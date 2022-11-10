@@ -1,7 +1,8 @@
+package iam
+
 /*
 Copyright 2022 Koninklijke Philips N.V., https://www.philips.com
 */
-package iam
 
 import (
 	"github.com/upbound/upjet/pkg/config"
