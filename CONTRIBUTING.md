@@ -1,4 +1,4 @@
-# Contributing to the HSDP upjet provider
+# Contributing to the HSDP crossplane provider
 
 We'd love for you to contribute to our source code and to make HSDP crossplane provider even better than it is today!
  Here are the guidelines we'd like you to follow:
