@@ -103,7 +103,6 @@ jobs:
     # Enable once Upbound setup is complete
     # if: needs.detect-noop.outputs.noop != 'true'
     if: 'true' == 'false'
-
     steps:
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v2
