@@ -94,4 +94,4 @@ jobs:
           path: _output/**
 
       - name: Publish Artifacts
-        run: make publish BRANCH_NAME=${GITHUB_REF##*/} XPKG_REG_ORGS=index.docker.io/philipssoftware
+        run: make publish XPKG_REG_ORGS=index.docker.io/philipssoftware
