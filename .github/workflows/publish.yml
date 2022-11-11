@@ -101,8 +101,7 @@ jobs:
     runs-on: ubuntu-22.04
     needs: detect-noop
     # Enable once Upbound setup is complete
-    # if: needs.detect-noop.outputs.noop != 'true'
-    if: false
+    if: needs.detect-noop.outputs.noop != 'true'
     steps:
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v2
