@@ -96,11 +96,12 @@ jobs:
       - name: Publish Artifacts
         run: make publish BRANCH_NAME=${GITHUB_REF##*/} XPKG_REG_ORGS=index.docker.io/philipssoftware
 
+
   publish-artifacts:
     runs-on: ubuntu-22.04
     needs: detect-noop
-    ## Enable once Upbound setup is complete
-    #if: needs.detect-noop.outputs.noop != 'true'
+    # Enable once Upbound setup is complete
+    # if: needs.detect-noop.outputs.noop != 'true'
     if: 'true' == 'false'
 
     steps:
