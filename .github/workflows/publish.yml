@@ -30,7 +30,7 @@ jobs:
     needs: detect-noop
     steps:
       - name: Setup QEMU
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v2
         with:
           platforms: all
 
