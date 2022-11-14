@@ -25,6 +25,10 @@ spec:
 EOF
 ```
 
+## API Reference
+
+You can see the API reference [here](https://doc.crds.dev/github.com/philips-software/provider-hsdp)
+
 ## Developing
 
 Run code-generation pipeline:
