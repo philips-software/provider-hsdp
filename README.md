@@ -19,7 +19,7 @@ cat <<EOF | kubectl apply -f -
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
-  name: upjet-provider-hsdp
+  name: provider-hsdp
 spec:
   package: philipssoftware/provider-hsdp:v0.1.0
 EOF
