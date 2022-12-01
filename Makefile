@@ -4,7 +4,7 @@
 PROJECT_NAME := provider-hsdp
 PROJECT_REPO := github.com/philips-software/$(PROJECT_NAME)
 
-export TERRAFORM_VERSION := 1.3.4
+export TERRAFORM_VERSION := 1.3.6
 
 export TERRAFORM_PROVIDER_SOURCE := philips-software/hsdp
 export TERRAFORM_PROVIDER_REPO := https://github.com/philips-software/terraform-provider-hsdp
