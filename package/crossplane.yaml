@@ -9,9 +9,9 @@ metadata:
       The HSDP Crossplane provider enables resource management
       of select services on the HealthSuite Platform
     meta.crossplane.io/readme: |
-      `provider-hsdp` is the Crossplane  provider for [HealthSuite digital platform](https://hsdp.io).
+      `provider-hsdp` is the Crossplane provider for [HealthSuite digital platform](https://hsdp.io).
       If you encounter a problem with this provider please create an issue on the 
-      [Github repo](https://github.com/philips-software/provider-hsdp/issues)
+      [github repo](https://github.com/philips-software/provider-hsdp/issues)
 spec:
   crossplane:
     version: ">=v1.0.0"
