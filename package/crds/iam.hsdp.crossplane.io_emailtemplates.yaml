@@ -5,18 +5,18 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.10.0
   creationTimestamp: null
-  name: services.iam.hsdp.jet.crossplane.io
+  name: emailtemplates.iam.hsdp.crossplane.io
 spec:
-  group: iam.hsdp.jet.crossplane.io
+  group: iam.hsdp.crossplane.io
   names:
     categories:
     - crossplane
     - managed
-    - hsdpjet
-    kind: Service
-    listKind: ServiceList
-    plural: services
-    singular: service
+    - hsdp
+    kind: EmailTemplate
+    listKind: EmailTemplateList
+    plural: emailtemplates
+    singular: emailtemplate
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,7 +35,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Service is the Schema for the Services API. <no value>
+        description: EmailTemplate is the Schema for the EmailTemplates API. <no value>
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -50,7 +50,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: ServiceSpec defines the desired state of Service
+            description: EmailTemplateSpec defines the desired state of EmailTemplate
             properties:
               deletionPolicy:
                 default: Delete
@@ -63,10 +63,18 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  applicationId:
+                  format:
                     type: string
-                  applicationIdSelector:
-                    description: Selector for a Application to populate applicationId.
+                  from:
+                    type: string
+                  link:
+                    type: string
+                  locale:
+                    type: string
+                  managingOrganization:
+                    type: string
+                  managingOrganizationSelector:
+                    description: Selector for a Organization to populate managingOrganization.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -104,8 +112,10 @@ spec:
                             type: string
                         type: object
                     type: object
-                  applicationRef:
-                    description: Reference to a Application to populate applicationId.
+                  message:
+                    type: string
+                  organizationRef:
+                    description: Reference to a Organization to populate managingOrganization.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -138,47 +148,13 @@ spec:
                     required:
                     - name
                     type: object
-                  defaultScopes:
-                    items:
-                      type: string
-                    type: array
-                  description:
+                  subject:
                     type: string
-                  name:
+                  type:
                     type: string
-                  scopes:
-                    items:
-                      type: string
-                    type: array
-                  selfManagedExpiresOn:
-                    type: string
-                  selfManagedPrivateKeySecretRef:
-                    description: A SecretKeySelector is a reference to a secret key
-                      in an arbitrary namespace.
-                    properties:
-                      key:
-                        description: The key to select.
-                        type: string
-                      name:
-                        description: Name of the secret.
-                        type: string
-                      namespace:
-                        description: Namespace of the secret.
-                        type: string
-                    required:
-                    - key
-                    - name
-                    - namespace
-                    type: object
-                  tokenValidity:
-                    type: number
-                  validity:
-                    type: number
                 required:
-                - defaultScopes
-                - description
-                - name
-                - scopes
+                - message
+                - type
                 type: object
               providerConfigRef:
                 default:
@@ -352,17 +328,13 @@ spec:
             - forProvider
             type: object
           status:
-            description: ServiceStatus defines the observed state of Service.
+            description: EmailTemplateStatus defines the observed state of EmailTemplate.
             properties:
               atProvider:
                 properties:
-                  expiresOn:
-                    type: string
                   id:
                     type: string
-                  organizationId:
-                    type: string
-                  serviceId:
+                  messageBase64:
                     type: string
                 type: object
               conditions:

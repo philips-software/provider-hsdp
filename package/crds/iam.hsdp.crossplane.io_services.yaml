@@ -5,18 +5,18 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.10.0
   creationTimestamp: null
-  name: applications.iam.hsdp.jet.crossplane.io
+  name: services.iam.hsdp.crossplane.io
 spec:
-  group: iam.hsdp.jet.crossplane.io
+  group: iam.hsdp.crossplane.io
   names:
     categories:
     - crossplane
     - managed
-    - hsdpjet
-    kind: Application
-    listKind: ApplicationList
-    plural: applications
-    singular: application
+    - hsdp
+    kind: Service
+    listKind: ServiceList
+    plural: services
+    singular: service
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,7 +35,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Application is the Schema for the Applications API. <no value>
+        description: Service is the Schema for the Services API. <no value>
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -50,7 +50,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: ApplicationSpec defines the desired state of Application
+            description: ServiceSpec defines the desired state of Service
             properties:
               deletionPolicy:
                 default: Delete
@@ -63,16 +63,10 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  description:
+                  applicationId:
                     type: string
-                  globalReferenceId:
-                    type: string
-                  name:
-                    type: string
-                  propositionId:
-                    type: string
-                  propositionIdSelector:
-                    description: Selector for a Proposition to populate propositionId.
+                  applicationIdSelector:
+                    description: Selector for a Application to populate applicationId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -110,8 +104,8 @@ spec:
                             type: string
                         type: object
                     type: object
-                  propositionRef:
-                    description: Reference to a Proposition to populate propositionId.
+                  applicationRef:
+                    description: Reference to a Application to populate applicationId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -144,9 +138,47 @@ spec:
                     required:
                     - name
                     type: object
+                  defaultScopes:
+                    items:
+                      type: string
+                    type: array
+                  description:
+                    type: string
+                  name:
+                    type: string
+                  scopes:
+                    items:
+                      type: string
+                    type: array
+                  selfManagedExpiresOn:
+                    type: string
+                  selfManagedPrivateKeySecretRef:
+                    description: A SecretKeySelector is a reference to a secret key
+                      in an arbitrary namespace.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  tokenValidity:
+                    type: number
+                  validity:
+                    type: number
                 required:
+                - defaultScopes
                 - description
                 - name
+                - scopes
                 type: object
               providerConfigRef:
                 default:
@@ -320,11 +352,17 @@ spec:
             - forProvider
             type: object
           status:
-            description: ApplicationStatus defines the observed state of Application.
+            description: ServiceStatus defines the observed state of Service.
             properties:
               atProvider:
                 properties:
+                  expiresOn:
+                    type: string
                   id:
+                    type: string
+                  organizationId:
+                    type: string
+                  serviceId:
                     type: string
                 type: object
               conditions:

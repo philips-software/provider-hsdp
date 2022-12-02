@@ -5,18 +5,18 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.10.0
   creationTimestamp: null
-  name: clients.iam.hsdp.jet.crossplane.io
+  name: propositions.iam.hsdp.crossplane.io
 spec:
-  group: iam.hsdp.jet.crossplane.io
+  group: iam.hsdp.crossplane.io
   names:
     categories:
     - crossplane
     - managed
-    - hsdpjet
-    kind: Client
-    listKind: ClientList
-    plural: clients
-    singular: client
+    - hsdp
+    kind: Proposition
+    listKind: PropositionList
+    plural: propositions
+    singular: proposition
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,7 +35,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Client is the Schema for the Clients API. <no value>
+        description: Proposition is the Schema for the Propositions API. <no value>
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -50,7 +50,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: ClientSpec defines the desired state of Client
+            description: PropositionSpec defines the desired state of Proposition
             properties:
               deletionPolicy:
                 default: Delete
@@ -63,12 +63,16 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  accessTokenLifetime:
-                    type: number
-                  applicationId:
+                  description:
                     type: string
-                  applicationIdSelector:
-                    description: Selector for a Application to populate applicationId.
+                  globalReferenceId:
+                    type: string
+                  name:
+                    type: string
+                  organizationId:
+                    type: string
+                  organizationIdSelector:
+                    description: Selector for a Organization to populate organizationId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -106,8 +110,8 @@ spec:
                             type: string
                         type: object
                     type: object
-                  applicationRef:
-                    description: Reference to a Application to populate applicationId.
+                  organizationRef:
+                    description: Reference to a Organization to populate organizationId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -140,67 +144,9 @@ spec:
                     required:
                     - name
                     type: object
-                  clientId:
-                    type: string
-                  consentImplied:
-                    type: boolean
-                  defaultScopes:
-                    items:
-                      type: string
-                    type: array
-                  description:
-                    type: string
-                  globalReferenceId:
-                    type: string
-                  idTokenLifetime:
-                    type: number
-                  name:
-                    type: string
-                  passwordSecretRef:
-                    description: A SecretKeySelector is a reference to a secret key
-                      in an arbitrary namespace.
-                    properties:
-                      key:
-                        description: The key to select.
-                        type: string
-                      name:
-                        description: Name of the secret.
-                        type: string
-                      namespace:
-                        description: Namespace of the secret.
-                        type: string
-                    required:
-                    - key
-                    - name
-                    - namespace
-                    type: object
-                  redirectionUris:
-                    items:
-                      type: string
-                    type: array
-                  refreshTokenLifetime:
-                    type: number
-                  responseTypes:
-                    items:
-                      type: string
-                    type: array
-                  scopes:
-                    items:
-                      type: string
-                    type: array
-                  type:
-                    type: string
                 required:
-                - clientId
-                - defaultScopes
                 - description
-                - globalReferenceId
                 - name
-                - passwordSecretRef
-                - redirectionUris
-                - responseTypes
-                - scopes
-                - type
                 type: object
               providerConfigRef:
                 default:
@@ -374,12 +320,10 @@ spec:
             - forProvider
             type: object
           status:
-            description: ClientStatus defines the observed state of Client.
+            description: PropositionStatus defines the observed state of Proposition.
             properties:
               atProvider:
                 properties:
-                  disabled:
-                    type: boolean
                   id:
                     type: string
                 type: object

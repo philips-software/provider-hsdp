@@ -5,18 +5,18 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.10.0
   creationTimestamp: null
-  name: passwordpolicies.iam.hsdp.jet.crossplane.io
+  name: applications.iam.hsdp.crossplane.io
 spec:
-  group: iam.hsdp.jet.crossplane.io
+  group: iam.hsdp.crossplane.io
   names:
     categories:
     - crossplane
     - managed
-    - hsdpjet
-    kind: PasswordPolicy
-    listKind: PasswordPolicyList
-    plural: passwordpolicies
-    singular: passwordpolicy
+    - hsdp
+    kind: Application
+    listKind: ApplicationList
+    plural: applications
+    singular: application
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,8 +35,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: PasswordPolicy is the Schema for the PasswordPolicys API. <no
-          value>
+        description: Application is the Schema for the Applications API. <no value>
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -51,7 +50,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: PasswordPolicySpec defines the desired state of PasswordPolicy
+            description: ApplicationSpec defines the desired state of Application
             properties:
               deletionPolicy:
                 default: Delete
@@ -64,48 +63,16 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  challengePolicy:
-                    items:
-                      properties:
-                        defaultQuestions:
-                          items:
-                            type: string
-                          type: array
-                        maxIncorrectAttempts:
-                          type: number
-                        minAnswerCount:
-                          type: number
-                        minQuestionCount:
-                          type: number
-                      type: object
-                    type: array
-                  challengesEnabled:
-                    type: boolean
-                  complexity:
-                    items:
-                      properties:
-                        maxLength:
-                          type: number
-                        minLength:
-                          type: number
-                        minLowercase:
-                          type: number
-                        minNumerics:
-                          type: number
-                        minSpecialChars:
-                          type: number
-                        minUppercase:
-                          type: number
-                      type: object
-                    type: array
-                  expiryPeriodInDays:
-                    type: number
-                  historyCount:
-                    type: number
-                  managingOrganization:
+                  description:
                     type: string
-                  managingOrganizationSelector:
-                    description: Selector for a Organization to populate managingOrganization.
+                  globalReferenceId:
+                    type: string
+                  name:
+                    type: string
+                  propositionId:
+                    type: string
+                  propositionIdSelector:
+                    description: Selector for a Proposition to populate propositionId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -143,8 +110,8 @@ spec:
                             type: string
                         type: object
                     type: object
-                  organizationRef:
-                    description: Reference to a Organization to populate managingOrganization.
+                  propositionRef:
+                    description: Reference to a Proposition to populate propositionId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -178,7 +145,8 @@ spec:
                     - name
                     type: object
                 required:
-                - complexity
+                - description
+                - name
                 type: object
               providerConfigRef:
                 default:
@@ -352,12 +320,10 @@ spec:
             - forProvider
             type: object
           status:
-            description: PasswordPolicyStatus defines the observed state of PasswordPolicy.
+            description: ApplicationStatus defines the observed state of Application.
             properties:
               atProvider:
                 properties:
-                  Policy:
-                    type: string
                   id:
                     type: string
                 type: object
