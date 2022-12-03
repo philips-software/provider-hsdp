@@ -3,4 +3,4 @@ kind: Provider
 metadata:
   name: provider-hsdp
 spec:
-  package: philips-software/provider-hsdp:v0.1.0
+  package: philips-software/provider-hsdp:v0.4.0

@@ -10,7 +10,7 @@ HSDP API.
 Install the provider by using the following command after changing the image tag
 to the [latest release](https://marketplace.upbound.io/providers/philips-software/provider-hsdp):
 ```
-kubectl crossplane provider install philipssoftware/provider-hsdp:v0.1.0
+kubectl crossplane provider install philipssoftware/provider-hsdp:v0.3.0
 ```
 
 Alternatively, you can use declarative installation:
@@ -21,38 +21,63 @@ kind: Provider
 metadata:
   name: provider-hsdp
 spec:
-  package: philipssoftware/provider-hsdp:v0.1.0
+  package: philipssoftware/provider-hsdp:v0.3.0
 EOF
 ```
+
+## Credentials
+
+Provider secrets are passed via the `ProviderConfig` resource which in turn 
+refers to a Kubernetes secret holding HSDP credentials
+
+```yaml
+apiVersion: hsdp.upbound.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: default
+spec:
+  credentials:
+    source: Secret
+    secretRef:
+      name: example-creds
+      namespace: crossplane-system
+      key: credentials
+```
+
+### Secret example
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: example-creds
+  namespace: crossplane-system
+type: Opaque
+stringData:
+  credentials: |
+    {
+      "service_id": "iam.service.id.here",
+      "service_private_key": "----PRIVATE KEY HERE----",
+      "region": "us-east",
+      "environment": "client-test",
+      "debug_log": "/tmp/crossplane.log"
+    }
+```
+
+### Supported credential keys
+
+| credential            | description                                                         | Example                 |
+|-----------------------|---------------------------------------------------------------------|-------------------------|
+| `service_id`          | Service ID of the IAM Service account to use                        |                         |
+| `service_private_key` | The RSA private key associated with the IAM Service account         |                         |
+| `region`              | The HSDP Region to use                                              | `us-east` or `eu-west`  |
+| `environment`         | The HSDP Environment to use                                         | `client-test` or `prod` |
+| `debug_log`           | Optional path where debug API traffic is logged in the provider Pod |                         |
+
 
 ## API Reference
 
 You can see the API reference [here](https://doc.crds.dev/github.com/philips-software/provider-hsdp)
-
-## Developing
-
-Run code-generation pipeline:
-```console
-go run cmd/generator/main.go "$PWD"
-```
-
-Run against a Kubernetes cluster:
-
-```console
-make run
-```
-
-Build, push, and install:
-
-```console
-make all
-```
-
-Build binary:
-
-```console
-make build
-```
 
 ## Known limitations
 
@@ -60,8 +85,11 @@ make build
 resources via Crossplane currently. This is a [known issue](https://github.com/upbound/upjet/issues/78) and will be addressed once [CRD Validation rules suport](https://kubernetes.io/blog/2022/09/23/crd-validation-rules-beta/) becomes
 widely available starting in Kubernetes 1.25+
 
+## Developing the provider
+
+Refer to the [DEVELOPMENT](DEVELOPMENT.md) page for details.
 
 ## Report a Bug
 
 For filing bugs, suggesting improvements, or requesting new features, please
-open an [issue](https://github.com/philipssoftware/provider-hsdp/issues).
+open an [issue](https://github.com/philips-software/provider-hsdp/issues).
