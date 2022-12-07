@@ -1,0 +1,34 @@
+apiVersion: iam.hsdp.crossplane.io/v1alpha1
+kind: Client
+metadata:
+  name: crossplane-client
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: CROSSPLANE-CLIENT
+    applicationRef:
+      name: crossplane-app
+    description: "Managed by Crossplane -- DO NOT EDIT"
+    globalReferenceId: 16648c38-5bb1-4c18-8222-9782f79e3167
+    consentImplied: false
+    scopes:
+    - openid
+    - email
+    - auth_iam_introspect
+    - auth_iam_organization
+    defaultScopes:
+    - openid
+    - email
+    - auth_iam_introspect
+    - auth_iam_organization
+    clientId: crossplane-client-id
+    passwordSecretRef:
+      name: client-password
+      namespace: crossplane-system
+      key: password
+    redirectionUris:
+    - "https://foo.com/bar"
+    type: Confidential
+    responseTypes:
+    - "token id_token"
+    - "token"
