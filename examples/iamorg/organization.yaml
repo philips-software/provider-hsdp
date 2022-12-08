@@ -1,0 +1,12 @@
+apiVersion: iam.hsdp.crossplane.io/v1alpha1
+kind: Organization
+metadata:
+  name: crossplane-org
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: crossplane-managed-org
+    displayName: "IAM Organization"
+    parentOrgId: cbc17197-d135-4af6-ba3b-1a01c57d251e
+    description: "Managed by Crossplane"
+    waitForDelete: false

@@ -1,0 +1,11 @@
+apiVersion: iam.hsdp.crossplane.io/v1alpha1
+kind: Application
+metadata:
+  name: crossplane-app
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: CROSSPLANE-MANAGED-APP
+    propositionRef:
+      name: crossplane-prop
+    description: "Managed by Crossplane"

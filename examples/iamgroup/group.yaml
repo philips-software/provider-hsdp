@@ -1,0 +1,16 @@
+apiVersion: iam.hsdp.crossplane.io/v1alpha1
+kind: Group
+metadata:
+  name: crossplane-group
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: CROSSPLANE-MANAGED-GROUP
+    driftDetection: true
+    organizationRef:
+      name: crossplane-org
+    description: "Managed by Crossplane"
+    roleRefs:
+    - name: crossplane-role
+    serviceRefs:
+    - name: crossplane-service

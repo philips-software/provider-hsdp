@@ -1,0 +1,14 @@
+apiVersion: iam.hsdp.crossplane.io/v1alpha1
+kind: Role
+metadata:
+  name: crossplane-role
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: CROSSPLANE-MANAGED-ROLE
+    organizationRef:
+      name: crossplane-org
+    description: "Managed by Crossplane"
+    permissions:
+      - ALL.READ
+      - ALL.WRITE
