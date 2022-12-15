@@ -16,7 +16,7 @@ spec:
   crossplane:
     version: ">=v1.0.0"
   controller:
-    image: loafoe/provider-hsdp:v0.4.2
+    image: loafoe/provider-hsdp:v0.4.4
     permissionRequests:
     - apiGroups:
       - apiextensions.crossplane.io
