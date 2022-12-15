@@ -12,20 +12,5 @@ metadata:
       `provider-hsdp` is the Crossplane provider for HealthSuite digital platform. It exposes a select set
       of platform capabilities. The project is developed and maintained as Philips Open source. If you encounter issues,
       please open an issue on [GitHub](https://github.com/philips-software/provider-hsdp/issues)
-spec:
-  crossplane:
-    version: ">=v1.0.0"
-  controller:
-    image: loafoe/provider-hsdp:v0.4.4
-    permissionRequests:
-    - apiGroups:
-      - apiextensions.crossplane.io
-      resources:
-      - compositions
-      verbs:
-      - get
-      - list
-      - create
-      - update
-      - patch
-      - watch
+    friendly-name.meta.crossplane.io: Provider HSDP
+
