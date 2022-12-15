@@ -10,7 +10,7 @@ HSDP API.
 Install the provider by using the following command after changing the image tag
 to the [latest release](https://marketplace.upbound.io/providers/philips-software/provider-hsdp):
 ```
-kubectl crossplane provider install philipssoftware/provider-hsdp:v0.3.0
+kubectl crossplane install provider loafoe/provider-hsdp:v0.3.0 provider-hsdp
 ```
 
 Alternatively, you can use declarative installation:
