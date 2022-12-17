@@ -21,7 +21,7 @@ kind: Provider
 metadata:
   name: provider-hsdp
 spec:
-  package: philipssoftware/provider-hsdp:v0.3.0
+  package: xpkg.upbound.io/philips-software/provider-hsdp:v0.4.6
 EOF
 ```
 
