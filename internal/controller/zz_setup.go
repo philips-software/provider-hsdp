@@ -10,6 +10,7 @@ import (
 	"github.com/upbound/upjet/pkg/controller"
 
 	organization "github.com/philips-software/provider-hsdp/internal/controller/cdr/organization"
+	subscription "github.com/philips-software/provider-hsdp/internal/controller/cdr/subscription"
 	application "github.com/philips-software/provider-hsdp/internal/controller/iam/application"
 	client "github.com/philips-software/provider-hsdp/internal/controller/iam/client"
 	emailtemplate "github.com/philips-software/provider-hsdp/internal/controller/iam/emailtemplate"
@@ -29,6 +30,7 @@ import (
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		organization.Setup,
+		subscription.Setup,
 		application.Setup,
 		client.Setup,
 		emailtemplate.Setup,

@@ -19,4 +19,9 @@ func Configure(p *config.Provider) {
 		r.ShortGroup = shortGroup
 		r.Kind = "Organization"
 	})
+	// Subscription
+	p.AddResourceConfigurator("hsdp_cdr_subscription", func(r *config.Resource) {
+		r.ShortGroup = shortGroup
+		r.Kind = "Subscription"
+	})
 }
