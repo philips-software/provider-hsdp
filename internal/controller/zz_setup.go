@@ -9,11 +9,12 @@ import (
 
 	"github.com/upbound/upjet/pkg/controller"
 
+	organization "github.com/philips-software/provider-hsdp/internal/controller/cdr/organization"
 	application "github.com/philips-software/provider-hsdp/internal/controller/iam/application"
 	client "github.com/philips-software/provider-hsdp/internal/controller/iam/client"
 	emailtemplate "github.com/philips-software/provider-hsdp/internal/controller/iam/emailtemplate"
 	group "github.com/philips-software/provider-hsdp/internal/controller/iam/group"
-	organization "github.com/philips-software/provider-hsdp/internal/controller/iam/organization"
+	organizationiam "github.com/philips-software/provider-hsdp/internal/controller/iam/organization"
 	passwordpolicy "github.com/philips-software/provider-hsdp/internal/controller/iam/passwordpolicy"
 	proposition "github.com/philips-software/provider-hsdp/internal/controller/iam/proposition"
 	role "github.com/philips-software/provider-hsdp/internal/controller/iam/role"
@@ -27,11 +28,12 @@ import (
 // the supplied manager.
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		organization.Setup,
 		application.Setup,
 		client.Setup,
 		emailtemplate.Setup,
 		group.Setup,
-		organization.Setup,
+		organizationiam.Setup,
 		passwordpolicy.Setup,
 		proposition.Setup,
 		role.Setup,

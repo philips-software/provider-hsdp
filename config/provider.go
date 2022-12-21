@@ -8,6 +8,7 @@ import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
 
+	"github.com/philips-software/provider-hsdp/config/cdr"
 	ujconfig "github.com/upbound/upjet/pkg/config"
 
 	"github.com/philips-software/provider-hsdp/config/iam"
@@ -37,6 +38,7 @@ func GetProvider() *ujconfig.Provider {
 	for _, configure := range []func(provider *ujconfig.Provider){
 		// add custom config functions
 		iam.Configure,
+		cdr.Configure,
 	} {
 		configure(pc)
 	}

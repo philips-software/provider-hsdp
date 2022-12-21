@@ -1,0 +1,12 @@
+apiVersion: cdr.hsdp.crossplane.io/v1alpha1
+kind: Organization
+metadata:
+  name: crossplane-cdr-org
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: crossplane-cdr-org
+    fhirStore: "https://cdr-stu3-sandbox.hsdp.io/store/fhir/root-iam-org-uuid"
+    orgId: "root-iam-org-uuid"
+    version: "r4"
+    purgeDelete: false

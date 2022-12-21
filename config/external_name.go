@@ -21,6 +21,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"hsdp_iam_password_policy":     config.IdentifierFromProvider,
 	"hsdp_iam_role_sharing_policy": config.IdentifierFromProvider,
 	"hsdp_iam_user":                config.IdentifierFromProvider,
+	"hsdp_cdr_org":                 config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the
