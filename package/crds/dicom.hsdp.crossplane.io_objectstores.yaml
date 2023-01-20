@@ -5,18 +5,18 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.10.0
   creationTimestamp: null
-  name: applications.iam.hsdp.crossplane.io
+  name: objectstores.dicom.hsdp.crossplane.io
 spec:
-  group: iam.hsdp.crossplane.io
+  group: dicom.hsdp.crossplane.io
   names:
     categories:
     - crossplane
     - managed
     - hsdp
-    kind: Application
-    listKind: ApplicationList
-    plural: applications
-    singular: application
+    kind: ObjectStore
+    listKind: ObjectStoreList
+    plural: objectstores
+    singular: objectstore
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,7 +35,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Application is the Schema for the Applications API. <no value>
+        description: ObjectStore is the Schema for the ObjectStores API. <no value>
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -50,7 +50,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: ApplicationSpec defines the desired state of Application
+            description: ObjectStoreSpec defines the desired state of ObjectStore
             properties:
               deletionPolicy:
                 default: Delete
@@ -63,16 +63,16 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  configUrl:
+                    type: string
                   description:
                     type: string
-                  globalReferenceId:
+                  forceDelete:
+                    type: boolean
+                  organizationId:
                     type: string
-                  name:
-                    type: string
-                  propositionId:
-                    type: string
-                  propositionIdSelector:
-                    description: Selector for a Proposition to populate propositionId.
+                  organizationIdSelector:
+                    description: Selector for a Organization in iam to populate organizationId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -110,8 +110,8 @@ spec:
                             type: string
                         type: object
                     type: object
-                  propositionRef:
-                    description: Reference to a Proposition to populate propositionId.
+                  organizationRef:
+                    description: Reference to a Organization in iam to populate organizationId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -144,11 +144,128 @@ spec:
                     required:
                     - name
                     type: object
-                  waitForDelete:
-                    type: boolean
+                  s3credsAccess:
+                    items:
+                      properties:
+                        bucketName:
+                          type: string
+                        endpoint:
+                          type: string
+                        folderPath:
+                          type: string
+                        productKeySecretRef:
+                          description: A SecretKeySelector is a reference to a secret
+                            key in an arbitrary namespace.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        serviceAccount:
+                          items:
+                            properties:
+                              accessTokenEndpoint:
+                                type: string
+                              name:
+                                type: string
+                              privateKeySecretRef:
+                                description: A SecretKeySelector is a reference to
+                                  a secret key in an arbitrary namespace.
+                                properties:
+                                  key:
+                                    description: The key to select.
+                                    type: string
+                                  name:
+                                    description: Name of the secret.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the secret.
+                                    type: string
+                                required:
+                                - key
+                                - name
+                                - namespace
+                                type: object
+                              serviceId:
+                                type: string
+                              tokenEndpoint:
+                                type: string
+                            required:
+                            - accessTokenEndpoint
+                            - privateKeySecretRef
+                            - serviceId
+                            - tokenEndpoint
+                            type: object
+                          type: array
+                      required:
+                      - bucketName
+                      - endpoint
+                      - folderPath
+                      - productKeySecretRef
+                      type: object
+                    type: array
+                  staticAccess:
+                    items:
+                      properties:
+                        accessKeySecretRef:
+                          description: A SecretKeySelector is a reference to a secret
+                            key in an arbitrary namespace.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        bucketName:
+                          type: string
+                        endpoint:
+                          type: string
+                        secretKeySecretRef:
+                          description: A SecretKeySelector is a reference to a secret
+                            key in an arbitrary namespace.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                      required:
+                      - accessKeySecretRef
+                      - bucketName
+                      - endpoint
+                      - secretKeySecretRef
+                      type: object
+                    type: array
                 required:
-                - description
-                - name
+                - configUrl
                 type: object
               providerConfigRef:
                 default:
@@ -322,10 +439,12 @@ spec:
             - forProvider
             type: object
           status:
-            description: ApplicationStatus defines the observed state of Application.
+            description: ObjectStoreStatus defines the observed state of ObjectStore.
             properties:
               atProvider:
                 properties:
+                  accessType:
+                    type: string
                   id:
                     type: string
                 type: object

@@ -40,6 +40,9 @@ type ApplicationParameters struct {
 	// Reference to a Proposition to populate propositionId.
 	// +kubebuilder:validation:Optional
 	PropositionRef *v1.Reference `json:"propositionRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	WaitForDelete *bool `json:"waitForDelete,omitempty" tf:"wait_for_delete,omitempty"`
 }
 
 // ApplicationSpec defines the desired state of Application

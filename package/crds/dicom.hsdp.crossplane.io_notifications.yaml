@@ -5,18 +5,18 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.10.0
   creationTimestamp: null
-  name: applications.iam.hsdp.crossplane.io
+  name: notifications.dicom.hsdp.crossplane.io
 spec:
-  group: iam.hsdp.crossplane.io
+  group: dicom.hsdp.crossplane.io
   names:
     categories:
     - crossplane
     - managed
     - hsdp
-    kind: Application
-    listKind: ApplicationList
-    plural: applications
-    singular: application
+    kind: Notification
+    listKind: NotificationList
+    plural: notifications
+    singular: notification
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,7 +35,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Application is the Schema for the Applications API. <no value>
+        description: Notification is the Schema for the Notifications API. <no value>
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -50,7 +50,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: ApplicationSpec defines the desired state of Application
+            description: NotificationSpec defines the desired state of Notification
             properties:
               deletionPolicy:
                 default: Delete
@@ -63,16 +63,12 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  description:
+                  configUrl:
                     type: string
-                  globalReferenceId:
+                  defaultOrganizationId:
                     type: string
-                  name:
-                    type: string
-                  propositionId:
-                    type: string
-                  propositionIdSelector:
-                    description: Selector for a Proposition to populate propositionId.
+                  defaultOrganizationIdSelector:
+                    description: Selector for a Organization in iam to populate defaultOrganizationId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -110,8 +106,14 @@ spec:
                             type: string
                         type: object
                     type: object
-                  propositionRef:
-                    description: Reference to a Proposition to populate propositionId.
+                  enabled:
+                    type: boolean
+                  endpointUrl:
+                    type: string
+                  organizationId:
+                    type: string
+                  organizationRef:
+                    description: Reference to a Organization in iam to populate defaultOrganizationId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -144,11 +146,9 @@ spec:
                     required:
                     - name
                     type: object
-                  waitForDelete:
-                    type: boolean
                 required:
-                - description
-                - name
+                - configUrl
+                - endpointUrl
                 type: object
               providerConfigRef:
                 default:
@@ -322,7 +322,7 @@ spec:
             - forProvider
             type: object
           status:
-            description: ApplicationStatus defines the observed state of Application.
+            description: NotificationStatus defines the observed state of Notification.
             properties:
               atProvider:
                 properties:
