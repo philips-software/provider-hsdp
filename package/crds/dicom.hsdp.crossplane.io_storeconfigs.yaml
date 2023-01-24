@@ -5,18 +5,18 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.10.0
   creationTimestamp: null
-  name: applications.iam.hsdp.crossplane.io
+  name: storeconfigs.dicom.hsdp.crossplane.io
 spec:
-  group: iam.hsdp.crossplane.io
+  group: dicom.hsdp.crossplane.io
   names:
     categories:
     - crossplane
     - managed
     - hsdp
-    kind: Application
-    listKind: ApplicationList
-    plural: applications
-    singular: application
+    kind: StoreConfig
+    listKind: StoreConfigList
+    plural: storeconfigs
+    singular: storeconfig
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,7 +35,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Application is the Schema for the Applications API. <no value>
+        description: StoreConfig is the Schema for the StoreConfigs API. <no value>
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -50,7 +50,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: ApplicationSpec defines the desired state of Application
+            description: StoreConfigSpec defines the desired state of StoreConfig
             properties:
               deletionPolicy:
                 default: Delete
@@ -63,16 +63,33 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  description:
+                  cdrServiceAccount:
+                    items:
+                      properties:
+                        privateKey:
+                          type: string
+                        serviceId:
+                          type: string
+                      required:
+                      - privateKey
+                      - serviceId
+                      type: object
+                    type: array
+                  configUrl:
                     type: string
-                  globalReferenceId:
+                  fhirStore:
+                    items:
+                      properties:
+                        mpiEndpoint:
+                          type: string
+                      required:
+                      - mpiEndpoint
+                      type: object
+                    type: array
+                  organizationId:
                     type: string
-                  name:
-                    type: string
-                  propositionId:
-                    type: string
-                  propositionIdSelector:
-                    description: Selector for a Proposition to populate propositionId.
+                  organizationIdSelector:
+                    description: Selector for a Organization in iam to populate organizationId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -110,8 +127,8 @@ spec:
                             type: string
                         type: object
                     type: object
-                  propositionRef:
-                    description: Reference to a Proposition to populate propositionId.
+                  organizationRef:
+                    description: Reference to a Organization in iam to populate organizationId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -144,11 +161,8 @@ spec:
                     required:
                     - name
                     type: object
-                  waitForDelete:
-                    type: boolean
                 required:
-                - description
-                - name
+                - configUrl
                 type: object
               providerConfigRef:
                 default:
@@ -322,11 +336,26 @@ spec:
             - forProvider
             type: object
           status:
-            description: ApplicationStatus defines the observed state of Application.
+            description: StoreConfigStatus defines the observed state of StoreConfig.
             properties:
               atProvider:
                 properties:
+                  cdrServiceAccount:
+                    items:
+                      properties:
+                        id:
+                          type: string
+                      type: object
+                    type: array
+                  dataManagementUrl:
+                    type: string
                   id:
+                    type: string
+                  qidoUrl:
+                    type: string
+                  stowUrl:
+                    type: string
+                  wadoUrl:
                     type: string
                 type: object
               conditions:

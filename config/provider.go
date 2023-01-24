@@ -9,6 +9,7 @@ import (
 	_ "embed"
 
 	"github.com/philips-software/provider-hsdp/config/cdr"
+	"github.com/philips-software/provider-hsdp/config/dicom"
 	ujconfig "github.com/upbound/upjet/pkg/config"
 
 	"github.com/philips-software/provider-hsdp/config/iam"
@@ -39,6 +40,7 @@ func GetProvider() *ujconfig.Provider {
 		// add custom config functions
 		iam.Configure,
 		cdr.Configure,
+		dicom.Configure,
 	} {
 		configure(pc)
 	}

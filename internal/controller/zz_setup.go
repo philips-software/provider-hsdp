@@ -11,6 +11,10 @@ import (
 
 	organization "github.com/philips-software/provider-hsdp/internal/controller/cdr/organization"
 	subscription "github.com/philips-software/provider-hsdp/internal/controller/cdr/subscription"
+	notification "github.com/philips-software/provider-hsdp/internal/controller/dicom/notification"
+	objectstore "github.com/philips-software/provider-hsdp/internal/controller/dicom/objectstore"
+	repository "github.com/philips-software/provider-hsdp/internal/controller/dicom/repository"
+	storeconfig "github.com/philips-software/provider-hsdp/internal/controller/dicom/storeconfig"
 	application "github.com/philips-software/provider-hsdp/internal/controller/iam/application"
 	client "github.com/philips-software/provider-hsdp/internal/controller/iam/client"
 	emailtemplate "github.com/philips-software/provider-hsdp/internal/controller/iam/emailtemplate"
@@ -31,6 +35,10 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		organization.Setup,
 		subscription.Setup,
+		notification.Setup,
+		objectstore.Setup,
+		repository.Setup,
+		storeconfig.Setup,
 		application.Setup,
 		client.Setup,
 		emailtemplate.Setup,

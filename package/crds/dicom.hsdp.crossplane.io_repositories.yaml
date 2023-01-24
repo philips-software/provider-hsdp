@@ -5,18 +5,18 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.10.0
   creationTimestamp: null
-  name: applications.iam.hsdp.crossplane.io
+  name: repositories.dicom.hsdp.crossplane.io
 spec:
-  group: iam.hsdp.crossplane.io
+  group: dicom.hsdp.crossplane.io
   names:
     categories:
     - crossplane
     - managed
     - hsdp
-    kind: Application
-    listKind: ApplicationList
-    plural: applications
-    singular: application
+    kind: Repository
+    listKind: RepositoryList
+    plural: repositories
+    singular: repository
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,7 +35,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Application is the Schema for the Applications API. <no value>
+        description: Repository is the Schema for the Repositorys API. <no value>
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -50,7 +50,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: ApplicationSpec defines the desired state of Application
+            description: RepositorySpec defines the desired state of Repository
             properties:
               deletionPolicy:
                 default: Delete
@@ -63,16 +63,25 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  description:
+                  configUrl:
                     type: string
-                  globalReferenceId:
+                  notification:
+                    items:
+                      properties:
+                        enabled:
+                          type: boolean
+                        organizationId:
+                          type: string
+                      required:
+                      - organizationId
+                      type: object
+                    type: array
+                  objectStoreId:
                     type: string
-                  name:
+                  organizationId:
                     type: string
-                  propositionId:
-                    type: string
-                  propositionIdSelector:
-                    description: Selector for a Proposition to populate propositionId.
+                  organizationIdSelector:
+                    description: Selector for a Organization in iam to populate organizationId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -110,8 +119,8 @@ spec:
                             type: string
                         type: object
                     type: object
-                  propositionRef:
-                    description: Reference to a Proposition to populate propositionId.
+                  organizationRef:
+                    description: Reference to a Organization in iam to populate organizationId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -144,11 +153,13 @@ spec:
                     required:
                     - name
                     type: object
-                  waitForDelete:
+                  repositoryOrganizationId:
+                    type: string
+                  storeAsComposite:
                     type: boolean
                 required:
-                - description
-                - name
+                - configUrl
+                - objectStoreId
                 type: object
               providerConfigRef:
                 default:
@@ -322,7 +333,7 @@ spec:
             - forProvider
             type: object
           status:
-            description: ApplicationStatus defines the observed state of Application.
+            description: RepositoryStatus defines the observed state of Repository.
             properties:
               atProvider:
                 properties:

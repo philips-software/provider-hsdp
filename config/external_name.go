@@ -23,6 +23,10 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"hsdp_iam_user":                config.IdentifierFromProvider,
 	"hsdp_cdr_org":                 config.IdentifierFromProvider,
 	"hsdp_cdr_subscription":        config.IdentifierFromProvider,
+	"hsdp_dicom_repository":        config.IdentifierFromProvider,
+	"hsdp_dicom_store_config":      config.IdentifierFromProvider,
+	"hsdp_dicom_notification":      config.IdentifierFromProvider,
+	"hsdp_dicom_object_store":      config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the
