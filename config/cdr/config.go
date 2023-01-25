@@ -18,6 +18,10 @@ func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("hsdp_cdr_org", func(r *config.Resource) {
 		r.ShortGroup = shortGroup
 		r.Kind = "Organization"
+		r.References["org_id"] = config.Reference{
+			Type:         "github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Organization",
+			RefFieldName: "OrganizationRef",
+		}
 	})
 	// Subscription
 	p.AddResourceConfigurator("hsdp_cdr_subscription", func(r *config.Resource) {

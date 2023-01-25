@@ -25,8 +25,18 @@ type OrganizationParameters struct {
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
-	// +kubebuilder:validation:Required
-	OrgID *string `json:"orgId" tf:"org_id,omitempty"`
+	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Organization
+	// +crossplane:generate:reference:refFieldName=OrganizationRef
+	// +kubebuilder:validation:Optional
+	OrgID *string `json:"orgId,omitempty" tf:"org_id,omitempty"`
+
+	// Selector for a Organization in iam to populate orgId.
+	// +kubebuilder:validation:Optional
+	OrgIDSelector *v1.Selector `json:"orgIdSelector,omitempty" tf:"-"`
+
+	// Reference to a Organization in iam to populate orgId.
+	// +kubebuilder:validation:Optional
+	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	PartOf *string `json:"partOf,omitempty" tf:"part_of,omitempty"`
