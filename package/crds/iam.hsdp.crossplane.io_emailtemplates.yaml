@@ -64,14 +64,21 @@ spec:
               forProvider:
                 properties:
                   format:
+                    description: The template format. Must be 'HTML' currently.
                     type: string
                   from:
                     type: string
                   link:
+                    description: A clickable link, depends on the template type.
                     type: string
                   locale:
+                    description: The locale of the template. When not specified the
+                      template will become the default. Only a single default template
+                      is allowed of course.
                     type: string
                   managingOrganization:
+                    description: The Id of the IAM Org to apply this email template
+                      to.
                     type: string
                   managingOrganizationSelector:
                     description: Selector for a Organization to populate managingOrganization.
@@ -113,6 +120,7 @@ spec:
                         type: object
                     type: object
                   message:
+                    description: The message body.
                     type: string
                   organizationRef:
                     description: Reference to a Organization to populate managingOrganization.
@@ -149,8 +157,10 @@ spec:
                     - name
                     type: object
                   subject:
+                    description: The Subject line of the email.
                     type: string
                   type:
+                    description: The email template type.
                     type: string
                 required:
                 - message

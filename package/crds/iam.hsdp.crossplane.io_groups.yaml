@@ -64,16 +64,21 @@ spec:
               forProvider:
                 properties:
                   description:
+                    description: The group description.
                     type: string
                   devices:
+                    description: The list of IAM device identity IDs to include in
+                      this group.
                     items:
                       type: string
                     type: array
                   driftDetection:
                     type: boolean
                   iamDeviceBugWorkaround:
+                    description: Deprecated, do not use.
                     type: boolean
                   managingOrganization:
+                    description: The managing organization ID.
                     type: string
                   managingOrganizationSelector:
                     description: Selector for a Organization to populate managingOrganization.
@@ -115,6 +120,7 @@ spec:
                         type: object
                     type: object
                   name:
+                    description: The group name.
                     type: string
                   organizationRef:
                     description: Reference to a Organization to populate managingOrganization.
@@ -188,6 +194,7 @@ spec:
                       type: object
                     type: array
                   roles:
+                    description: The list of role IDS to assign to this group.
                     items:
                       type: string
                     type: array
@@ -268,6 +275,8 @@ spec:
                       type: object
                     type: array
                   services:
+                    description: The list of service identity IDs to include in this
+                      group.
                     items:
                       type: string
                     type: array
@@ -348,6 +357,10 @@ spec:
                       type: object
                     type: array
                   users:
+                    description: The list of user IDs to include in this group. The
+                      provider only manages this list of users. Existing users added
+                      by others means to the group by the provider. It is not practical
+                      to manage hundreds or thousands of users this way of course.
                     items:
                       type: string
                     type: array

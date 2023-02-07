@@ -19,9 +19,11 @@ type RoleObservation struct {
 
 type RoleParameters struct {
 
+	// The role description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// The managing organization of the role.
 	// +crossplane:generate:reference:type=Organization
 	// +crossplane:generate:reference:refFieldName=OrganizationRef
 	// +kubebuilder:validation:Optional
@@ -31,6 +33,7 @@ type RoleParameters struct {
 	// +kubebuilder:validation:Optional
 	ManagingOrganizationSelector *v1.Selector `json:"managingOrganizationSelector,omitempty" tf:"-"`
 
+	// The role name.
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
@@ -38,9 +41,11 @@ type RoleParameters struct {
 	// +kubebuilder:validation:Optional
 	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
 
+	// List of permissions IDs assigned to this role.
 	// +kubebuilder:validation:Required
 	Permissions []*string `json:"permissions" tf:"permissions,omitempty"`
 
+	// Removal protection of some ticket only permissions.
 	// +kubebuilder:validation:Optional
 	TicketProtection *bool `json:"ticketProtection,omitempty" tf:"ticket_protection,omitempty"`
 }

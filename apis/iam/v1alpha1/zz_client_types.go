@@ -14,6 +14,8 @@ import (
 )
 
 type ClientObservation struct {
+
+	// True if the client is disabled e.g. because the managing Organization is disabled.
 	Disabled *bool `json:"disabled,omitempty" tf:"disabled,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -21,9 +23,11 @@ type ClientObservation struct {
 
 type ClientParameters struct {
 
+	// Lifetime of the access token in seconds. If not specified, system default life time (1800 secs) will be considered.
 	// +kubebuilder:validation:Optional
 	AccessTokenLifetime *float64 `json:"accessTokenLifetime,omitempty" tf:"access_token_lifetime,omitempty"`
 
+	// The application ID to attach this client to.
 	// +crossplane:generate:reference:type=Application
 	// +crossplane:generate:reference:refFieldName=ApplicationRef
 	// +kubebuilder:validation:Optional
@@ -37,42 +41,55 @@ type ClientParameters struct {
 	// +kubebuilder:validation:Optional
 	ApplicationRef *v1.Reference `json:"applicationRef,omitempty" tf:"-"`
 
+	// The client id
 	// +kubebuilder:validation:Required
 	ClientID *string `json:"clientId" tf:"client_id,omitempty"`
 
+	// Flag when enabled, the resource owner will not be asked for consent during authorization flows.
 	// +kubebuilder:validation:Optional
 	ConsentImplied *bool `json:"consentImplied,omitempty" tf:"consent_implied,omitempty"`
 
+	// Default scopes. You do not have to specify these explicitly when requesting a token.
 	// +kubebuilder:validation:Required
 	DefaultScopes []*string `json:"defaultScopes" tf:"default_scopes,omitempty"`
 
+	// The description of the client.
 	// +kubebuilder:validation:Required
 	Description *string `json:"description" tf:"description,omitempty"`
 
+	// Reference identifier defined by the provisioning user. This reference Identifier will be carried over to identify the provisioned resource across deployment instances.
 	// +kubebuilder:validation:Required
 	GlobalReferenceID *string `json:"globalReferenceId" tf:"global_reference_id,omitempty"`
 
+	// Lifetime of the jwt token generated in case openid scope is enabled for the client. If not specified, system default life time (3600 secs) will be considered.
 	// +kubebuilder:validation:Optional
 	IDTokenLifetime *float64 `json:"idTokenLifetime,omitempty" tf:"id_token_lifetime,omitempty"`
 
+	// Name of the client.
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// The password to use (8-16 chars, at least one capital, number, special char).
 	// +kubebuilder:validation:Required
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
+	// List of valid RedirectionURIs for this client.
 	// +kubebuilder:validation:Required
 	RedirectionUris []*string `json:"redirectionUris" tf:"redirection_uris,omitempty"`
 
+	// Lifetime of the refresh token in seconds. If not specified, system default life time (2592000 secs) will be considered.
 	// +kubebuilder:validation:Optional
 	RefreshTokenLifetime *float64 `json:"refreshTokenLifetime,omitempty" tf:"refresh_token_lifetime,omitempty"`
 
+	// Examples of response types are 'code id_token', 'token id_token', etc.
 	// +kubebuilder:validation:Required
 	ResponseTypes []*string `json:"responseTypes" tf:"response_types,omitempty"`
 
+	// List of supported scopes for this client.
 	// +kubebuilder:validation:Required
 	Scopes []*string `json:"scopes" tf:"scopes,omitempty"`
 
+	// The type of the client. Either 'Public' or 'Confidential'.
 	// +kubebuilder:validation:Required
 	Type *string `json:"type" tf:"type,omitempty"`
 }

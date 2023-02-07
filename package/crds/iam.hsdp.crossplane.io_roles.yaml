@@ -64,8 +64,10 @@ spec:
               forProvider:
                 properties:
                   description:
+                    description: The role description.
                     type: string
                   managingOrganization:
+                    description: The managing organization of the role.
                     type: string
                   managingOrganizationSelector:
                     description: Selector for a Organization to populate managingOrganization.
@@ -107,6 +109,7 @@ spec:
                         type: object
                     type: object
                   name:
+                    description: The role name.
                     type: string
                   organizationRef:
                     description: Reference to a Organization to populate managingOrganization.
@@ -143,10 +146,12 @@ spec:
                     - name
                     type: object
                   permissions:
+                    description: List of permissions IDs assigned to this role.
                     items:
                       type: string
                     type: array
                   ticketProtection:
+                    description: Removal protection of some ticket only permissions.
                     type: boolean
                 required:
                 - name

@@ -19,21 +19,26 @@ type UserObservation struct {
 
 type UserParameters struct {
 
+	// The email address of the user.
 	// +kubebuilder:validation:Required
 	Email *string `json:"email" tf:"email,omitempty"`
 
+	// The first name of the user.
 	// +kubebuilder:validation:Required
 	FirstName *string `json:"firstName" tf:"first_name,omitempty"`
 
+	// The last name of the user.
 	// +kubebuilder:validation:Required
 	LastName *string `json:"lastName" tf:"last_name,omitempty"`
 
 	// +kubebuilder:validation:Required
 	Login *string `json:"login" tf:"login,omitempty"`
 
+	// The optional mobile phone number of the user.
 	// +kubebuilder:validation:Optional
 	Mobile *string `json:"mobile,omitempty" tf:"mobile,omitempty"`
 
+	// The managing organization of the user.
 	// +crossplane:generate:reference:type=Organization
 	// +crossplane:generate:reference:refFieldName=OrganizationRef
 	// +kubebuilder:validation:Optional
@@ -47,12 +52,15 @@ type UserParameters struct {
 	// +kubebuilder:validation:Optional
 	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
 
+	// When specified this will skip the email activation flow and immediately activate the IAM account. Very Important: you are responsible for sharing this password with the new IAM user through some channel of communication. No email will be triggered by the system. If unsure, do not set a password so the normal email activation flow is followed. Finally, any password value changes after user creation will have no effect on the users' actual password.
 	// +kubebuilder:validation:Optional
 	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
+	// Preferred communication channel. Email and SMS are supported channels. Email is the default channel if e-mail address is provided. Values supported: [ email | sms ].
 	// +kubebuilder:validation:Optional
 	PreferredCommunicationChannel *string `json:"preferredCommunicationChannel,omitempty" tf:"preferred_communication_channel,omitempty"`
 
+	// Language preference for all communications. Value can be a two letter language code as defined by ISO 639-1 (en, de) or it can be a combination of language code and country code (en-gb, en-us). The country code is as per ISO 3166 two letter code (alpha-2).
 	// +kubebuilder:validation:Optional
 	PreferredLanguage *string `json:"preferredLanguage,omitempty" tf:"preferred_language,omitempty"`
 

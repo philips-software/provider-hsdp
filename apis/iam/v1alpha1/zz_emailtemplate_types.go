@@ -21,18 +21,22 @@ type EmailTemplateObservation struct {
 
 type EmailTemplateParameters struct {
 
+	// The template format. Must be 'HTML' currently.
 	// +kubebuilder:validation:Optional
 	Format *string `json:"format,omitempty" tf:"format,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	From *string `json:"from,omitempty" tf:"from,omitempty"`
 
+	// A clickable link, depends on the template type.
 	// +kubebuilder:validation:Optional
 	Link *string `json:"link,omitempty" tf:"link,omitempty"`
 
+	// The locale of the template. When not specified the template will become the default. Only a single default template is allowed of course.
 	// +kubebuilder:validation:Optional
 	Locale *string `json:"locale,omitempty" tf:"locale,omitempty"`
 
+	// The Id of the IAM Org to apply this email template to.
 	// +crossplane:generate:reference:type=Organization
 	// +crossplane:generate:reference:refFieldName=OrganizationRef
 	// +kubebuilder:validation:Optional
@@ -42,6 +46,7 @@ type EmailTemplateParameters struct {
 	// +kubebuilder:validation:Optional
 	ManagingOrganizationSelector *v1.Selector `json:"managingOrganizationSelector,omitempty" tf:"-"`
 
+	// The message body.
 	// +kubebuilder:validation:Required
 	Message *string `json:"message" tf:"message,omitempty"`
 
@@ -49,9 +54,11 @@ type EmailTemplateParameters struct {
 	// +kubebuilder:validation:Optional
 	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
 
+	// The Subject line of the email.
 	// +kubebuilder:validation:Optional
 	Subject *string `json:"subject,omitempty" tf:"subject,omitempty"`
 
+	// The email template type.
 	// +kubebuilder:validation:Required
 	Type *string `json:"type" tf:"type,omitempty"`
 }

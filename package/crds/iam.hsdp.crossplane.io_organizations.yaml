@@ -64,20 +64,33 @@ spec:
               forProvider:
                 properties:
                   description:
+                    description: The description of the organization.
                     type: string
                   displayName:
+                    description: The display name to use for this organization.
                     type: string
                   externalId:
+                    description: An optional external identifier for this organization.
                     type: string
                   isRootOrg:
+                    description: Deprecated, do not use.
                     type: boolean
                   name:
+                    description: The name of the IAM Organization.
                     type: string
                   parentOrgId:
+                    description: The parent organization ID.
                     type: string
                   type:
+                    description: The organization type.
                     type: string
                   waitForDelete:
+                    description: 'Blocks until the organization delete has completed.
+                      Default: false. The organization delete process can take some
+                      time as all its associated resources like users, groups, roles
+                      etc. are removed recursively. This option is useful for ephemeral
+                      environments where the same organization might be recreated
+                      shortly after a destroy operation.'
                     type: boolean
                 required:
                 - name
@@ -259,6 +272,7 @@ spec:
               atProvider:
                 properties:
                   active:
+                    description: Weather the organization is active or not.
                     type: boolean
                   id:
                     type: string

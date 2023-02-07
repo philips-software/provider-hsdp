@@ -19,18 +19,22 @@ type GroupObservation struct {
 
 type GroupParameters struct {
 
+	// The group description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// The list of IAM device identity IDs to include in this group.
 	// +kubebuilder:validation:Optional
 	Devices []*string `json:"devices,omitempty" tf:"devices,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	DriftDetection *bool `json:"driftDetection,omitempty" tf:"drift_detection,omitempty"`
 
+	// Deprecated, do not use.
 	// +kubebuilder:validation:Optional
 	IAMDeviceBugWorkaround *bool `json:"iamDeviceBugWorkaround,omitempty" tf:"iam_device_bug_workaround,omitempty"`
 
+	// The managing organization ID.
 	// +crossplane:generate:reference:type=Organization
 	// +crossplane:generate:reference:refFieldName=OrganizationRef
 	// +kubebuilder:validation:Optional
@@ -40,6 +44,7 @@ type GroupParameters struct {
 	// +kubebuilder:validation:Optional
 	ManagingOrganizationSelector *v1.Selector `json:"managingOrganizationSelector,omitempty" tf:"-"`
 
+	// The group name.
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
@@ -51,6 +56,7 @@ type GroupParameters struct {
 	// +kubebuilder:validation:Optional
 	RoleRef []v1.Reference `json:"roleRef,omitempty" tf:"-"`
 
+	// The list of role IDS to assign to this group.
 	// +crossplane:generate:reference:type=Role
 	// +crossplane:generate:reference:refFieldName=RoleRef
 	// +kubebuilder:validation:Optional
@@ -64,6 +70,7 @@ type GroupParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceRef []v1.Reference `json:"serviceRef,omitempty" tf:"-"`
 
+	// The list of service identity IDs to include in this group.
 	// +crossplane:generate:reference:type=Service
 	// +crossplane:generate:reference:refFieldName=ServiceRef
 	// +kubebuilder:validation:Optional
@@ -77,6 +84,7 @@ type GroupParameters struct {
 	// +kubebuilder:validation:Optional
 	UserRef []v1.Reference `json:"userRef,omitempty" tf:"-"`
 
+	// The list of user IDs to include in this group. The provider only manages this list of users. Existing users added by others means to the group by the provider. It is not practical to manage hundreds or thousands of users this way of course.
 	// +crossplane:generate:reference:type=User
 	// +crossplane:generate:reference:refFieldName=UserRef
 	// +kubebuilder:validation:Optional

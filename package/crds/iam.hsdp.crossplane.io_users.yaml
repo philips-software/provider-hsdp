@@ -64,16 +64,21 @@ spec:
               forProvider:
                 properties:
                   email:
+                    description: The email address of the user.
                     type: string
                   firstName:
+                    description: The first name of the user.
                     type: string
                   lastName:
+                    description: The last name of the user.
                     type: string
                   login:
                     type: string
                   mobile:
+                    description: The optional mobile phone number of the user.
                     type: string
                   organizationId:
+                    description: The managing organization of the user.
                     type: string
                   organizationIdSelector:
                     description: Selector for a Organization to populate organizationId.
@@ -149,8 +154,14 @@ spec:
                     - name
                     type: object
                   passwordSecretRef:
-                    description: A SecretKeySelector is a reference to a secret key
-                      in an arbitrary namespace.
+                    description: 'When specified this will skip the email activation
+                      flow and immediately activate the IAM account. Very Important:
+                      you are responsible for sharing this password with the new IAM
+                      user through some channel of communication. No email will be
+                      triggered by the system. If unsure, do not set a password so
+                      the normal email activation flow is followed. Finally, any password
+                      value changes after user creation will have no effect on the
+                      users'' actual password.'
                     properties:
                       key:
                         description: The key to select.
@@ -167,8 +178,16 @@ spec:
                     - namespace
                     type: object
                   preferredCommunicationChannel:
+                    description: 'Preferred communication channel. Email and SMS are
+                      supported channels. Email is the default channel if e-mail address
+                      is provided. Values supported: [ email | sms ].'
                     type: string
                   preferredLanguage:
+                    description: Language preference for all communications. Value
+                      can be a two letter language code as defined by ISO 639-1 (en,
+                      de) or it can be a combination of language code and country
+                      code (en-gb, en-us). The country code is as per ISO 3166 two
+                      letter code (alpha-2).
                     type: string
                   username:
                     type: string

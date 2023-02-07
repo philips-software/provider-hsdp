@@ -19,15 +19,19 @@ type ApplicationObservation struct {
 
 type ApplicationParameters struct {
 
+	// The description of the application.
 	// +kubebuilder:validation:Required
 	Description *string `json:"description" tf:"description,omitempty"`
 
+	// Reference identifier defined by the provisioning user.
 	// +kubebuilder:validation:Optional
 	GlobalReferenceID *string `json:"globalReferenceId,omitempty" tf:"global_reference_id,omitempty"`
 
+	// The name of the application.
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// The proposition ID (GUID) to attach this a application to.
 	// +crossplane:generate:reference:type=Proposition
 	// +crossplane:generate:reference:refFieldName=PropositionRef
 	// +kubebuilder:validation:Optional
@@ -41,6 +45,7 @@ type ApplicationParameters struct {
 	// +kubebuilder:validation:Optional
 	PropositionRef *v1.Reference `json:"propositionRef,omitempty" tf:"-"`
 
+	// Blocks until the application delete has completed. Default: false. The application delete process can take some time as all its associated resources like services and clients are removed recursively. This option is useful for ephemeral environments where the same application might be recreated shortly after a destroy operation.
 	// +kubebuilder:validation:Optional
 	WaitForDelete *bool `json:"waitForDelete,omitempty" tf:"wait_for_delete,omitempty"`
 }
