@@ -8,7 +8,7 @@ export TERRAFORM_VERSION := 1.3.7
 
 export TERRAFORM_PROVIDER_SOURCE := philips-software/hsdp
 export TERRAFORM_PROVIDER_REPO := https://github.com/philips-software/terraform-provider-hsdp
-export TERRAFORM_PROVIDER_VERSION := 0.40.2
+export TERRAFORM_PROVIDER_VERSION := 0.41.4
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME := terraform-provider-hsdp
 export TERRAFORM_NATIVE_PROVIDER_BINARY := terraform-provider-hsdp_v${TERRAFORM_PROVIDER_VERSION}
 export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX := https://github.com/philips-software/terraform-provider-hsdp/releases/download/v${TERRAFORM_PROVIDER_VERSION}
