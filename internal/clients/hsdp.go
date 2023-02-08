@@ -57,7 +57,7 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		if err != nil {
 			return ps, errors.Wrap(err, errExtractCredentials)
 		}
-		creds := map[string]string{}
+		creds := map[string]any{}
 		if err := json.Unmarshal(data, &creds); err != nil {
 			return ps, errors.Wrap(err, errUnmarshalCredentials)
 		}
@@ -80,6 +80,7 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 			"uaa_username":        creds["uaa_username"],
 			"uaa_password":        creds["uaa_password"],
 			"debug_log":           creds["debug_log"],
+			"debug_stderr":        creds["debug_stderr"],
 		}
 		return ps, nil
 	}
