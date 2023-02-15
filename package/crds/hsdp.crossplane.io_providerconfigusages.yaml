@@ -5,9 +5,9 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.10.0
   creationTimestamp: null
-  name: providerconfigusages.hsdp.upbound.io
+  name: providerconfigusages.hsdp.crossplane.io
 spec:
-  group: hsdp.upbound.io
+  group: hsdp.crossplane.io
   names:
     categories:
     - crossplane

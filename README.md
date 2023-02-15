@@ -31,7 +31,7 @@ Provider secrets are passed via the `ProviderConfig` resource which in turn
 refers to a Kubernetes secret holding HSDP credentials
 
 ```yaml
-apiVersion: hsdp.upbound.io/v1beta1
+apiVersion: hsdp.crossplane.io/v1beta1
 kind: ProviderConfig
 metadata:
   name: default
