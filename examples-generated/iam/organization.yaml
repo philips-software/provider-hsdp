@@ -1,0 +1,16 @@
+apiVersion: iam.hsdp.crossplane.io/v1alpha1
+kind: Organization
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iam/v1alpha1/organization
+  labels:
+    testing.upbound.io/example-name: testorg
+  name: testorg
+spec:
+  forProvider:
+    description: Test Organization
+    name: TestOrg
+    parentOrgId: ${hsdp_iam_org.myorg.id}
+
+---
+

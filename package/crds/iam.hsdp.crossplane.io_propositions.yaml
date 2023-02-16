@@ -35,7 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Proposition is the Schema for the Propositions API. <no value>
+        description: Proposition is the Schema for the Propositions API. Manages HSDP
+          IAM Proposition resources
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,12 +65,18 @@ spec:
               forProvider:
                 properties:
                   description:
+                    description: The description of the application
                     type: string
                   globalReferenceId:
+                    description: Reference identifier defined by the provisioning
+                      user.
                     type: string
                   name:
+                    description: The name of the application
                     type: string
                   organizationId:
+                    description: the organization ID (GUID) to attach this a proposition
+                      to
                     type: string
                   organizationIdSelector:
                     description: Selector for a Organization to populate organizationId.
@@ -325,6 +332,7 @@ spec:
               atProvider:
                 properties:
                   id:
+                    description: The GUID of the proposition
                     type: string
                 type: object
               conditions:

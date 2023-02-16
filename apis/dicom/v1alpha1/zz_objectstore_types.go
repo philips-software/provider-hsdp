@@ -14,6 +14,8 @@ import (
 )
 
 type ObjectStoreObservation struct {
+
+	// The access type for this object store
 	AccessType *string `json:"accessType,omitempty" tf:"access_type,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -21,15 +23,20 @@ type ObjectStoreObservation struct {
 
 type ObjectStoreParameters struct {
 
+	// The base config URL of the DICOM Object store instance
 	// +kubebuilder:validation:Required
 	ConfigURL *string `json:"configUrl" tf:"config_url,omitempty"`
 
+	// Description of the object store
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// By default object stores will not be deleted by the provider (soft-delete).
+	// By setting this value to true the provider removes the object store. We strongly suggest enabling this only for ephemeral deployments.
 	// +kubebuilder:validation:Optional
 	ForceDelete *bool `json:"forceDelete,omitempty" tf:"force_delete,omitempty"`
 
+	// the IAM organization ID to use for authorization
 	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Organization
 	// +crossplane:generate:reference:refFieldName=OrganizationRef
 	// +kubebuilder:validation:Optional
@@ -43,9 +50,11 @@ type ObjectStoreParameters struct {
 	// +kubebuilder:validation:Optional
 	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
 
+	// the FHIR store configuration
 	// +kubebuilder:validation:Optional
 	S3CredsAccess []S3CredsAccessParameters `json:"s3credsAccess,omitempty" tf:"s3creds_access,omitempty"`
 
+	// Details of the CDR service account
 	// +kubebuilder:validation:Optional
 	StaticAccess []StaticAccessParameters `json:"staticAccess,omitempty" tf:"static_access,omitempty"`
 }
@@ -55,18 +64,23 @@ type S3CredsAccessObservation struct {
 
 type S3CredsAccessParameters struct {
 
+	// The S3 bucket name
 	// +kubebuilder:validation:Required
 	BucketName *string `json:"bucketName" tf:"bucket_name,omitempty"`
 
+	// The S3 bucket endpoint
 	// +kubebuilder:validation:Required
 	Endpoint *string `json:"endpoint" tf:"endpoint,omitempty"`
 
+	// The S3Creds folder path to use
 	// +kubebuilder:validation:Required
 	FolderPath *string `json:"folderPath" tf:"folder_path,omitempty"`
 
+	// The S3Creds product key
 	// +kubebuilder:validation:Required
 	ProductKeySecretRef v1.SecretKeySelector `json:"productKeySecretRef" tf:"-"`
 
+	// The IAM service account to use
 	// +kubebuilder:validation:Optional
 	ServiceAccount []ServiceAccountParameters `json:"serviceAccount,omitempty" tf:"service_account,omitempty"`
 }
@@ -76,18 +90,23 @@ type ServiceAccountObservation struct {
 
 type ServiceAccountParameters struct {
 
+	// The IAM access token endpoint
 	// +kubebuilder:validation:Required
 	AccessTokenEndpoint *string `json:"accessTokenEndpoint" tf:"access_token_endpoint,omitempty"`
 
+	// Name of the service
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// The IAM service private key
 	// +kubebuilder:validation:Required
 	PrivateKeySecretRef v1.SecretKeySelector `json:"privateKeySecretRef" tf:"-"`
 
+	// The IAM service id
 	// +kubebuilder:validation:Required
 	ServiceID *string `json:"serviceId" tf:"service_id,omitempty"`
 
+	// The IAM token endpoint
 	// +kubebuilder:validation:Required
 	TokenEndpoint *string `json:"tokenEndpoint" tf:"token_endpoint,omitempty"`
 }
@@ -97,15 +116,19 @@ type StaticAccessObservation struct {
 
 type StaticAccessParameters struct {
 
+	// The S3 access key
 	// +kubebuilder:validation:Required
 	AccessKeySecretRef v1.SecretKeySelector `json:"accessKeySecretRef" tf:"-"`
 
+	// The S3 bucket name
 	// +kubebuilder:validation:Required
 	BucketName *string `json:"bucketName" tf:"bucket_name,omitempty"`
 
+	// The S3 bucket endpoint
 	// +kubebuilder:validation:Required
 	Endpoint *string `json:"endpoint" tf:"endpoint,omitempty"`
 
+	// The S3 secret key
 	// +kubebuilder:validation:Required
 	SecretKeySecretRef v1.SecretKeySelector `json:"secretKeySecretRef" tf:"-"`
 }
@@ -124,7 +147,7 @@ type ObjectStoreStatus struct {
 
 // +kubebuilder:object:root=true
 
-// ObjectStore is the Schema for the ObjectStores API. <no value>
+// ObjectStore is the Schema for the ObjectStores API. Manages HSDP DICOM Object Stores
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

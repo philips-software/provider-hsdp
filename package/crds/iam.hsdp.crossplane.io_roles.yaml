@@ -35,7 +35,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Role is the Schema for the Roles API. <no value>
+        description: Role is the Schema for the Roles API. Manages HSDP IAM Role resources
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,10 +64,11 @@ spec:
               forProvider:
                 properties:
                   description:
-                    description: The role description.
+                    description: The description of the group The role description.
                     type: string
                   managingOrganization:
-                    description: The managing organization of the role.
+                    description: The managing organization ID of this role The managing
+                      organization of the role.
                     type: string
                   managingOrganizationSelector:
                     description: Selector for a Organization to populate managingOrganization.
@@ -109,7 +110,7 @@ spec:
                         type: object
                     type: object
                   name:
-                    description: The role name.
+                    description: The name of the group The role name.
                     type: string
                   organizationRef:
                     description: Reference to a Organization to populate managingOrganization.
@@ -146,12 +147,15 @@ spec:
                     - name
                     type: object
                   permissions:
-                    description: List of permissions IDs assigned to this role.
+                    description: The list of permission to assign to this role List
+                      of permissions IDs assigned to this role.
                     items:
                       type: string
                     type: array
                   ticketProtection:
-                    description: Removal protection of some ticket only permissions.
+                    description: Defaults to true. Setting to false will remove e.g.
+                      CLIENT.SCOPES permission which is only addable using a HSDP
+                      support ticket. Removal protection of some ticket only permissions.
                     type: boolean
                 required:
                 - name
@@ -334,6 +338,7 @@ spec:
               atProvider:
                 properties:
                   id:
+                    description: The GUID of the role
                     type: string
                 type: object
               conditions:

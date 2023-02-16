@@ -1,0 +1,34 @@
+apiVersion: dicom.hsdp.crossplane.io/v1alpha1
+kind: ObjectStore
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dicom/v1alpha1/objectstore
+  labels:
+    testing.upbound.io/example-name: store2
+  name: store2
+spec:
+  forProvider:
+    configUrl: ${var.dicom_base_url}
+    description: Store 2
+    organizationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    s3credsAccess:
+    - bucketName: yyyy-yyyy-yyy-yyyy
+      endpoint: https://xxx.com
+      folderPath: /store1
+      productKeySecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      serviceAccount:
+      - accessTokenEndpoint: ${data.hsdp_config.iam.url}/oauth2/access_token
+        privateKeySecretRef:
+          key: example-key
+          name: example-secret
+          namespace: upbound-system
+        serviceId: a@b.com
+        tokenEndpoint: ${data.hsdp_config.iam.url}/authorize/oauth2/token
+
+---
+

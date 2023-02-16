@@ -35,7 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Notification is the Schema for the Notifications API. <no value>
+        description: Notification is the Schema for the Notifications API. Manages
+          HSDP DICOM Store notifications
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,8 +65,10 @@ spec:
               forProvider:
                 properties:
                   configUrl:
+                    description: The base config URL of the DICOM Store instance
                     type: string
                   defaultOrganizationId:
+                    description: The default organization ID
                     type: string
                   defaultOrganizationIdSelector:
                     description: Selector for a Organization in iam to populate defaultOrganizationId.
@@ -107,8 +110,10 @@ spec:
                         type: object
                     type: object
                   enabled:
+                    description: 'Enable the notification or not. Default: true'
                     type: boolean
                   endpointUrl:
+                    description: 'The notification endpoint URL. Example: https://notification-dev.us-east.philips-healthsuite.com'
                     type: string
                   organizationId:
                     type: string

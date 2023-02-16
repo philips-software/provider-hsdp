@@ -14,15 +14,19 @@ import (
 )
 
 type RoleObservation struct {
+
+	// The GUID of the role
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type RoleParameters struct {
 
+	// The description of the group
 	// The role description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// The managing organization ID of this role
 	// The managing organization of the role.
 	// +crossplane:generate:reference:type=Organization
 	// +crossplane:generate:reference:refFieldName=OrganizationRef
@@ -33,6 +37,7 @@ type RoleParameters struct {
 	// +kubebuilder:validation:Optional
 	ManagingOrganizationSelector *v1.Selector `json:"managingOrganizationSelector,omitempty" tf:"-"`
 
+	// The name of the group
 	// The role name.
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
@@ -41,10 +46,12 @@ type RoleParameters struct {
 	// +kubebuilder:validation:Optional
 	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
 
+	// The list of permission to assign to this role
 	// List of permissions IDs assigned to this role.
 	// +kubebuilder:validation:Required
 	Permissions []*string `json:"permissions" tf:"permissions,omitempty"`
 
+	// Defaults to true. Setting to false will remove e.g. CLIENT.SCOPES permission which is only addable using a HSDP support ticket.
 	// Removal protection of some ticket only permissions.
 	// +kubebuilder:validation:Optional
 	TicketProtection *bool `json:"ticketProtection,omitempty" tf:"ticket_protection,omitempty"`
@@ -64,7 +71,7 @@ type RoleStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Role is the Schema for the Roles API. <no value>
+// Role is the Schema for the Roles API. Manages HSDP IAM Role resources
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

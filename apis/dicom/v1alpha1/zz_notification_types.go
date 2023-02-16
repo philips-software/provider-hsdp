@@ -19,9 +19,11 @@ type NotificationObservation struct {
 
 type NotificationParameters struct {
 
+	// The base config URL of the DICOM Store instance
 	// +kubebuilder:validation:Required
 	ConfigURL *string `json:"configUrl" tf:"config_url,omitempty"`
 
+	// The default organization ID
 	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Organization
 	// +crossplane:generate:reference:refFieldName=OrganizationRef
 	// +kubebuilder:validation:Optional
@@ -31,9 +33,11 @@ type NotificationParameters struct {
 	// +kubebuilder:validation:Optional
 	DefaultOrganizationIDSelector *v1.Selector `json:"defaultOrganizationIdSelector,omitempty" tf:"-"`
 
+	// Enable the notification or not. Default: true
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
+	// The notification endpoint URL. Example: https://notification-dev.us-east.philips-healthsuite.com
 	// +kubebuilder:validation:Required
 	EndpointURL *string `json:"endpointUrl" tf:"endpoint_url,omitempty"`
 
@@ -59,7 +63,7 @@ type NotificationStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Notification is the Schema for the Notifications API. <no value>
+// Notification is the Schema for the Notifications API. Manages HSDP DICOM Store notifications
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

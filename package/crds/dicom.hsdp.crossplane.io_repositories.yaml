@@ -35,7 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Repository is the Schema for the Repositorys API. <no value>
+        description: Repository is the Schema for the Repositorys API. Manages HSDP
+          DICOM Repository resources
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,21 +65,27 @@ spec:
               forProvider:
                 properties:
                   configUrl:
+                    description: The base config URL of the DICOM Store instance
                     type: string
                   notification:
+                    description: (Block, Optional)
                     items:
                       properties:
                         enabled:
+                          description: 'Enable notifications or not. Default: true'
                           type: boolean
                         organizationId:
+                          description: The organization ID
                           type: string
                       required:
                       - organizationId
                       type: object
                     type: array
                   objectStoreId:
+                    description: the Object store ID
                     type: string
                   organizationId:
+                    description: The organization ID
                     type: string
                   organizationIdSelector:
                     description: Selector for a Organization in iam to populate organizationId.
@@ -154,8 +161,11 @@ spec:
                     - name
                     type: object
                   repositoryOrganizationId:
+                    description: The organization ID attached to this repository.
+                      When not specified, the root organization is used.
                     type: string
                   storeAsComposite:
+                    description: Configure this repository as store as composite.
                     type: boolean
                 required:
                 - configUrl

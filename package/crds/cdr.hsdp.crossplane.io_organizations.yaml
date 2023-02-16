@@ -35,7 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Organization is the Schema for the Organizations API. <no value>
+        description: Organization is the Schema for the Organizations API. Manages
+          HSDP CDR Organizations
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,10 +65,14 @@ spec:
               forProvider:
                 properties:
                   fhirStore:
+                    description: The CDR FHIR store to use
                     type: string
                   name:
+                    description: The name of the FHIR Org
                     type: string
                   orgId:
+                    description: The Org ID (GUID) under which to onboard. Usually
+                      same as IAM Org ID
                     type: string
                   orgIdSelector:
                     description: Selector for a Organization in iam to populate orgId.
@@ -143,10 +148,18 @@ spec:
                     - name
                     type: object
                   partOf:
+                    description: The parent Organization ID (GUID) this Org is part
+                      of
                     type: string
                   purgeDelete:
+                    description: 'If set to true, when the resource is destroyed the
+                      provider will purge all FHIR resources associated with the Organization.
+                      The ORGANIZATION.PURGE IAM permission is required for this to
+                      work. Default: false'
                     type: boolean
                   version:
+                    description: The FHIR version to use. Options [ stu3 | r4 ]. Default
+                      is stu3
                     type: string
                 required:
                 - fhirStore
@@ -329,6 +342,7 @@ spec:
               atProvider:
                 properties:
                   id:
+                    description: The GUID of the organization
                     type: string
                 type: object
               conditions:

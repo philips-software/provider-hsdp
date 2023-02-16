@@ -35,7 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: StoreConfig is the Schema for the StoreConfigs API. <no value>
+        description: StoreConfig is the Schema for the StoreConfigs API. Manages HSDP
+          DICOM Store configurations
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,11 +65,14 @@ spec:
               forProvider:
                 properties:
                   cdrServiceAccount:
+                    description: Details of the CDR service account
                     items:
                       properties:
                         privateKey:
+                          description: the service private key
                           type: string
                         serviceId:
+                          description: the service id
                           type: string
                       required:
                       - privateKey
@@ -76,17 +80,21 @@ spec:
                       type: object
                     type: array
                   configUrl:
+                    description: The base config URL of the DICOM Store instance
                     type: string
                   fhirStore:
+                    description: the FHIR store configuration
                     items:
                       properties:
                         mpiEndpoint:
+                          description: the FHIR mpi endpoint
                           type: string
                       required:
                       - mpiEndpoint
                       type: object
                     type: array
                   organizationId:
+                    description: the IAM organization ID to use for authorization
                     type: string
                   organizationIdSelector:
                     description: Selector for a Organization in iam to populate organizationId.
@@ -341,6 +349,7 @@ spec:
               atProvider:
                 properties:
                   cdrServiceAccount:
+                    description: Details of the CDR service account
                     items:
                       properties:
                         id:
@@ -352,10 +361,13 @@ spec:
                   id:
                     type: string
                   qidoUrl:
+                    description: QIDO API endpoint URL
                     type: string
                   stowUrl:
+                    description: STOW API endpoint URL
                     type: string
                   wadoUrl:
+                    description: WADO API endpoint URL
                     type: string
                 type: object
               conditions:

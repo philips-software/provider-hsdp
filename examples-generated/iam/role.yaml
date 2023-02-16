@@ -1,0 +1,27 @@
+apiVersion: iam.hsdp.crossplane.io/v1alpha1
+kind: Role
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iam/v1alpha1/role
+  labels:
+    testing.upbound.io/example-name: TDRALL
+  name: tdrall
+spec:
+  forProvider:
+    description: Role for TDR users with ALL access
+    managingOrganizationSelector:
+      matchLabels:
+        testing.upbound.io/example-name: testdev
+    name: TDRALL
+    permissions:
+    - DATAITEM.CREATEONBEHALF
+    - DATAITEM.READ
+    - DATAITEM.DELETEONBEHALF
+    - DATAITEM.DELETE
+    - CONTRACT.CREATE
+    - DATAITEM.READONBEHALF
+    - CONTRACT.READ
+    - DATAITEM.CREATE
+
+---
+

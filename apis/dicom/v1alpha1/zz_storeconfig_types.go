@@ -19,9 +19,11 @@ type CdrServiceAccountObservation struct {
 
 type CdrServiceAccountParameters struct {
 
+	// the service private key
 	// +kubebuilder:validation:Required
 	PrivateKey *string `json:"privateKey" tf:"private_key,omitempty"`
 
+	// the service id
 	// +kubebuilder:validation:Required
 	ServiceID *string `json:"serviceId" tf:"service_id,omitempty"`
 }
@@ -31,12 +33,14 @@ type FHIRStoreObservation struct {
 
 type FHIRStoreParameters struct {
 
+	// the FHIR mpi endpoint
 	// +kubebuilder:validation:Required
 	MpiEndpoint *string `json:"mpiEndpoint" tf:"mpi_endpoint,omitempty"`
 }
 
 type StoreConfigObservation struct {
 
+	// Details of the CDR service account
 	// +kubebuilder:validation:Optional
 	CdrServiceAccount []CdrServiceAccountObservation `json:"cdrServiceAccount,omitempty" tf:"cdr_service_account,omitempty"`
 
@@ -44,24 +48,31 @@ type StoreConfigObservation struct {
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// QIDO API endpoint URL
 	QidoURL *string `json:"qidoUrl,omitempty" tf:"qido_url,omitempty"`
 
+	// STOW API endpoint URL
 	StowURL *string `json:"stowUrl,omitempty" tf:"stow_url,omitempty"`
 
+	// WADO API endpoint URL
 	WadoURL *string `json:"wadoUrl,omitempty" tf:"wado_url,omitempty"`
 }
 
 type StoreConfigParameters struct {
 
+	// Details of the CDR service account
 	// +kubebuilder:validation:Optional
 	CdrServiceAccount []CdrServiceAccountParameters `json:"cdrServiceAccount,omitempty" tf:"cdr_service_account,omitempty"`
 
+	// The base config URL of the DICOM Store instance
 	// +kubebuilder:validation:Required
 	ConfigURL *string `json:"configUrl" tf:"config_url,omitempty"`
 
+	// the FHIR store configuration
 	// +kubebuilder:validation:Optional
 	FHIRStore []FHIRStoreParameters `json:"fhirStore,omitempty" tf:"fhir_store,omitempty"`
 
+	// the IAM organization ID to use for authorization
 	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Organization
 	// +crossplane:generate:reference:refFieldName=OrganizationRef
 	// +kubebuilder:validation:Optional
@@ -90,7 +101,7 @@ type StoreConfigStatus struct {
 
 // +kubebuilder:object:root=true
 
-// StoreConfig is the Schema for the StoreConfigs API. <no value>
+// StoreConfig is the Schema for the StoreConfigs API. Manages HSDP DICOM Store configurations
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

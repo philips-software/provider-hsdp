@@ -35,7 +35,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: User is the Schema for the Users API. <no value>
+        description: User is the Schema for the Users API. Manages HSDP IAM Users
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,21 +64,25 @@ spec:
               forProvider:
                 properties:
                   email:
-                    description: The email address of the user.
+                    description: (Semi-Required) The email address of the user The
+                      email address of the user.
                     type: string
                   firstName:
-                    description: The first name of the user.
+                    description: First name of the user The first name of the user.
                     type: string
                   lastName:
-                    description: The last name of the user.
+                    description: Last name of the user The last name of the user.
                     type: string
                   login:
+                    description: The login ID of the user (NEW since v0.4.0)
                     type: string
                   mobile:
-                    description: The optional mobile phone number of the user.
+                    description: Mobile number of the user. E.164 format The optional
+                      mobile phone number of the user.
                     type: string
                   organizationId:
-                    description: The managing organization of the user.
+                    description: The managing organization of the user The managing
+                      organization of the user.
                     type: string
                   organizationIdSelector:
                     description: Selector for a Organization to populate organizationId.
@@ -161,7 +165,14 @@ spec:
                       triggered by the system. If unsure, do not set a password so
                       the normal email activation flow is followed. Finally, any password
                       value changes after user creation will have no effect on the
-                      users'' actual password.'
+                      users'' actual password. When specified this will skip the email
+                      activation flow and immediately activate the IAM account. Very
+                      Important: you are responsible for sharing this password with
+                      the new IAM user through some channel of communication. No email
+                      will be triggered by the system. If unsure, do not set a password
+                      so the normal email activation flow is followed. Finally, any
+                      password value changes after user creation will have no effect
+                      on the users'' actual password.'
                     properties:
                       key:
                         description: The key to select.
@@ -180,12 +191,19 @@ spec:
                   preferredCommunicationChannel:
                     description: 'Preferred communication channel. Email and SMS are
                       supported channels. Email is the default channel if e-mail address
-                      is provided. Values supported: [ email | sms ].'
+                      is provided. Values supported: [ email | sms ] Preferred communication
+                      channel. Email and SMS are supported channels. Email is the
+                      default channel if e-mail address is provided. Values supported:
+                      [ email | sms ].'
                     type: string
                   preferredLanguage:
                     description: Language preference for all communications. Value
                       can be a two letter language code as defined by ISO 639-1 (en,
                       de) or it can be a combination of language code and country
+                      code (en-gb, en-us). The country code is as per ISO 3166 two
+                      letter code (alpha-2) Language preference for all communications.
+                      Value can be a two letter language code as defined by ISO 639-1
+                      (en, de) or it can be a combination of language code and country
                       code (en-gb, en-us). The country code is as per ISO 3166 two
                       letter code (alpha-2).
                     type: string
@@ -374,6 +392,7 @@ spec:
               atProvider:
                 properties:
                   id:
+                    description: The GUID of the user
                     type: string
                 type: object
               conditions:

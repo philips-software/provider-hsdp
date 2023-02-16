@@ -14,23 +14,29 @@ import (
 )
 
 type ApplicationObservation struct {
+
+	// The GUID of the application
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type ApplicationParameters struct {
 
+	// The description of the application
 	// The description of the application.
 	// +kubebuilder:validation:Required
 	Description *string `json:"description" tf:"description,omitempty"`
 
 	// Reference identifier defined by the provisioning user.
+	// Reference identifier defined by the provisioning user.
 	// +kubebuilder:validation:Optional
 	GlobalReferenceID *string `json:"globalReferenceId,omitempty" tf:"global_reference_id,omitempty"`
 
+	// The name of the application
 	// The name of the application.
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// the proposition ID (GUID) to attach this a application to
 	// The proposition ID (GUID) to attach this a application to.
 	// +crossplane:generate:reference:type=Proposition
 	// +crossplane:generate:reference:refFieldName=PropositionRef
@@ -45,6 +51,10 @@ type ApplicationParameters struct {
 	// +kubebuilder:validation:Optional
 	PropositionRef *v1.Reference `json:"propositionRef,omitempty" tf:"-"`
 
+	// Blocks until the application delete has completed. Default: false.
+	// The application delete process can take some time as all its associated resources like
+	// services and clients are removed recursively. This option is useful for ephemeral environments
+	// where the same application might be recreated shortly after a destroy operation.
 	// Blocks until the application delete has completed. Default: false. The application delete process can take some time as all its associated resources like services and clients are removed recursively. This option is useful for ephemeral environments where the same application might be recreated shortly after a destroy operation.
 	// +kubebuilder:validation:Optional
 	WaitForDelete *bool `json:"waitForDelete,omitempty" tf:"wait_for_delete,omitempty"`
@@ -64,7 +74,7 @@ type ApplicationStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Application is the Schema for the Applications API. <no value>
+// Application is the Schema for the Applications API. Manages HSDP IAM Application resources
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

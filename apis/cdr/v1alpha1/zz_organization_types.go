@@ -14,17 +14,22 @@ import (
 )
 
 type OrganizationObservation struct {
+
+	// The GUID of the organization
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type OrganizationParameters struct {
 
+	// The CDR FHIR store to use
 	// +kubebuilder:validation:Required
 	FHIRStore *string `json:"fhirStore" tf:"fhir_store,omitempty"`
 
+	// The name of the FHIR Org
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// The Org ID (GUID) under which to onboard. Usually same as IAM Org ID
 	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Organization
 	// +crossplane:generate:reference:refFieldName=OrganizationRef
 	// +kubebuilder:validation:Optional
@@ -38,12 +43,15 @@ type OrganizationParameters struct {
 	// +kubebuilder:validation:Optional
 	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
 
+	// The parent Organization ID (GUID) this Org is part of
 	// +kubebuilder:validation:Optional
 	PartOf *string `json:"partOf,omitempty" tf:"part_of,omitempty"`
 
+	// If set to true, when the resource is destroyed the provider will purge all FHIR resources associated with the Organization. The ORGANIZATION.PURGE IAM permission is required for this to work. Default: false
 	// +kubebuilder:validation:Optional
 	PurgeDelete *bool `json:"purgeDelete,omitempty" tf:"purge_delete,omitempty"`
 
+	// The FHIR version to use. Options [ stu3 | r4 ]. Default is stu3
 	// +kubebuilder:validation:Optional
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
@@ -62,7 +70,7 @@ type OrganizationStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Organization is the Schema for the Organizations API. <no value>
+// Organization is the Schema for the Organizations API. Manages HSDP CDR Organizations
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

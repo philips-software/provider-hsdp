@@ -35,7 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: ObjectStore is the Schema for the ObjectStores API. <no value>
+        description: ObjectStore is the Schema for the ObjectStores API. Manages HSDP
+          DICOM Object Stores
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,12 +65,19 @@ spec:
               forProvider:
                 properties:
                   configUrl:
+                    description: The base config URL of the DICOM Object store instance
                     type: string
                   description:
+                    description: Description of the object store
                     type: string
                   forceDelete:
+                    description: By default object stores will not be deleted by the
+                      provider (soft-delete). By setting this value to true the provider
+                      removes the object store. We strongly suggest enabling this
+                      only for ephemeral deployments.
                     type: boolean
                   organizationId:
+                    description: the IAM organization ID to use for authorization
                     type: string
                   organizationIdSelector:
                     description: Selector for a Organization in iam to populate organizationId.
@@ -145,17 +153,20 @@ spec:
                     - name
                     type: object
                   s3credsAccess:
+                    description: the FHIR store configuration
                     items:
                       properties:
                         bucketName:
+                          description: The S3 bucket name
                           type: string
                         endpoint:
+                          description: The S3 bucket endpoint
                           type: string
                         folderPath:
+                          description: The S3Creds folder path to use
                           type: string
                         productKeySecretRef:
-                          description: A SecretKeySelector is a reference to a secret
-                            key in an arbitrary namespace.
+                          description: The S3Creds product key
                           properties:
                             key:
                               description: The key to select.
@@ -172,15 +183,17 @@ spec:
                           - namespace
                           type: object
                         serviceAccount:
+                          description: The IAM service account to use
                           items:
                             properties:
                               accessTokenEndpoint:
+                                description: The IAM access token endpoint
                                 type: string
                               name:
+                                description: Name of the service
                                 type: string
                               privateKeySecretRef:
-                                description: A SecretKeySelector is a reference to
-                                  a secret key in an arbitrary namespace.
+                                description: The IAM service private key
                                 properties:
                                   key:
                                     description: The key to select.
@@ -197,8 +210,10 @@ spec:
                                 - namespace
                                 type: object
                               serviceId:
+                                description: The IAM service id
                                 type: string
                               tokenEndpoint:
+                                description: The IAM token endpoint
                                 type: string
                             required:
                             - accessTokenEndpoint
@@ -215,11 +230,11 @@ spec:
                       type: object
                     type: array
                   staticAccess:
+                    description: Details of the CDR service account
                     items:
                       properties:
                         accessKeySecretRef:
-                          description: A SecretKeySelector is a reference to a secret
-                            key in an arbitrary namespace.
+                          description: The S3 access key
                           properties:
                             key:
                               description: The key to select.
@@ -236,12 +251,13 @@ spec:
                           - namespace
                           type: object
                         bucketName:
+                          description: The S3 bucket name
                           type: string
                         endpoint:
+                          description: The S3 bucket endpoint
                           type: string
                         secretKeySecretRef:
-                          description: A SecretKeySelector is a reference to a secret
-                            key in an arbitrary namespace.
+                          description: The S3 secret key
                           properties:
                             key:
                               description: The key to select.
@@ -444,6 +460,7 @@ spec:
               atProvider:
                 properties:
                   accessType:
+                    description: The access type for this object store
                     type: string
                   id:
                     type: string

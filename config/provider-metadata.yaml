@@ -1,2 +1,2796 @@
 name: philips-software/hsdp
-resources: {}
+resources:
+    hsdp_ai_inference_compute_environment:
+        subCategory: AI Inference
+        description: Manages HSDP AI Inference Compute Environments
+        name: hsdp_ai_inference_compute_environment
+        title: hsdp_ai_inference_compute_environment
+        examples:
+            - name: compute
+              manifest: |-
+                {
+                  "endpoint": "${data.hsdp_ai_inference_service_instance.inference.endpoint}",
+                  "image": "arn:aws:ecr:us-west-2:012345678910:repository/test",
+                  "name": "python3.8_keras_gpu"
+                }
+              references:
+                endpoint: data.hsdp_ai_inference_service_instance.inference.endpoint
+        argumentDocs:
+            created: '- The date this Compute Environment was created'
+            created_by: '- Who created the environment'
+            endpoint: '- (Required) The AI Inference instance endpoint'
+            id: '- The GUID of the Compute Environment'
+            image: '- (Required) The image to use for the Compute Environment'
+            is_factory: '- Weather this Compute Environment is factory one'
+            name: '- (Required) The name of Compute Environment'
+            reference: '- The reference of this Compute Environment'
+        importStatements: []
+    hsdp_ai_inference_compute_target:
+        subCategory: AI Inference
+        description: Manages HSDP AI Inference Compute Targets
+        name: hsdp_ai_inference_compute_target
+        title: hsdp_ai_inference_compute_target
+        examples:
+            - name: target
+              manifest: |-
+                {
+                  "description": "Tesla v100 GPU based environment with 128MB GPU memory",
+                  "endpoint": "${data.hsdp_ai_inference_service_instance.inference.endpoint}",
+                  "instance_type": "ml.p3.16xlarge",
+                  "name": "gpu1",
+                  "storage": 20
+                }
+              references:
+                endpoint: data.hsdp_ai_inference_service_instance.inference.endpoint
+        argumentDocs:
+            created: '- The date this Compute Environment was created'
+            created_by: '- Who created the environment'
+            description: '- (Optional) Description of the Compute Target'
+            endpoint: '- (Required) The AI Inference instance endpoint'
+            id: '- The GUID of the Compute Target'
+            instance_type: '- (Required) The instance type to use. Available instance types for Inference, see Sagemaker pricing'
+            is_factory: '- Weather this Compute Environment is factory one'
+            name: '- (Required) The name of Compute Environment'
+            reference: '- The reference of this Compute Target'
+            storage: '- (Required) Additional storage to allocate (in GB). Default: 1'
+        importStatements: []
+    hsdp_ai_inference_job:
+        subCategory: AI Inference
+        description: Manages HSDP AI Inference Jobs
+        name: hsdp_ai_inference_job
+        title: hsdp_ai_inference_job
+        examples:
+            - name: job
+              manifest: |-
+                {
+                  "command_args": [
+                    "-f",
+                    "abc"
+                  ],
+                  "compute_target": [
+                    {
+                      "reference": "${hsdp_ai_inference_compute_target.target.reference}"
+                    }
+                  ],
+                  "description": "Long running Inference Job",
+                  "endpoint": "${data.hsdp_ai_inference_service_instance.inference.endpoint}",
+                  "environment": {
+                    "BAR": "baz",
+                    "FOO": "bar"
+                  },
+                  "input": [
+                    {
+                      "name": "train",
+                      "url": "s3://input-sagemaker-64q6eey/data/input"
+                    }
+                  ],
+                  "labels": [
+                    "BONEAGE",
+                    "CNN"
+                  ],
+                  "model": [
+                    {
+                      "reference": "${hsdp_ai_inference_model.model.reference}"
+                    }
+                  ],
+                  "name": "job1",
+                  "output": [
+                    {
+                      "name": "train",
+                      "url": "s3://input-sagemaker-64q6eey/data/prediction"
+                    }
+                  ],
+                  "timeout": 60
+                }
+              references:
+                compute_target.reference: hsdp_ai_inference_compute_target.target.reference
+                endpoint: data.hsdp_ai_inference_service_instance.inference.endpoint
+                model.reference: hsdp_ai_inference_model.model.reference
+        argumentDocs:
+            command_args: '- (Optional, list(string)) Arguments to use for job'
+            completed: '- When the job was completed'
+            compute_target: '- (Required) The compute Target to use'
+            created: '- The date this job was created'
+            created_by: '- Who created the environment'
+            description: '- (Optional) Description of the Compute Target'
+            duration: '- How long (seconds) the job ran for'
+            endpoint: '- (Required) The AI Inference instance endpoint'
+            environment: '- (Optional, Map) Environment to set for Job'
+            id: '- The GUID of the job'
+            input: '- (Optional) Input data. Can have mulitple'
+            model: '- (Optional) The model to use'
+            name: '- (Required) The name of Compute Environment'
+            output: '- (Optional) Output data. Can have mulitple'
+            reference: '- (Required) The reference of the Compute Target'
+            status: '- The status of the job'
+            status_message: '- The status message, if available'
+            timeout: '- (Optional) How long the job should run max.'
+            url: '- (Required) URL pointing to the input'
+        importStatements: []
+    hsdp_ai_inference_model:
+        subCategory: AI Inference
+        description: Manages HSDP AI Inference Models
+        name: hsdp_ai_inference_model
+        title: hsdp_ai_inference_model
+        examples:
+            - name: model
+              manifest: |-
+                {
+                  "additional_configuration": "{\"Tags\": [ { \"Key\": \"name\",\"Value\": \"hsp\"}]}",
+                  "artifact_path": "git@github.com:testuser/example.git",
+                  "compute_environment": [
+                    {
+                      "identifier": "bar",
+                      "reference": "foo"
+                    }
+                  ],
+                  "description": "Test model",
+                  "endpoint": "${data.hsdp_ai_inference_service_instance.inference.endpoint}",
+                  "entry_commands": [
+                    "python main/train.py -s 134786"
+                  ],
+                  "environment": {
+                    "BAR": "baz",
+                    "FOO": "bar"
+                  },
+                  "labels": [
+                    "CNN"
+                  ],
+                  "name": "model1",
+                  "source_code": [
+                    {
+                      "branch": "main",
+                      "commit_id": "e1f9366",
+                      "ssh_key": "...",
+                      "url": "git@github.com:testuser/source.git"
+                    }
+                  ],
+                  "version": "v1"
+                }
+              references:
+                endpoint: data.hsdp_ai_inference_service_instance.inference.endpoint
+        argumentDocs:
+            additional_configuration: '- (Optional)'
+            artifact_path: '- (Optional)'
+            compute_environment: '- (Required)'
+            created: '- The date this Model  was created'
+            created_by: '- Who created the Model'
+            description: '- (Optional) Description of the Compute Target'
+            endpoint: '- (Required) The AI Inference instance endpoint'
+            entry_commands: '- (Required, list(string)) Commands to execute'
+            environment: '- (Optional, Map) List of environment variables to set'
+            id: '- The GUID of the Model'
+            labels: '- (Optional)'
+            name: '- (Required) The name of the Model'
+            reference: '- The reference of this Model'
+            source_code: '- (Required)'
+        importStatements: []
+    hsdp_ai_workspace:
+        subCategory: AI Workspace
+        description: Manages HSDP AI Workspaces
+        name: hsdp_ai_workspace
+        title: hsdp_ai_workspace
+        examples:
+            - name: workspace1
+              manifest: |-
+                {
+                  "compute_target": [
+                    {
+                      "identifier": "${hsdp_ai_workspace_compute_target.target.id}"
+                    }
+                  ],
+                  "description": "Test workspace for my world changing algorithm",
+                  "endpoint": "${data.hsdp_ai_inference_service_instance.inference.endpoint}",
+                  "labels": [
+                    "CNN"
+                  ],
+                  "name": "Workspace 1",
+                  "source_code": [
+                    {
+                      "branch": "main",
+                      "commit_id": "e1f9366",
+                      "ssh_key": "...",
+                      "url": "git@github.com:loafoe/algo.git"
+                    }
+                  ]
+                }
+              references:
+                compute_target.identifier: hsdp_ai_workspace_compute_target.target.id
+                endpoint: data.hsdp_ai_inference_service_instance.inference.endpoint
+        argumentDocs:
+            additional_configuration: '- (Optional)'
+            artifact_path: '- (Optional)'
+            compute_target: '- (Required)'
+            created: '- The date this Model  was created'
+            created_by: '- Who created the Model'
+            description: '- (Optional) Description of the Compute Target'
+            endpoint: '- (Required) The AI Inference instance endpoint'
+            id: '- The GUID of the Model'
+            labels: '- (Optional)'
+            name: '- (Required) The name of the Model'
+            reference: '- (Required) Reference to the compute target'
+            source_code: '- (Required)'
+        importStatements: []
+    hsdp_ai_workspace_compute_target:
+        subCategory: AI Workspace
+        description: Manages HSDP AI Workspaces Compute targets
+        name: hsdp_ai_workspace_compute_target
+        title: hsdp_ai_workspace_compute_target
+        argumentDocs:
+            created: '- The date this Model  was created'
+            created_by: '- Who created the Model'
+            endpoint: '- (Required) The AI Inference instance endpoint'
+            id: '- The GUID of the Model'
+            instance_type: '- (Required) The instance type'
+            name: '- (Required) The name of the Model'
+            storage: '- (Required) The storage to allocate'
+        importStatements: []
+    hsdp_cdl_data_type_definition:
+        subCategory: Clinical Data Lake (CDL)
+        description: Manages HSDP CDL Data Type Definitions
+        name: hsdp_cdl_data_type_definition
+        title: hsdp_cdl_data_type_definition
+        examples:
+            - name: def_a
+              manifest: |-
+                {
+                  "cdl_endpoint": "${data.cdl_instance.cicd.endpoint}",
+                  "json_schema": "{\n \"required\": [\n  \"email\"\n ],\n \"properties\": {\n  \"name\": {\n   \"type\": \"string\"\n  },\n  \"email\": {\n   \"type\": \"string\"\n  },\n  \"birthdate\": {\n   \"type\": \"string\"\n  }\n }\n}\n",
+                  "name": "my CDL schema A"
+                }
+              references:
+                cdl_endpoint: data.cdl_instance.cicd.endpoint
+        argumentDocs:
+            cdl_endpoint: '- (Required) The CDL instance endpoint to query'
+            created_by: '- Which entity created the DTD'
+            created_on: '- When the DTD was created'
+            description: '- (Optional) The description of the DTD'
+            id: '- The GUID of the DTDT'
+            json_schema: '- (Optional) The JSON Schema describing the DTD'
+            name: '- (Required) The name of the DTD'
+            updated_by: '- Which entity updated the DTD last'
+            updated_on: '- When the DTD was updated'
+        importStatements: []
+    hsdp_cdl_export_route:
+        subCategory: Clinical Data Lake (CDL)
+        description: Manages HSDP CDL Export routes
+        name: hsdp_cdl_export_route
+        title: hsdp_cdl_export_route
+        examples:
+            - name: expRoute1
+              manifest: |-
+                {
+                  "auto_export": true,
+                  "cdl_endpoint": "https://RouteFrefix-datalake.cloud.pcftest.com/store/cdl/XXXXXXX-f896-4883-80fa-5593cd69556d",
+                  "description": "description11",
+                  "destination_research_study_endpoint": "https://ROUTE_PREFIX-datalake.cloud.pcftest.com/store/cdl/XXXXXX-f896-4883-80fa-5593cd69556d/Study/5c8431e2-f4f1-11eb-bf8f-b799651c8a11",
+                  "display_name": "display name1",
+                  "export_route_name": "ExportTrial_for_demo55",
+                  "service_account_details": [
+                    {
+                      "access_token_endpoint": "https://IAM_HOST_NAME/oauth2/access_token",
+                      "private_key": "-----BEGIN RSA PRIVATE KEY-----SVC ACC PRIVATE KEY-----END RSA PRIVATE KEY-----",
+                      "service_id": "SVC_ID",
+                      "token_endpoint": "https://IAM_HOST_NAME/authorize/oauth2/token"
+                    }
+                  ],
+                  "source_research_study": [
+                    {
+                      "allowed_data_objects": [
+                        {
+                          "associated_labels": [
+                            {
+                              "approval_required": true,
+                              "label_name": "videoQualityTF7"
+                            }
+                          ],
+                          "resource_type": "DataObject.customDataTest123"
+                        },
+                        {
+                          "associated_labels": [
+                            {
+                              "approval_required": true,
+                              "label_name": "videoQualityTF8"
+                            },
+                            {
+                              "approval_required": false,
+                              "label_name": "videoQualityTF7"
+                            }
+                          ],
+                          "resource_type": "DataObject.customDataTest123"
+                        }
+                      ],
+                      "source_cdl_endpoint": "https://ROUTE_PREFIX-datalake.cloud.pcftest.com/store/cdl/XXXXXX-f896-4883-80fa-5593cd69556d/Study/a1467792-ef81-11eb-8ac2-477a9e3b09aa"
+                    }
+                  ]
+                }
+        argumentDocs:
+            access_token_endpoint: '- (Required) The access token endpoint - For ex:- "https://IAM_HOST/oauth2/access_token"'
+            allowed_data_objects: '- "The DataObject details (multiple blocks of allowed_data_objects are supported) containing resource type and the labels associated to the dataobjects"'
+            approval_required: '- "Boolean argument that triggers export automatically when the label is approved"'
+            associated_labels: ""
+            auto_export: '- Boolean argument which shows the status of auto_export'
+            cdl_endpoint: '- (Required) The CDL instance endpoint to query'
+            created_by: '- User who created the ExportRoute'
+            created_on: '- Datetime of creation of ExportRoute'
+            description: '-  Description of the ExportRoute'
+            destination_research_study_endpoint: '- (Required) This argument represents the destination CDL endpoint'
+            display_name: '- (Required) Display Name of the ExportRoute'
+            export_route_name: '- (Required) The name of the ExportRoute'
+            id: '- The UUID of the ExportRoute'
+            label_name: '- "Name of the label that is associated with the data object"'
+            private_key: '- (Required) The private key corresponding to the service acccount'
+            resource_type: '- (Required) "The resource type of the DataObject"'
+            service_account_details: '- (Required) This block represents the service account details'
+            service_id: '- (Required) This is service_id of the service account used for the export route'
+            source_research_study: '- (Required) Use this block to specify the details of the source Research Study'
+            source_research_study_endpoint: '- (Required) The research study endpoint of the source'
+            token_endpoint: '- (Required) The token endpoint - For ex:- "https://IAM_HOST/authorize/oauth2/token"'
+            updated_by: '- The user who updated the ExportRoute'
+            updated_on: '- Datetime of update of ExportRoute'
+        importStatements: []
+    hsdp_cdl_label_definition:
+        subCategory: Clinical Data Lake (CDL)
+        description: Manages HSDP CDL Label definitions
+        name: hsdp_cdl_label_definition
+        title: hsdp_cdl_label_definition
+        examples:
+            - name: labeldef1
+              manifest: |-
+                {
+                  "cdl_endpoint": "https://cicd-datalake.cloud.pcftest.com/store/cdl/1f5be763-f896-4883-80fa-5593cd69556d",
+                  "description": "TF create desc",
+                  "label_def_name": "TF create Test4",
+                  "label_name": "videoQualityTF10",
+                  "label_scope": "DataObject.DICOM",
+                  "labels": [
+                    "good",
+                    "bad",
+                    "acceptable",
+                    "something",
+                    "something1"
+                  ],
+                  "study_id": "a1467792-ef81-11eb-8ac2-477a9e3b09aa",
+                  "type": "cdl/video-classification"
+                }
+        argumentDocs:
+            cdl_endpoint: '- (Required) The CDL instance endpoint to query'
+            created_by: '- User who created the label definition'
+            created_on: '- Timestamp the label definition was created'
+            description: '- Description of label definition'
+            id: '- The GUID of the label definition'
+            label_def_name: '- Name of the label definition'
+            label_name: '- The label name'
+            label_scope: '- Use this parameter to specify for which CDL Data the LabelDefinition is applicable'
+            labels: '- Use this parameter to specify your labels, or classes. Add one label for each class.'
+            study_id: '- (Required) The research study id under which label definition has to be created'
+            type: '- Use this parameter to define the label type. Supported Values : cdl/video-classification'
+        importStatements: []
+    hsdp_cdl_research_study:
+        subCategory: Clinical Data Lake (CDL)
+        description: Manages HSDP CDL Research studies
+        name: hsdp_cdl_research_study
+        title: hsdp_cdl_research_study
+        examples:
+            - name: study_a
+              manifest: |-
+                {
+                  "cdl_endpoint": "${data.cdl_instance.cicd.endpoint}",
+                  "data_protected_from_deletion": false,
+                  "data_scientist": [
+                    {
+                      "email": "${data.hsdp_iam_user.scientist.email_address}",
+                      "user_id": "${data.hsdp_iam_user.scientist.id}"
+                    }
+                  ],
+                  "description": "Example study A",
+                  "ends_at": "${var.ends_at}",
+                  "monitor": [
+                    {
+                      "email": "${data.hsdp_iam_user.monitor.email_address}",
+                      "user_id": "${data.hsdp_iam_user.monitor.id}"
+                    }
+                  ],
+                  "study_manager": [
+                    {
+                      "email": "${data.hsdp_iam_user.study_manager.email_address}",
+                      "user_id": "${data.hsdp_iam_user.study_manager.id}"
+                    }
+                  ],
+                  "study_owner": "${var.study_owner_id}",
+                  "title": "Study A",
+                  "uploader": [
+                    {
+                      "email": "${data.hsdp_iam_user.uploaderA.email_address}",
+                      "user_id": "${data.hsdp_iam_user.uploaderA.id}"
+                    },
+                    {
+                      "email": "${data.hsdp_iam_user.uploaderB.email_address}",
+                      "user_id": "${data.hsdp_iam_user.uploaderB.id}"
+                    }
+                  ]
+                }
+              references:
+                cdl_endpoint: data.cdl_instance.cicd.endpoint
+                data_scientist.email: data.hsdp_iam_user.scientist.email_address
+                data_scientist.user_id: data.hsdp_iam_user.scientist.id
+                ends_at: var.ends_at
+                monitor.email: data.hsdp_iam_user.monitor.email_address
+                monitor.user_id: data.hsdp_iam_user.monitor.id
+                study_manager.email: data.hsdp_iam_user.study_manager.email_address
+                study_manager.user_id: data.hsdp_iam_user.study_manager.id
+                study_owner: var.study_owner_id
+                uploader.email: data.hsdp_iam_user.uploaderB.email_address
+                uploader.user_id: data.hsdp_iam_user.uploaderB.id
+        argumentDocs:
+            cdl_endpoint: '- (Required) The CDL instance to query'
+            data_protected_from_deletion: (Optional) Protects data from being deleted. Default is false
+            data_scientist: '- (Optional) A data scientist role definition for the study'
+            description: '- (Optional) The description of the application'
+            email: '- (Required) The email address for this data scientist (for display purposes)'
+            ends_at: '- (Optional) The end date of the study'
+            id: '- The GUID of the study'
+            institute_id: '- (Optional) The institute ID associated with this role'
+            monitor: '- (Optional) A monitor role definition for the study'
+            study_manager: '- (Optional) An study manager role definition for the study'
+            study_owner: '- (Required, UUIDv4) The owner of the study'
+            title: '- (Required) The name of the application'
+            uploader: '- (Optional) An uploader role definition for the study'
+            user_id: (Required) The IAM user ID of the data scientist
+        importStatements:
+            - terraform import hsdp_cdl_research_study.mystudy a-guid
+    hsdp_cdr_org:
+        subCategory: Clinical Data Repository (CDR)
+        description: Manages HSDP CDR Organizations
+        name: hsdp_cdr_org
+        title: hsdp_cdr_org
+        examples:
+            - name: root_org
+              manifest: |-
+                {
+                  "fhir_store": "${data.hsdp_cdr_fhir_store.sandbox.endpoint}",
+                  "name": "Root ORG",
+                  "org_id": "${var.root_org_id}",
+                  "version": "r4"
+                }
+              references:
+                fhir_store: data.hsdp_cdr_fhir_store.sandbox.endpoint
+                org_id: var.root_org_id
+            - name: hospital
+              manifest: |-
+                {
+                  "fhir_store": "${data.hsdp_cdr_fhir_store.sandbox.endpoint}",
+                  "name": "Hospital",
+                  "org_id": "${var.sub_org_id}",
+                  "part_of": "${var.root_org_id}",
+                  "purge_delete": false,
+                  "version": "r4"
+                }
+              references:
+                fhir_store: data.hsdp_cdr_fhir_store.sandbox.endpoint
+                org_id: var.sub_org_id
+                part_of: var.root_org_id
+        argumentDocs:
+            fhir_store: '- (Required) The CDR FHIR store to use'
+            id: '- The GUID of the organization'
+            name: '- (Required) The name of the FHIR Org'
+            org_id: '- (Required) The Org ID (GUID) under which to onboard. Usually same as IAM Org ID'
+            part_of: '- (Optional) The parent Organization ID (GUID) this Org is part of'
+            purge_delete: '- (Optional) If set to true, when the resource is destroyed the provider will purge all FHIR resources associated with the Organization. The ORGANIZATION.PURGE IAM permission is required for this to work. Default: false'
+            version: '- (Optional) The FHIR version to use. Options [ stu3 | r4 ]. Default is stu3'
+        importStatements: []
+    hsdp_cdr_practitioner:
+        subCategory: Clinical Data Repository (CDR)
+        description: Manages HSDP CDR Practitioner resources
+        name: hsdp_cdr_practitioner
+        title: hsdp_cdr_practitioner
+        examples:
+            - name: practitioner
+              manifest: |-
+                {
+                  "fhir_store": "${hsdp_cdr_org.hospital.fhir_store}",
+                  "identifier": [
+                    {
+                      "system": "https://iam.hsdp.io",
+                      "use": "actual",
+                      "value": "xx-xx"
+                    }
+                  ],
+                  "name": [
+                    {
+                      "family": "Swanson",
+                      "given": [
+                        "Ron"
+                      ],
+                      "text": "Ron Swanson"
+                    }
+                  ],
+                  "version": "r4"
+                }
+              references:
+                fhir_store: hsdp_cdr_org.hospital.fhir_store
+              dependencies:
+                hsdp_cdr_org.hospital: |-
+                    {
+                      "fhir_store": "${data.hsdp_cdr_fhir_store.sandbox.endpoint}",
+                      "name": "Hospital",
+                      "org_id": "${var.sub_org_id}",
+                      "part_of": "${var.root_org_id}",
+                      "purge_delete": false,
+                      "version": "r4"
+                    }
+        argumentDocs:
+            fhir_store: '- (Required) The CDR FHIR store endpoint to use'
+            first: '- (Required) The first name'
+            given: '- (Required, list(string)) The list of given names'
+            id: '- The unique GUID of the practitioner in the CDR instance'
+            identifier: '- (Required) The FHIR identifier block'
+            last_updated: '- Last update time'
+            name: '- (Required) The FHIR name block'
+            soft_delete: |-
+                - (Optional) Soft deletes a Practitioner from Terraform (state) in case it still has references in CDR. Default: false
+                This option is useful if you are using Terraform for provisioning Practitioners only. Setting soft_delete = true also
+                causes existing Practitioners to be auto-imported in case the usual identifier matches your declaration.
+            system: '- (Required) The system of the identifier e.g. HSP IAM'
+            text: '- (Required) The text representation of the name'
+            use: '- (Optional) the use value. Can be usual, temp, secondary, official'
+            value: '- (Required) the identifier value e.g. the IAM GUID of the practitioner'
+            version: '- (Optional) The FHIR version to use. Options [ stu3 | r4 ]. Default is stu3'
+            version_id: '- The version of the resource'
+        importStatements: []
+    hsdp_cdr_subscription:
+        subCategory: Clinical Data Repository (CDR)
+        description: Manages HSDP CDR Subscription resources
+        name: hsdp_cdr_subscription
+        title: hsdp_cdr_subscription
+        examples:
+            - name: patient_changes
+              manifest: |-
+                {
+                  "criteria": "Patient",
+                  "delete_endpoint": "https://webhook.myapp.io/patient_deleted",
+                  "end": "2030-12-31T23:59:59Z",
+                  "endpoint": "https://webhook.myapp.io/patient",
+                  "fhir_store": "${hsdp_cdr_org.test.fhir_store}",
+                  "headers": [
+                    "Authorization: Basic cm9uOnN3YW5zb24="
+                  ],
+                  "reason": "Notification for patient changes",
+                  "version": "r4"
+                }
+              references:
+                fhir_store: hsdp_cdr_org.test.fhir_store
+              dependencies:
+                hsdp_cdr_org.test: |-
+                    {
+                      "fhir_store": "${data.hsdp_cdr_fhir_store.sandbox.endpoint}",
+                      "name": "Hospital",
+                      "org_id": "${hsdp_iam_org.test.id}",
+                      "version": "r4"
+                    }
+        argumentDocs:
+            criteria: '- (Required) On which resource to notify'
+            delete_endpoint: '- (Optional) The REST endpoint to call for DELETE operations. Must use https:// schema'
+            end: '- (Required) RFC3339 formatted timestamp when to end notifications'
+            endpoint: '- (Required) The REST endpoint to call. Must use https://  schema'
+            fhir_store: '- (Required) The CDR FHIR store endpoint to use'
+            headers: '- (Optional) List of headers to add to the REST call'
+            id: '- The ID of the CDR subscription'
+            reason: '- (Required) Reason for creating the subscription'
+            status: '- The status of the subscription (requested | active | error  | off)'
+            version: '- (Optional) The FHIR version to use. Options [ stu3 | r4 ]. Default is stu3'
+        importStatements: []
+    hsdp_connect_mdm_application:
+        subCategory: Master Data Management (MDM)
+        description: Manages HSDP Connect MDM Applications
+        name: hsdp_connect_mdm_application
+        title: hsdp_connect_mdm_application
+        examples:
+            - name: app
+              manifest: |-
+                {
+                  "description": "Terraform managed Application",
+                  "name": "mobile",
+                  "proposition_id": "${data.hsdp_connect_mdm_proposition.prop.id}"
+                }
+              references:
+                proposition_id: data.hsdp_connect_mdm_proposition.prop.id
+        argumentDocs:
+            application_guid_system: '- The external system associated with resource (this would point to an IAM deployment)'
+            application_guid_value: '- The external value associated with this resource (this would be an underlying IAM application ID)'
+            default_group_guid: '- (Optional) The GUID of the IAM Group to assign by default'
+            description: '- (Optional) A short description of the Application'
+            global_reference_id: '- (Optional) A global reference ID for this application'
+            guid: '- The GUID of this resource'
+            id: '- The ID reference (format: Application/${GUID})'
+            name: '- (Required) The name of the Application'
+            proposition_id: '- (Required) The ID of the Proposition this Application should fall under'
+        importStatements: []
+    hsdp_connect_mdm_authentication_method:
+        subCategory: Master Data Management (MDM)
+        description: Manages HSDP Connect MDM Authentication methods
+        name: hsdp_connect_mdm_authentication_method
+        title: hsdp_connect_mdm_authentication_method
+        examples:
+            - name: some_auth_method
+              manifest: |-
+                {
+                  "api_version": "3",
+                  "auth_method": "Basic",
+                  "auth_url": "https://api.login.app.hsdp.io",
+                  "client_id": "${var.client_id}",
+                  "client_secret": "${var.client_secret}",
+                  "description": "An authentication method",
+                  "login_id": "${var.login_id}",
+                  "name": "some-authentication-method",
+                  "password": "${random_password.generated.result}"
+                }
+              references:
+                client_id: var.client_id
+                client_secret: var.client_secret
+                login_id: var.login_id
+                password: random_password.generated.result
+              dependencies:
+                random_password.generated: |-
+                    {
+                      "length": 16,
+                      "min_lower": 1,
+                      "min_numeric": 1,
+                      "min_special": 1,
+                      "min_upper": 1,
+                      "override_special": "-!@#.:_?{$",
+                      "special": true
+                    }
+        argumentDocs:
+            api_version: '- (Required) the API version to use'
+            auth_method: '- (Required) the authentication method to use [Bearer | Basic]'
+            auth_url: '- (Required) The authentication URL to use'
+            client_id: '- (Required) The client ID to use'
+            client_secret: '- (Required) the client secret to use'
+            description: '- (Optional) A short description of the device group'
+            guid: '- The GUID of the service action'
+            id: '- The ID reference of the service action (format: Group/${GUID})'
+            login_name: '- (Required) The login name to use'
+            name: '- (Required) The name of the device group'
+            organization_id: '- (Optional) The organization ID to associate this method to'
+            password: '- (Required) The password to use'
+        importStatements: []
+    hsdp_connect_mdm_blob_data_contract:
+        subCategory: Master Data Management (MDM)
+        description: Manages HSDP Connect MDM Blob data contracts
+        name: hsdp_connect_mdm_blob_data_contract
+        title: hsdp_connect_mdm_blob_data_contract
+        examples:
+            - name: contract
+              manifest: |-
+                {
+                  "bucket_id": "${hsdp_connect_mdm_bucket.first.id}",
+                  "cross_region_replication_enabled": false,
+                  "data_type_id": "${hsdp_connect_mdm_data_type.first.id}",
+                  "logging_enabled": true,
+                  "name": "tf-blob-data-contract",
+                  "root_path_in_bucket": "/",
+                  "storage_class_id": "${data.connect_mdm_storage_class.first.id}"
+                }
+              references:
+                bucket_id: hsdp_connect_mdm_bucket.first.id
+                data_type_id: hsdp_connect_mdm_data_type.first.id
+                storage_class_id: data.connect_mdm_storage_class.first.id
+        argumentDocs:
+            bucket_id: '- (Required) Reference to the Bucket'
+            cross_region_replication_enabled: '- (Optional) cross region replication active (default: false)'
+            data_type_id: '- (Required) Reference to the DataType'
+            guid: '- The GUID of the service action'
+            id: '- The ID reference of the service action (format: Group/${GUID})'
+            logging_enabled: '- (Optional) Enable logging (default: true)'
+            name: '- (Required) The name of the device group'
+            root_path_in_bucket: '- (Required) The root path in the bucket'
+            storage_class_id: '- (Required) Reference to the StorageClass'
+        importStatements: []
+    hsdp_connect_mdm_blobl_subscription:
+        subCategory: Master Data Management (MDM)
+        description: Manages HSDP Connect MDM Blob subscriptions
+        name: hsdp_connect_mdm_blobl_subscription
+        title: hsdp_connect_mdm_blobl_subscription
+        argumentDocs:
+            data_type_id: '- (Required)'
+            description: '- (Optional)'
+            guid: '- The GUID of the service action'
+            id: '- The ID reference of the service action (format: Group/${GUID})'
+            name: '- (Required) The name of the Blob subscription'
+            notification_topic_id: '- (Required)'
+        importStatements: []
+    hsdp_connect_mdm_bucket:
+        subCategory: Master Data Management (MDM)
+        description: Manages HSDP Connect MDM Buckets
+        name: hsdp_connect_mdm_bucket
+        title: hsdp_connect_mdm_bucket
+        examples:
+            - name: store
+              manifest: |-
+                {
+                  "auditing_enabled": true,
+                  "cors_configuration": [
+                    {
+                      "allowed_methods": [
+                        "GET"
+                      ],
+                      "allowed_origins": [
+                        "https://foo.hsdp.io"
+                      ],
+                      "expose_headers": [
+                        "X-Hsdp-Signature"
+                      ]
+                    }
+                  ],
+                  "default_region_id": "${data.hsdp_connect_mdm_region.us_east.id}",
+                  "description": "Terraform provisioned bucket",
+                  "logging_enabled": true,
+                  "name": "bucket-store-1",
+                  "proposition_id": "${data.hsdp_connect_mdm_propososition.prop.id}",
+                  "versioning_enabled": true
+                }
+              references:
+                default_region_id: data.hsdp_connect_mdm_region.us_east.id
+                proposition_id: data.hsdp_connect_mdm_propososition.prop.id
+        argumentDocs:
+            allowed_methods: '- (Required, list(string)) Allowed methods: [GET, PUT, POST, DELETE, HEAD]'
+            allowed_origins: '- (Required, list(string)) List of allowed origins'
+            auditing_enabled: '- (Required) Set auditing'
+            cache_control_age: '- (Optional) Cache control age settings (Max: 1800, Min: 300, Default: 300)'
+            cors_configuration: '- (Optional)'
+            default_region_id: '- (Required) The Region this bucket should be provisioned in'
+            description: '- (Optional) A short description of the device group'
+            enable_cdn: '- (Optional) Enable CDN or not'
+            expose_headers: '- (Optional, list(string)) List of headers to expose'
+            guid: '- The GUID of the bucket'
+            id: '- The ID reference of the service action (format: Bucket/${GUID})'
+            logging_enabled: '- (Required) Set logging'
+            max_age_seconds: '- (Optional) Max age in seconds'
+            name: '- (Required) The name of the device group'
+            proposition_id: '- (Required) The proposition ID where this bucket falls under'
+            versioning_enabled: '- (Required) Set versioning'
+        importStatements: []
+    hsdp_connect_mdm_component_version:
+        subCategory: Master Data Management (MDM)
+        description: Manages HSDP Connect MDM Firmware Component versions
+        name: hsdp_connect_mdm_component_version
+        title: hsdp_connect_mdm_component_version
+        argumentDocs:
+            algorithm: '- (Required) The algorithm used to calculate the fingerprint'
+            blob_url: '- (Optional) The path of the image on Blob storage'
+            component_required: '- (Optional, bool) Is the component required (default: false)'
+            custom_resource: '- (Optional, string) JSON string describing your custom resource'
+            decryption_key: '- (Optional) The decryption key'
+            deprecated_date: '- (Optional, date) Deprecated date of this firmware'
+            description: '- (Optional) A short description of the resource'
+            effective_date: '- (Required) The effective date of this firmware (Format: yyyy-mm-dd)'
+            encrypted: '- (Required, bool) If the component is encrypted'
+            encryption_info: '- (Optional) Specify encrypted related info'
+            fingerprint: '- (Optional) Fingerprint information'
+            firmware_component_id: '- (Required) Reference to Firmware Component resource'
+            guid: '- The GUID of the service action'
+            hash: '- (Required) The fingerprint value'
+            id: '- The ID reference of the service action (format: FirmwareComponentVersion/${GUID})'
+            size: '- (Optional, int) The size of the image'
+            version: '- (Required) The version of the Firmware Component image'
+        importStatements: []
+    hsdp_connect_mdm_data_type:
+        subCategory: Master Data Management (MDM)
+        description: Manages HSDP Connect MDM Data types
+        name: hsdp_connect_mdm_data_type
+        title: hsdp_connect_mdm_data_type
+        examples:
+            - name: some_type
+              manifest: |-
+                {
+                  "description": "A Terraform provisioned DataType",
+                  "name": "tf-some-data-type",
+                  "proposition_id": "${data.hsdp_connect_mdm_proposition.first.id}",
+                  "tags": [
+                    "ONE",
+                    "TWO",
+                    "THREE"
+                  ]
+                }
+              references:
+                proposition_id: data.hsdp_connect_mdm_proposition.first.id
+        argumentDocs:
+            application_id: '- (Required) Reference to the Application this group falls under'
+            default_iam_group_id: '- (Optional) The IAM Group from which this group will inherit roles from'
+            description: '- (Optional) A short description of the device group'
+            guid: '- The GUID of the service action'
+            id: '- The ID reference of the service action (format: DataType/${GUID})'
+            name: '- (Required) The name of the device group'
+        importStatements: []
+    hsdp_connect_mdm_device_group:
+        subCategory: Master Data Management (MDM)
+        description: Manages HSDP Connect MDM Device groups
+        name: hsdp_connect_mdm_device_group
+        title: hsdp_connect_mdm_device_group
+        examples:
+            - name: some_group
+              manifest: |-
+                {
+                  "application_id": "${data.hsdp_connect_mdm_application.app.id}",
+                  "default_iam_group_id": "${data.hsdp_iam_group.device_group.id}",
+                  "description": "A device group",
+                  "name": "some-device-group"
+                }
+              references:
+                application_id: data.hsdp_connect_mdm_application.app.id
+                default_iam_group_id: data.hsdp_iam_group.device_group.id
+        argumentDocs:
+            application_id: '- (Required) Reference to the Application this group falls under'
+            default_iam_group_id: '- (Optional) The IAM Group from which this group will inherit roles from'
+            description: '- (Optional) A short description of the device group'
+            guid: '- The GUID of the service action'
+            id: '- The ID reference of the service action (format: Group/${GUID})'
+            name: '- (Required) The name of the device group'
+        importStatements: []
+    hsdp_connect_mdm_device_type:
+        subCategory: Master Data Management (MDM)
+        description: Manages HSDP Connect MDM Device Types
+        name: hsdp_connect_mdm_device_type
+        title: hsdp_connect_mdm_device_type
+        examples:
+            - name: some_device_type
+              manifest: |-
+                {
+                  "commercial_type_number": "WATCH1",
+                  "custom_type_attributes": {
+                    "position": "wrist",
+                    "region": "eu"
+                  },
+                  "default_iam_group_id": "${data.hsdp_iam_group.wearable_group.id}",
+                  "description": "WEARABLE0001",
+                  "device_group_id": "${hsdp_connect_mdm_device_group.some_group.id}",
+                  "name": "some-device-type"
+                }
+              references:
+                default_iam_group_id: data.hsdp_iam_group.wearable_group.id
+                device_group_id: hsdp_connect_mdm_device_group.some_group.id
+        argumentDocs:
+            commercial_type_number: '- (Required) Commercial Type Number'
+            custom_type_attributes: '- (Optional) Type attributes for all devices under this type.'
+            default_iam_group_id: '- (Optional) The IAM Group from which this group will inherit roles from'
+            description: '- (Optional) A short description of the device type'
+            device_group_id: '- (Required) Reference to the Device Group this type falls under'
+            guid: '- The GUID of the service action'
+            id: '- The ID reference of the service action (format: Group/${GUID})'
+            name: '- (Required) The name of the device type'
+        importStatements: []
+    hsdp_connect_mdm_firmware_component:
+        subCategory: Master Data Management (MDM)
+        description: Manages HSDP Connect MDM Firmware components
+        name: hsdp_connect_mdm_firmware_component
+        title: hsdp_connect_mdm_firmware_component
+        examples:
+            - name: first
+              manifest: |-
+                {
+                  "description": "Terraform managed firmware component",
+                  "device_type_id": "${hsdp_connect_mdm_device_type.first.id}",
+                  "main_component": true,
+                  "name": "tf-firmware-component"
+                }
+              references:
+                device_type_id: hsdp_connect_mdm_device_type.first.id
+        argumentDocs:
+            description: '- (Optional) A short description of the device group'
+            device_type_id: '- (Required) Reference to the DeviceType'
+            guid: '- The GUID of the service action'
+            id: '- The ID reference of the service action (format: Group/${GUID})'
+            main_component: '- (Required) Signals if this is a main component (default: true)'
+            name: '- (Required) The name of the device group'
+        importStatements: []
+    hsdp_connect_mdm_firmware_distribution_request:
+        subCategory: Master Data Management (MDM)
+        description: Manages HSDP Connect MDM Firmware distribution requests
+        name: hsdp_connect_mdm_firmware_distribution_request
+        title: hsdp_connect_mdm_firmware_distribution_request
+        examples:
+            - name: distro
+              manifest: |-
+                {
+                  "description": "Terraform managed firmware distribution request",
+                  "distribution_target_device_groups_ids": [
+                    "${hsdp_connect_mdm_device_group.first.id}",
+                    "${hsdp_connect_mdm_device_group.second.id}"
+                  ],
+                  "firmware_component_version_ids": [
+                    "${hsdp_connect_mdm_firmware_component_version.one_dot_oh.id}"
+                  ],
+                  "firmware_version": "1.0.0",
+                  "orchestration_mode": "continuous",
+                  "status": "ACTIVE",
+                  "user_consent_required": false
+                }
+        argumentDocs:
+            description: '- (Optional) A short description of the resource'
+            distribution_target_device_groups_ids: '- (Required, list(string)) Reference to Firmware Component resource'
+            firmware_component_version_ids: '- (Requires, list(string)) The path of the image on Blob storage'
+            firmware_version: '- (Required) The version of the Firmware Component image'
+            guid: '- The GUID of the service action'
+            id: '- The ID reference of the service action (format: FirmwareDistributionRequest/${GUID})'
+            orchestration_mode: '- (Required) What mode of orchestration to use [none | continuous | snapshot]'
+            status: '- (Required) The status of the request [ACTIVE | CANCELED]'
+            user_consent_required: '- (Optional, bool) Is user consent needed for this update (default: false)'
+        importStatements: []
+    hsdp_connect_mdm_oauth_application:
+        subCategory: Master Data Management (MDM)
+        description: Manages HSDP Connect MDM OAuth applications
+        name: hsdp_connect_mdm_oauth_application
+        title: hsdp_connect_mdm_oauth_application
+        argumentDocs:
+            application_id: '- (Required) the application ID (GUID) to attach this client to'
+            bootstrap_client_default_scopes: '- (Optional) Array. Default scopes for the bootstrap client. You do not have to specify these explicitly when requesting a token'
+            bootstrap_client_guid_system: '- The external system bootstrap client associated with resource (this would point to an IAM deployment)'
+            bootstrap_client_guid_value: '- The external value of the bootstrap client associated with this resource (this would be an underlying IAM OAuth2 client GUID)'
+            bootstrap_client_iam_default_scopes: '- (Optional) Array. Default scopes to set for this bootstrap client''s IAM instance'
+            bootstrap_client_iam_scopes: '- (Optional) Array. List of supported scopes for this bootstrap client''s IAM instance'
+            bootstrap_client_id: '- The bootstrap client ID'
+            bootstrap_client_scopes: '- (Optional) Array. List of supported scopes for the bootstrap client'
+            bootstrap_client_secret: '- The boostrap client secret'
+            client_guid_system: '- The external system client associated with resource (this would point to an IAM deployment)'
+            client_guid_value: '- The external value client associated with this resource (this would be an underlying IAM OAuth2 client GUID)'
+            client_id: '-  The client id'
+            client_revoked: '- (Optional, bool)'
+            default_scopes: '- (Optional) Array. Default scopes. You do not have to specify these explicitly when requesting a token'
+            description: '- (Required) The description of the client'
+            disabled: '- True if the client is disabled e.g. because the Org is disabled'
+            global_reference_id: '- (Required) Reference identifier defined by the provisioning user. This reference Identifier will be carried over to identify the provisioned resource across deployment instances (ClientTest, Production). Invalid Characters:- "[&+’";=?()[]<>]'
+            iam_default_scopes: '- (Optional) Array. Default scopes to set for this client''s IAM instance'
+            iam_scopes: '- (Optional) Array. List of supported scopes for this client''s IAM instance'
+            id: '- The GUID of the client'
+            name: '- (Required) The name of the client'
+            password: '- The password'
+            redirection_uris: '- (Optional) Array of valid RedirectionURIs for this client'
+            scopes: '- (Optional) Array. List of supported scopes for this client'
+            user_client: '- (Optional, bool)'
+        importStatements:
+            - terraform import hsdp_iam_client.myclient a-guid
+    hsdp_connect_mdm_proposition:
+        subCategory: Master Data Management (MDM)
+        description: Manages HSDP Connect MDM Propositions
+        name: hsdp_connect_mdm_proposition
+        title: hsdp_connect_mdm_proposition
+        examples:
+            - name: app
+              manifest: |-
+                {
+                  "description": "Terraform managed proposition",
+                  "name": "moonshot",
+                  "organization_id": "${var.org_id}"
+                }
+              references:
+                organization_id: var.org_id
+        argumentDocs:
+            description: '- (Optional) A short description of the Proposition'
+            guid: '- The GUID of the underlying IAM resource'
+            id: '- The ID reference (format: Proposition/${GUID})'
+            name: '- (Required) The name of the Proposition'
+            organization_id: '- (Required) The ID of the IAM organization this Proposition should fall under'
+            proposition_guid: '- The GUID of the MDM proposition resource'
+            proposition_id: '- The ID of the IAM proposition this proposition falls under'
+            status: '- (Required) The status of the Proposition [DRAFT, ACTIVE]'
+        importStatements: []
+    hsdp_connect_mdm_service_action:
+        subCategory: Master Data Management (MDM)
+        description: Manages HSDP Connect MDM Service actions
+        name: hsdp_connect_mdm_service_action
+        title: hsdp_connect_mdm_service_action
+        examples:
+            - name: some_action
+              manifest: |-
+                {
+                  "description": "A tenant service action that does something",
+                  "name": "Some action",
+                  "standard_service_id": "${hsdp_connect_mdm_standard_service.some_service.id}"
+                }
+              references:
+                standard_service_id: hsdp_connect_mdm_standard_service.some_service.id
+        argumentDocs:
+            description: '- (Optional) A short description of the service action'
+            guid: '- The GUID of the service action'
+            id: '- The ID reference of the service action (format: ServiceAction/${GUID})'
+            name: '- (Required) The name of the service action'
+            standard_service_id: '- (Required) Reference to a Standard Service'
+        importStatements: []
+    hsdp_connect_mdm_service_reference:
+        subCategory: Master Data Management (MDM)
+        description: Manages HSDP Connect MDM Service references
+        name: hsdp_connect_mdm_service_reference
+        title: hsdp_connect_mdm_service_reference
+        examples:
+            - name: some_reference
+              manifest: |-
+                {
+                  "application_id": "${data.hsdp_connect_mdm_application.app.id}",
+                  "bootstrap_enabled": true,
+                  "description": "Terraform provisioned service reference",
+                  "matching_rule": "*",
+                  "name": "some-service-reference",
+                  "service_action_ids": [
+                    "${hsdp_connect_mdm_service_action.some_action.id}"
+                  ],
+                  "standard_service_id": "${hsdp_connect_mdm_standard_service.service.id}"
+                }
+              references:
+                application_id: data.hsdp_connect_mdm_application.app.id
+                standard_service_id: hsdp_connect_mdm_standard_service.service.id
+        argumentDocs:
+            application_id: '- (Required) The application associated with this service reference'
+            bootstrap_enabled: (Optional) Wether or not to enable this for bootstrapping
+            description: '- (Optional) A short description of the service action'
+            guid: '- The GUID of the service action'
+            id: '- The ID reference of the service action (format: ServiceReference/${GUID})'
+            matching_rule: '- (Required) The rule to use to match up the services'
+            name: '- (Required) The name of the service action'
+            service_action_ids: (Required, list(string)) The list of serviced action IDs
+            standard_service_id: '- (Required) Reference to a Standard Service'
+        importStatements: []
+    hsdp_connect_mdm_standard_service:
+        subCategory: Master Data Management (MDM)
+        description: Manages HSDP Connect MDM Standard Services
+        name: hsdp_connect_mdm_standard_service
+        title: hsdp_connect_mdm_standard_service
+        examples:
+            - name: some_service
+              manifest: |-
+                {
+                  "description": "A tenant service that does something",
+                  "name": "Some service",
+                  "service_url": [
+                    {
+                      "sort_order": 1,
+                      "url": "https://tycho-service.hsdp.in"
+                    },
+                    {
+                      "sort_order": 2,
+                      "url": "https://tycho-service.hsdp.nl"
+                    }
+                  ],
+                  "tags": [
+                    "TYCHO"
+                  ]
+                }
+        argumentDocs:
+            authentication_method_id: '- (Optional) The id of the authention method to use'
+            description: '- (Optional) A short description of the service'
+            guid: '- The GUID of the standard service'
+            id: '- The ID reference of the standard service (format: StandardService/${GUID})'
+            name: '- (Required) The name of the standard service'
+            service_url: '- (Required) Location of this service. Maximum of 5 items are allowed'
+            sort_order: (Required, number) the sorting order
+            tags: '- (Required, list(string)) A tag associated with the service'
+            url: '- (Required) the URL of the service'
+        importStatements: []
+    hsdp_container_host:
+        subCategory: Container Host
+        description: Manages HSDP Container Host resources
+        name: hsdp_container_host
+        title: hsdp_container_host
+        examples:
+            - name: zahadoom
+              manifest: |-
+                {
+                  "commands": [
+                    "cat /tmp/stored.txt",
+                    "docker volume create fluent-bit",
+                    "docker run -d -p 24224:24224 -v fluent-bit:/fluent-bit/etc philipssoftware/fluent-bit-out-hsdp:1.4.4"
+                  ],
+                  "file": [
+                    {
+                      "content": "This string will be stored remotely",
+                      "destination": "/tmp/stored.txt",
+                      "permissions": "0700"
+                    }
+                  ],
+                  "instance_type": "t2.medium",
+                  "name": "mybox.dev",
+                  "private_key": "${var.private_key}",
+                  "security_groups": [
+                    "analytics",
+                    "${var.user}"
+                  ],
+                  "tags": {
+                    "created_by": "terraform"
+                  },
+                  "user": "${var.user}",
+                  "user_groups": "${var.user_groups}"
+                }
+              references:
+                private_key: var.private_key
+                user: var.user
+                user_groups: var.user_groups
+            - name: zahadoom
+              manifest: |-
+                {
+                  "connection": [
+                    {
+                      "bastion_host": "${var.bastion_host}",
+                      "host": "${self.private_ip}",
+                      "private_key": "${var.private_key}",
+                      "script_path": "/home/${var.user}/bootstrap.bash",
+                      "user": "${var.user}"
+                    }
+                  ],
+                  "count": 3,
+                  "instance_type": "t2.medium",
+                  "name": "zahadoom-${count.index}.dev",
+                  "provisioner": {
+                    "remote-exec": [
+                      {
+                        "inline": [
+                          "ifconfig",
+                          "docker volume create fluent-bit",
+                          "docker run -d -p 24224:24224 -v fluent-bit:/fluent-bit/etc philipssoftware/fluent-bit-out-hsdp:1.4.4"
+                        ]
+                      }
+                    ]
+                  },
+                  "security_groups": [
+                    "analytics",
+                    "${var.user}"
+                  ],
+                  "tags": {
+                    "created_by": "terraform",
+                    "owner": "${var.user}"
+                  },
+                  "user_groups": "${var.user_groups}",
+                  "volume_size": 50,
+                  "volumes": 1
+                }
+              references:
+                connection.bastion_host: var.bastion_host
+                connection.host: self.private_ip
+                connection.private_key: var.private_key
+                connection.user: var.user
+                user_groups: var.user_groups
+        argumentDocs:
+            agent: '- (Optional) Signals the resource should use an SSH-agent connection. Default is false'
+            bastion_host: '- (Optional) The bastion host to use.  When not set, this will be deduced from the container host location'
+            block_devices: '- The list of block devices attached to the instance.'
+            encrypt_volumes: '- (Optional) When set encrypts volumes. Default is true'
+            file: '- (Optional) Block specifying content to be written to the container host after creation'
+            file.commands: '- (Optional, list(string)) List of commands to execute after creation of container host'
+            file.content: '- (Optional, string) Content of the file. Conflicts with source'
+            file.destination: '- (Required, string) Remote filename to store the content in'
+            file.group: '- (Optional, string) The file group. Default group is the SSH user''s group'
+            file.owner: '- (Optional, string) The file owner. Default owner the SSH user'
+            file.permissions: '- (Optional, string) The file permissions. Default permissions are "0644"'
+            file.source: '- (Optional, file path) Content of the file. Conflicts with content'
+            id: '- The instance ID'
+            image: '- (Optional) The OS image to use. Only use this if you have access to additional image types (example: centos7). Conflicts with instance_role value container-host'
+            instance_role: '- (Optional) The role to use. Default container-host (other values: vanilla, base)'
+            instance_type: '- (Optional) The EC2 instance type to use. Default m5.large'
+            iops: '- (Optional) Number of guaranteed IOPs to provision. Supported value range 1-4000'
+            keep_failed_instances: '- (Optional) Keep instances around for post-mortem analysis on failure. Default is false.'
+            launch_time: '- Timestamp when the instance was launched.'
+            name: '- (Required) The container host name. Must be unique.'
+            private_ip: '- The private IP address of the instance'
+            private_key: '- (Optional) The SSH private key to use for provision activities'
+            protect: '- (Optional) Boolean when set will enable protection for container host.'
+            public_ip: '- The public IP address of the instance if it has one'
+            result: '- The stdout of the last command executed in the commands list'
+            role: '- The role of the instance.'
+            security_groups: '- (Optional) list(string) of Security groups to attach. Default [], Maximum 4'
+            subnet: '- (Optional) This will cause a new instance to get deployed on a specific subnet. Conflicts with subnet_type. You should only use this option if you have very specific requirements that dictate all the instances you are creating need to reside in the same AZ. An example of this would be a cluster of systems that need to reside in the same datacenter.'
+            subnet_type: '- (Optional) What subnet type to use. Can be public or private. Default is private.'
+            tags: '- (Optional) Map of tags to assign to the instances'
+            user: '- (Optional) The username to use for provision activities using SSH'
+            user_groups: '- (Optional) list(string) of User groups to attach. Default [], Maximum 50'
+            volume_size: '- (Optional) Volume size in GB. Supported value range 1-16000 (16 TB max)'
+            volume_type: '- (Optional) The EBS volume type. Default is gp2. You can also choose io1 which is default when you specify iops value'
+            volumes: '- (Optional) Number of additional volumes to attach. Default 0, Maximum 6'
+            vpc: '- The VPC the instance was provisioned in.'
+            zone: '- The Zone the instance was provisioned in.'
+        importStatements: []
+    hsdp_dicom_gateway_config:
+        subCategory: DICOM Gateway
+        description: Manages HSDP DICOM Gateway configurations
+        name: hsdp_dicom_gateway_config
+        title: hsdp_dicom_gateway_config
+        examples:
+            - name: dicom_gateway
+              manifest: |-
+                {
+                  "config_url": "${var.config_url}",
+                  "organization_id": "${var.site_id}",
+                  "query_retrieve_service": [
+                    {
+                      "application_entity": [
+                        {
+                          "ae_title": "Foo",
+                          "allow_any": true,
+                          "organization_id": "aaa-bbb-ccc-ddd"
+                        }
+                      ],
+                      "is_secure": false,
+                      "port": 108,
+                      "title": "Query Retrieve Title"
+                    }
+                  ],
+                  "store_service": [
+                    {
+                      "application_entity": [
+                        {
+                          "ae_title": "Foo",
+                          "allow_any": true,
+                          "organization_id": "aaa-bbb-ccc-ddd"
+                        }
+                      ],
+                      "artim_timeout": 3000,
+                      "association_idle_timeout": 4500,
+                      "is_secure": false,
+                      "pdu_length": 65535,
+                      "port": 104,
+                      "title": "Store title"
+                    }
+                  ]
+                }
+              references:
+                config_url: var.config_url
+                organization_id: var.site_id
+        argumentDocs:
+            ae_title: '- AE title. Allowed characters for aetitle are A-Za-z0-9\\s/+=_-. Eg. DicomStoreScp'
+            allow_any: '- Allow any. Value can be true or false'
+            application_entity: '- Application entity'
+            artim_timeout: '- Time-out waiting for A-ASSOCIATE RQ PDU on open TCP/IP connection (Artim timeout). Default 3000 ms'
+            association_idle_timeout: '- Association idle timeout. 4500 ms'
+            authenticate_client_certificate: |-
+                - (Optional, Boolean) Weather or not the client certificate is authenticated.
+                Only needed for secure connections.
+            certificate_id: |-
+                - (Optional) Certificate ID.
+                Only needed for secure connections.
+            config_url: '- (Required) The base config URL of the DICOM Store'
+            is_secure: '- Is secure. Default false'
+            organization_id: '- (Required) The site organization ID'
+            pdu_length: '- PDU length. Default 65535'
+            port: '- Port. Default 104 for Non-Secure and 105 for Secure. Don''t change this.'
+            query_retrieve_service: '- (Optional) the FHIR store configuration'
+            site_organization_id: '- Site Organization ID for which Gateway to be deployed'
+            store_service: |-
+                - (Optional) Details of the DICOM Store SCP
+                *title - Store Device Title
+            title: '- Store Device Title'
+        importStatements: []
+    hsdp_dicom_notification:
+        subCategory: DICOM Store
+        description: Manages HSDP DICOM Store notifications
+        name: hsdp_dicom_notification
+        title: hsdp_dicom_notification
+        examples:
+            - name: topic
+              manifest: |-
+                {
+                  "config_url": "${hsdp_dicom_store_config.dicom.config_url}",
+                  "default_organization_id": "${hsdp_iam_org.tenant1.id}",
+                  "endpoint_url": "${var.notification_endpoint_url}"
+                }
+              references:
+                config_url: hsdp_dicom_store_config.dicom.config_url
+                default_organization_id: hsdp_iam_org.tenant1.id
+                endpoint_url: var.notification_endpoint_url
+        argumentDocs:
+            config_url: '- (Required) The base config URL of the DICOM Store instance'
+            default_organization_id: '- (Optional) The default organization ID'
+            enabled: '- (Optional) Enable the notification or not. Default: true'
+            endpoint_url: '- (Required) The notification endpoint URL. Example: https://notification-dev.us-east.philips-healthsuite.com'
+        importStatements: []
+    hsdp_dicom_object_store:
+        subCategory: DICOM Store
+        description: Manages HSDP DICOM Object Stores
+        name: hsdp_dicom_object_store
+        title: hsdp_dicom_object_store
+        examples:
+            - name: store2
+              manifest: |-
+                {
+                  "config_url": "${var.dicom_base_url}",
+                  "description": "Store 2",
+                  "organization_id": "${var.iam_org_two_id}",
+                  "s3creds_access": [
+                    {
+                      "bucket_name": "yyyy-yyyy-yyy-yyyy",
+                      "endpoint": "https://xxx.com",
+                      "folder_path": "/store1",
+                      "product_key": "xxxx-xxxx-xxxx-xxxx",
+                      "service_account": [
+                        {
+                          "access_token_endpoint": "${data.hsdp_config.iam.url}/oauth2/access_token",
+                          "private_key": "${var.service_private_key}",
+                          "service_id": "a@b.com",
+                          "token_endpoint": "${data.hsdp_config.iam.url}/authorize/oauth2/token"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              references:
+                config_url: var.dicom_base_url
+                organization_id: var.iam_org_two_id
+                s3creds_access.service_account.private_key: var.service_private_key
+        argumentDocs:
+            access_key: '- (Required) The S3 access key'
+            access_token_endpoint: '- (Required) The IAM access token endpoint'
+            access_type: '- The access type for this object store'
+            bucket_name: '- (Required) The S3 bucket name'
+            config_url: '- (Required) The base config URL of the DICOM Object store instance'
+            description: '- (Optional) Description of the object store'
+            endpoint: '- (Required) The S3 bucket endpoint'
+            folder_path: '- (Required) The S3Creds folder path to use'
+            force_delete: |-
+                - (Optional) By default object stores will not be deleted by the provider (soft-delete).
+                By setting this value to true the provider removes the object store. We strongly suggest enabling this only for ephemeral deployments.
+            name: '- (Optional) Name of the service'
+            organization_id: '- (Required) the IAM organization ID to use for authorization'
+            private_key: '- (Required) The IAM service private key'
+            product_key: '- (Required) The S3Creds product key'
+            s3creds_access: '- (Optional) the FHIR store configuration'
+            secret_key: '- (Required) The S3 secret key'
+            service_account: '- (Required) The IAM service account to use'
+            service_id: '- (Required) The IAM service id'
+            static_access: '- (Optional) Details of the CDR service account'
+            token_endpoint: '- (Required) The IAM token endpoint'
+        importStatements: []
+    hsdp_dicom_remote_node:
+        subCategory: DICOM Gateway
+        description: Manages HSDP DICOM Remote nodes
+        name: hsdp_dicom_remote_node
+        title: hsdp_dicom_remote_node
+        examples:
+            - name: remote_node_1
+              manifest: |-
+                {
+                  "ae_title": "AeTitelNode1",
+                  "config_url": "${var.dicom_base_url}",
+                  "network_connection": [
+                    {
+                      "artim_timeout": 20,
+                      "association_idle_timeout": 600,
+                      "disable_ipv6": false,
+                      "hostname": "foo.bar.com",
+                      "ip_address": "1.2.3.4",
+                      "is_secure": false,
+                      "network_timeout": 20,
+                      "pdu_length": 10,
+                      "port": 1000
+                    }
+                  ],
+                  "organization_id": "${var.site_org}",
+                  "title": "Node 1"
+                }
+              references:
+                config_url: var.dicom_base_url
+                organization_id: var.site_org
+        argumentDocs:
+            ae_title: '- (Required) Remote Node AETtile. Allowed characters for aetitle are A-Za-z0-9\\s/+=_-'
+            artim_timeout: '- (optional) Time-out waiting for A-ASSOCIATE RQ PDU on open TCP/IP connection. Artim timeout. Default 3000 ms'
+            associationIdleTimeOut: '- (Optional) Association Idle Timeout. Default 4500 ms'
+            config_url: '- (Required) The base config URL of the DICOM Store'
+            disable_ipv6: '- (Optional) Disable IPv6. Default false'
+            force_delete: |-
+                - (Optional) By default remote nodes are not deleted by the provider (soft-delete).
+                By setting this value to true the provider removes the remote node. We strongly suggest enabling this only for ephemeral deployments.
+            hostname: '- (Required) Remote Node Host name'
+            id: '- The remote node ID'
+            ip_address: '- (Optional) Remote Nde IP Address'
+            is_secure: '- (Required) Secure connection. Boolean true or false. Default false'
+            network_connection: '- (Required) Details of the remote not network connection'
+            network_timeout: '- (optional) Network timeout. Default 3000 ms'
+            pdu_length: '- (optional) PDU length. Default 65535'
+            port: '- (Required) Remte Node Port'
+            site_organization_id: '- (Required) Site Organization ID for which Gateway to be deployed'
+            title: '- (Optional) Remote Noe Description'
+        importStatements: []
+    hsdp_dicom_repository:
+        subCategory: DICOM Store
+        description: Manages HSDP DICOM Repository resources
+        name: hsdp_dicom_repository
+        title: hsdp_dicom_repository
+        examples:
+            - name: repo1
+              manifest: |-
+                {
+                  "config_url": "${hsdp_dicom_store_config.dicom.config_url}",
+                  "notification": [
+                    {
+                      "organization_id": "${hsdp_iam_org.tenant1.id}"
+                    }
+                  ],
+                  "object_store_id": "${hsdp_dicom_object_store.store1.id}",
+                  "organization_id": "${hsdp_iam_org.root_org.id}"
+                }
+              references:
+                config_url: hsdp_dicom_store_config.dicom.config_url
+                notification.organization_id: hsdp_iam_org.tenant1.id
+                object_store_id: hsdp_dicom_object_store.store1.id
+                organization_id: hsdp_iam_org.root_org.id
+        argumentDocs:
+            config_url: '- (Required) The base config URL of the DICOM Store instance'
+            enabled: '- (Required) Enable notifications or not. Default: true'
+            notification: (Block, Optional)
+            object_store_id: '- (Required) the Object store ID'
+            organization_id: '- (Required) The organization ID'
+            repository_organization_id: |-
+                - (Optional) The organization ID attached to this repository.
+                When not specified, the root organization is used.
+            store_as_composite: '- (Optional) Configure this repository as store as composite.'
+        importStatements: []
+    hsdp_dicom_store_config:
+        subCategory: DICOM Store
+        description: Manages HSDP DICOM Store configurations
+        name: hsdp_dicom_store_config
+        title: hsdp_dicom_store_config
+        examples:
+            - name: dicom
+              manifest: |-
+                {
+                  "cdr_service_account": [
+                    {
+                      "private_key": "${hsdp_iam_service.cdr.private_key}",
+                      "service_id": "${hsdp_iam_service.cdr.service_id}"
+                    }
+                  ],
+                  "config_url": "${var.dicom_base_url}",
+                  "fhir_store": [
+                    {
+                      "mpi_endpoint": "https://foo.bar/xxx"
+                    }
+                  ],
+                  "organization_id": "${var.iam_org_id}"
+                }
+              references:
+                cdr_service_account.private_key: hsdp_iam_service.cdr.private_key
+                cdr_service_account.service_id: hsdp_iam_service.cdr.service_id
+                config_url: var.dicom_base_url
+                organization_id: var.iam_org_id
+        argumentDocs:
+            cdr_service_account: '- (Optional) Details of the CDR service account'
+            config_url: '- (Required) The base config URL of the DICOM Store instance'
+            fhir_store: '- (Optional) the FHIR store configuration'
+            mpi_endpoint: '- the FHIR mpi endpoint'
+            organization_id: '- (Required) the IAM organization ID to use for authorization'
+            private_key: '- the service private key'
+            qido_url: '- QIDO API endpoint URL'
+            service_id: '- the service id'
+            stow_url: '- STOW API endpoint URL'
+            wado_url: '- WADO API endpoint URL'
+        importStatements: []
+    hsdp_docker_namespace:
+        subCategory: Docker Registry
+        description: Manages HSDP Docker namespaces
+        name: hsdp_docker_namespace
+        title: hsdp_docker_namespace
+        examples:
+            - name: project1
+              manifest: |-
+                {
+                  "name": "project1"
+                }
+        argumentDocs:
+            id: '- The id of the namespace'
+            name: '- (Required) The name of the namespace to look up'
+        importStatements: []
+    hsdp_docker_namespace_user:
+        subCategory: Docker Registry
+        description: Manages HSDP Docker namespace users
+        name: hsdp_docker_namespace_user
+        title: hsdp_docker_namespace_user
+        examples:
+            - name: camina
+              manifest: |-
+                {
+                  "can_delete": true,
+                  "can_pull": true,
+                  "can_push": true,
+                  "is_admin": false,
+                  "namespace_id": "${hsdp_docker_namespace.tycho.id}",
+                  "username": "camina"
+                }
+              references:
+                namespace_id: hsdp_docker_namespace.tycho.id
+              dependencies:
+                hsdp_docker_namespace.tycho: |-
+                    {
+                      "name": "tycho"
+                    }
+        argumentDocs:
+            can_delete: '- (Optional) Specifies if the user can delete repositories or not. Default: false'
+            can_pull: '- (Optional) Specifies if the user can pull repositories or not. Default: true'
+            can_push: '- (Optional) Specifies if the user can push repositories or not. Default: false'
+            id: '- The ID of the permission record'
+            is_admin: '- (Optional) Admin permissions on the namespace. Default: false'
+            namespace_id: '- (Required) The namespace ID to configure permissions for'
+            user_id: '- (Computed) The user id'
+            username: '- (Required) The LDAP / UAA username of the user to configure permissions for'
+        importStatements: []
+    hsdp_docker_repository:
+        subCategory: Docker Registry
+        description: Manages HSDP Docker repositories
+        name: hsdp_docker_repository
+        title: hsdp_docker_repository
+        examples:
+            - name: caddy
+              manifest: |-
+                {
+                  "full_description": "A copy of the official Caddy Docker image",
+                  "name": "caddy",
+                  "namespace_id": "${hsdp_docker_namespace.apps.id}",
+                  "short_description": "Caddy server image"
+                }
+              references:
+                namespace_id: hsdp_docker_namespace.apps.id
+              dependencies:
+                hsdp_docker_namespace.apps: |-
+                    {
+                      "name": "apps"
+                    }
+        argumentDocs:
+            compressed_sizes: '- The compressed size of the tags'
+            full_description: '- (Optional) A longer description, supporting markdown'
+            full_name: '- The full name to use to pull and push images, includes Docker host and namespace'
+            id: '- The ids of the repository'
+            image_digests: '- The SHA256 image digest of the tags'
+            image_ids: '- The image ids of the tags'
+            latest_tag: '- The latest tag, if available, based on the updated field'
+            name: '- (Required) Filter users on verified email state'
+            namespace_id: '- (Required) The organization users should belong to'
+            num_pulls: '- The pulls per tag'
+            short_description: '- (Optional) A short description of the repository (100 chars max)'
+            tags: '- The list of tag names'
+            total_pulls: '- The total number of pulls for this repo'
+            updated_at: '- The update timestamp'
+        importStatements: []
+    hsdp_docker_service_key:
+        subCategory: Docker Registry
+        description: Manages HSDP Docker service keys
+        name: hsdp_docker_service_key
+        title: hsdp_docker_service_key
+        examples:
+            - name: cicd
+              manifest: |-
+                {
+                  "description": "Terraform managed key"
+                }
+        argumentDocs:
+            created_at: '- (Computed) The timestamp the key was created'
+            description: '- (Required) The description of the service key'
+            id: '- The ID of the service key'
+            password: '- (Computed, Sensitive) The service key password'
+            username: '- (Computed) The service key username'
+        importStatements: []
+    hsdp_edge_app:
+        subCategory: HealthSuite Edge
+        description: Manages HSDP Edge applications
+        name: hsdp_edge_app
+        title: hsdp_edge_app
+        examples:
+            - name: myapp
+              manifest: |-
+                {
+                  "content": "${file(var.myapp_yaml)}",
+                  "name": "app.yml",
+                  "serial_number": "${var.serial_number}"
+                }
+              references:
+                serial_number: var.serial_number
+        argumentDocs:
+            content: '- (Required) The content of the resource'
+            endpoint: '- (Optional) The endpoint URL to use if applicable. When not set, the provider config is used'
+            id: '- The resource ID'
+            name: '- (Required) The name of the resource'
+            principal: '- (Optional) The optional principal to use for this resource'
+            region: '- (Optional) Region to use. When not set, the provider config is used'
+            serial_number: '- (Required) The serial number of the device to deploy this app resource on'
+            sync: '- (Optional, boolean) Sync the resource after mutation. Current default behaviour at system level is to sync immediately, but this might change in future updates.'
+            uaa_password: '- (Optional) The UAA password to use'
+            uaa_username: '- (Optional) The UAA username to use'
+        importStatements:
+            - terraform import hsdp_edge_app.myapp 234
+    hsdp_edge_config:
+        subCategory: HealthSuite Edge
+        description: Manages HSDP Edge configurations
+        name: hsdp_edge_config
+        title: hsdp_edge_config
+        examples:
+            - name: sme100
+              manifest: |-
+                {
+                  "firewall_exceptions": [
+                    {
+                      "ensure_tcp": [
+                        2575
+                      ],
+                      "ensure_udp": [
+                        2345
+                      ]
+                    }
+                  ],
+                  "logging": [
+                    {
+                      "hsdp_ingestor_host": "${var.logging_endpoint}",
+                      "hsdp_logging": true,
+                      "hsdp_product_key": "${var.logging_product_key}",
+                      "hsdp_secret_key": "${var.logging_secret_key}",
+                      "hsdp_shared_key": "${var.logging_shared_key}",
+                      "raw_config": "${file(var.raw_fluentbit_config)}"
+                    }
+                  ],
+                  "serial_number": "${data.hsdp_edge_device.sme100.serial_number}"
+                }
+              references:
+                logging.hsdp_ingestor_host: var.logging_endpoint
+                logging.hsdp_product_key: var.logging_product_key
+                logging.hsdp_secret_key: var.logging_secret_key
+                logging.hsdp_shared_key: var.logging_shared_key
+                serial_number: data.hsdp_edge_device.sme100.serial_number
+        argumentDocs:
+            clear_on_destroy: '- (Optional, boolean) When set to true, clears specified ports on destroy. Default is true'
+            endpoint: '- (Optional) The endpoint URL to use if applicable. When not set, the provider config is used'
+            ensure_tcp: '- (Optional, list(int)) Array of TCP ports to add. Conflicts with tcp'
+            ensure_udp: '- (Optional, list(int)) Array of UDP ports to add. Conflicts with udp'
+            firewall_exceptions: '- (Optional) Firewall exceptions'
+            hsdp_ingestor_host: '- (Optional) The HSDP logging endpoint'
+            hsdp_logging: '- (Optional, boolean) Enable or disable HSDP Logging feature'
+            hsdp_product_key: '- (Optional) the HSDP logging product key'
+            hsdp_secret_key: '- (Optional) the HSDP logging secret key'
+            hsdp_shared_key: '- (Optional) the HSDP logging shared key'
+            logging: '- (Optional) Log forwarding and fluent-bit logging configuration for the device'
+            principal: '- (Optional) The optional principal to use for this resource'
+            raw_config: '- (Optional) Fluent-bit raw configuration to use'
+            region: '- (Optional) Region to use. When not set, the provider config is used'
+            serial_number: '- (Required) The serial of the device this config should be applied to'
+            sync: |-
+                (Optional, boolean) - When set to true syncs the config after mutations. Default is true.
+                Set this to false if you want to batch sync to your device using hsdp_edge_sync
+            tcp: '- (Optional, list(int)) Array of TCP ports to allow. Conflicts with ensure_tcp'
+            uaa_password: '- (Optional) The UAA password to use'
+            uaa_username: '- (Optional) The UAA username to use'
+            udp: '- (Optional, list(int)) Array of UDP ports to allow. Conflicts with ensure_udp'
+        importStatements: []
+    hsdp_edge_custom_cert:
+        subCategory: HealthSuite Edge
+        description: Manages HSDP Edge custom certificates
+        name: hsdp_edge_custom_cert
+        title: hsdp_edge_custom_cert
+        examples:
+            - name: cert
+              manifest: |-
+                {
+                  "cert_pem": "${var.cert_pem}",
+                  "name": "terrakube.com",
+                  "private_key_pem": "${var.private_key_pme}",
+                  "serial_number": "${var.serial_number}"
+                }
+              references:
+                cert_pem: var.cert_pem
+                private_key_pem: var.private_key_pme
+                serial_number: var.serial_number
+        argumentDocs:
+            cert_pem: '- (Required) The certificate in PEM format'
+            endpoint: '- (Optional) The endpoint URL to use if applicable. When not set, the provider config is used'
+            id: '- The id of the custom certificate'
+            name: '- (Required) Name of the certificate'
+            principal: '- (Optional) The optional principal to use for this resource'
+            private_key_pem: '- (Required) the private key of the certificate in PEM format'
+            region: '- (Optional) Region to use. When not set, the provider config is used'
+            serial_number: '- (Required) Device to attach the cert to'
+            sync: |-
+                (Optional, boolean) - When set to true syncs the config after mutations. Default is true.
+                Set this to false if you want to batch sync to your device using hsdp_edge_sync
+            uaa_password: '- (Optional) The UAA password to use'
+            uaa_username: '- (Optional) The UAA username to use'
+        importStatements: []
+    hsdp_edge_sync:
+        subCategory: HealthSuite Edge
+        description: Manages HSDP Edge synchronizations
+        name: hsdp_edge_sync
+        title: hsdp_edge_sync
+        argumentDocs:
+            endpoint: '- (Optional) The endpoint URL to use if applicable. When not set, the provider config is used'
+            principal: '- (Optional) The optional principal to use for this resource'
+            region: '- (Optional) Region to use. When not set, the provider config is used'
+            serial_number: '- (Required) Serial number of the device to sync'
+            triggers: '- (Required, Hashmap) Create dependencies on other resources'
+            uaa_password: '- (Optional) The UAA password to use'
+            uaa_username: '- (Optional) The UAA username to use'
+        importStatements: []
+    hsdp_function:
+        subCategory: Functions
+        description: Manages HSDP Function definitions
+        name: hsdp_function
+        title: hsdp_function
+        examples:
+            - name: rds_backup
+              manifest: |-
+                {
+                  "backend": [
+                    {
+                      "credentials": "${module.siderite_backend.credentials}"
+                    }
+                  ],
+                  "docker_credentials": {
+                    "password": "${var.docker_password}",
+                    "username": "${var.docker_username}"
+                  },
+                  "docker_image": "${var.streaming_backup_image}",
+                  "environment": {
+                    "db_host": "rds.aws.com",
+                    "db_name": "hsdp_pg",
+                    "db_password": "${var.db_password}",
+                    "db_username": "${var.db_username}",
+                    "s3_access_key": "AAA",
+                    "s3_bucket": "cf-s3-xxx",
+                    "s3_prefix": "/backups",
+                    "s3_secret_key": "BBB"
+                  },
+                  "name": "streaming-backup",
+                  "schedule": "0 4 * * *"
+                }
+              references:
+                backend.credentials: module.siderite_backend.credentials
+                docker_image: var.streaming_backup_image
+        argumentDocs:
+            async_endpoint: '- The gateway endpoint where you can schedule the function asynchronously'
+            auth_type: '- The authentication type. Possible values [none, token, iam]'
+            backend: '- (Required) Use this block to specify backend details'
+            command: '- (Optional) The command to execute in the container. Default is /app/server'
+            credentials: '- (Required, map) The backend credentials. Must be iron configuration details at this time.'
+            docker_credentials: '- (Optional) The docker registry credentials'
+            docker_image: '- (Required) The docker image that contains the logic of the function'
+            endpoint: '- The gateway endpoint where you can trigger this function'
+            environment: '- (Optional, map) The environment variables to set in the docker container before executing the function'
+            name: '- (Required) The name of the function'
+            password: '- (Required) The registry password'
+            run_every: |-
+                - (Optional) Run the function every {value}{unit} period. Supported units are s, m, h, d for second, minute, hours, days respectively. Conflicts with cron
+                Example: a value of "20m" would run the function every 20 minutes.
+            schedule: '- (Optional) set schedule using cron format. This requires a backend with activated gateway. Conflicts with run_every'
+            start_at: |-
+                - (Optional) Only valid for run_every. This is a hint for when the first run should be.
+                This determines the time of day the schedule will run at. Depending on the frequency of the runs and
+                the time of day when the Terraform script was run, it can take up to 24 hours for the first run to happen.
+                Use schedule for more accurate scheduling behaviour.
+            timeout: '- (Optional, int) When set, limits the execution time (seconds) to this value. Default: 1800 (30 minutes)'
+            token: '- The token to use in case auth_type is set to token. This token must be pasted in the HTTP Authorization header as Token TOKENHERE'
+            username: '- (Required) The registry username'
+        importStatements: []
+    hsdp_iam_activation_email:
+        subCategory: Identity and Access Management (IAM)
+        description: Manages HSDP IAM Activation email resources
+        name: hsdp_iam_activation_email
+        title: hsdp_iam_activation_email
+        examples:
+            - name: activations
+              manifest: |-
+                {
+                  "for_each": "${toset(data.terraform_remote_state.local.outputs.unverified_users)}",
+                  "resend_every": 168,
+                  "user_id": "${for_each.key}"
+                }
+              references:
+                user_id: for_each.key
+        argumentDocs:
+            last_sent: '- (Computed) When the last email was sent'
+            resend_every: '- (Optional) Resend activation email after the provided number of hours. Default 72 (3 days)'
+            send: '- (Computed) Enabled when activation email is going to be sent'
+            user_id: '- (Required) The user GUID of the user'
+        importStatements: []
+    hsdp_iam_application:
+        subCategory: Identity and Access Management (IAM)
+        description: Manages HSDP IAM Application resources
+        name: hsdp_iam_application
+        title: hsdp_iam_application
+        examples:
+            - name: testapp
+              manifest: |-
+                {
+                  "description": "Test application",
+                  "name": "TESTAPP",
+                  "proposition_id": "${hsdp_iam_proposition.testprop.id}"
+                }
+              references:
+                proposition_id: hsdp_iam_proposition.testprop.id
+        argumentDocs:
+            description: '- (Required) The description of the application'
+            global_reference_id: '- (Optional, UUIDv4) Reference identifier defined by the provisioning user. Highly recommend to never set this and let Terraform generate a UUID for you.'
+            id: '- The GUID of the application'
+            name: '- (Required) The name of the application'
+            proposition_id: '- (Required) the proposition ID (GUID) to attach this a application to'
+            wait_for_delete: |-
+                - (Optional) Blocks until the application delete has completed. Default: false.
+                The application delete process can take some time as all its associated resources like
+                services and clients are removed recursively. This option is useful for ephemeral environments
+                where the same application might be recreated shortly after a destroy operation.
+        importStatements:
+            - terraform import hsdp_iam_application.myapp a-guid
+    hsdp_iam_client:
+        subCategory: Identity and Access Management (IAM)
+        description: Manages HSDP IAM Client resources
+        name: hsdp_iam_client
+        title: hsdp_iam_client
+        examples:
+            - name: testclient
+              manifest: |-
+                {
+                  "application_id": "${hsdp_iam_application.testtapp.id}",
+                  "client_id": "testclient",
+                  "default_scopes": [
+                    "cn",
+                    "introspect"
+                  ],
+                  "description": "Test client",
+                  "global_reference_id": "some-ref-here",
+                  "name": "TESTCLIENT",
+                  "password": "${random_password.client_password.result}",
+                  "redirection_uris": [
+                    "https://foo.bar/auth",
+                    "https://testapp.cloud.pcftest.com/auth"
+                  ],
+                  "response_types": [
+                    "code",
+                    "code id_token"
+                  ],
+                  "scopes": [
+                    "cn",
+                    "introspect",
+                    "email",
+                    "profile"
+                  ],
+                  "type": "Public"
+                }
+              references:
+                application_id: hsdp_iam_application.testtapp.id
+                password: random_password.client_password.result
+              dependencies:
+                random_password.client_password: |-
+                    {
+                      "length": 16,
+                      "min_lower": 1,
+                      "min_numeric": 1,
+                      "min_special": 1,
+                      "min_upper": 1,
+                      "override_special": "-!@#.:_?{$",
+                      "special": true
+                    }
+        argumentDocs:
+            access_token_lifetime: '- (Optional) Lifetime of the access token in seconds. If not specified, system default life time (1800 secs) will be considered.'
+            application_id: '- (Required) the application ID (GUID) to attach this client to'
+            client_id: '- (Required) The client id'
+            consent_implied: '- (Optional) Flag when enabled, the resource owner will not be asked for consent during authorization flows.'
+            default_scopes: '- (Required) Array. Default scopes. You do not have to specify these explicitly when requesting a token'
+            description: '- (Required) The description of the client'
+            disabled: '- True if the client is disabled e.g. because the Org is disabled'
+            global_reference_id: '- (Required) Reference identifier defined by the provisioning user. This reference Identifier will be carried over to identify the provisioned resource across deployment instances (ClientTest, Production). Invalid Characters:- "[&+’";=?()[]<>]'
+            id: '- The GUID of the client'
+            id_token_lifetime: '- (Optional) Lifetime of the jwt token generated in case openid scope is enabled for the client. If not specified, system default life time (3600 secs) will be considered.'
+            name: '- (Required) The name of the client'
+            password: '- (Required) The password to use (8-16 chars, at least one capital, number, special char)'
+            redirection_uris: '- (Required) Array of valid RedirectionURIs for this client'
+            refresh_token_lifetime: '- (Optional) Lifetime of the refresh token in seconds. If not specified, system default life time (2592000 secs) will be considered.'
+            response_types: '- (Required) Array. Examples of response types are "code id_token", "token id_token", etc.'
+            scopes: '- (Required) Array. List of supported scopes for this client'
+            type: '- (Required) Either Public or Confidential'
+        importStatements:
+            - terraform import hsdp_iam_client.myclient a-guid
+    hsdp_iam_device:
+        subCategory: Identity and Access Management (IAM)
+        description: Manages HSDP IAM Device resources
+        name: hsdp_iam_device
+        title: hsdp_iam_device
+        examples:
+            - name: test_device
+              manifest: |-
+                {
+                  "application_id": "${var.app_id}",
+                  "external_identifier": [
+                    {
+                      "system": "https://www.philips.co.id/c-m-ho/cooking/airfryer",
+                      "type": [
+                        {
+                          "code": "ID",
+                          "text": "Device Identifier"
+                        }
+                      ],
+                      "value": "001"
+                    }
+                  ],
+                  "for_test": true,
+                  "global_reference_id": "${random_uuid.test_device.result}",
+                  "is_active": true,
+                  "login_id": "test_device_a",
+                  "organization_id": "${var.org_id}",
+                  "password": "${random_password.test_device.result}",
+                  "type": "ActivityMonitor"
+                }
+              references:
+                application_id: var.app_id
+                global_reference_id: random_uuid.test_device.result
+                organization_id: var.org_id
+                password: random_password.test_device.result
+              dependencies:
+                random_password.test_device: '{}'
+                random_uuid.test_device: '{}'
+        argumentDocs:
+            application_id: '- (Required) the application ID (GUID) this device should be attached to'
+            code: '- (Required) The code of the ID'
+            external_identifier: '- (Required) Block describing external ID of this device'
+            for_test: '- (Optional) Boolean. When set to true this device is marked as a test device'
+            id: '- The GUID of the device'
+            is_active: '- (Optional) Boolean. Controls if this device is active or not'
+            login_id: '- (Required) The login id of the device'
+            organization_id: '- (Required) the organization ID (GUID) this device should be attached to'
+            password: '- (Required) The password of the device'
+            registration_date: '- (Generated) The date the device was registered'
+            system: '- (Required) The system where the identifier is defined in'
+            text: '- (Optional) Text describing the code type'
+            type: '- (Required) - Block describing the type'
+            value: '- (Required) The value of the identifier'
+        importStatements: []
+    hsdp_iam_email_template:
+        subCategory: Identity and Access Management (IAM)
+        description: Manages HSDP IAM Email template resources
+        name: hsdp_iam_email_template
+        title: hsdp_iam_email_template
+        examples:
+            - name: password_changed
+              manifest: |-
+                {
+                  "format": "HTML",
+                  "managing_organization": "${data.hsdp_iam_org.myorg.id}",
+                  "message": "Dear {{user.givenName}},\n\nYour password was recently changed. If this was not initiated\nby you please contact support immediately.\n\nKind regards,\nIAM Team\n",
+                  "subject": "Your IAM account password was changed",
+                  "type": "PASSWORD_CHANGED"
+                }
+              references:
+                managing_organization: data.hsdp_iam_org.myorg.id
+            - name: password_expiry
+              manifest: |-
+                {
+                  "format": "HTML",
+                  "managing_organization": "${data.hsdp_iam_org.myorg.id}",
+                  "message": "Dear {{user.givenName}},\n\nYour password will expire in {{password.expiresAfterPeriod}} day(s). Please set a new\npassword using the below link:\n\n{{link.passwordChange}}\n\nKind regards,\nIAM Team\n",
+                  "subject": "Your IAM account password was changed",
+                  "type": "PASSWORD_EXPIRY"
+                }
+              references:
+                managing_organization: data.hsdp_iam_org.myorg.id
+        argumentDocs:
+            '{{OTP}}': '- Email verification code'
+            '{{link.passwordChange}}': '- Change password uri'
+            '{{link.passwordReset}}': |-
+                - Reset password uri
+                The link can be configured to a custom page where the user can set new password. If no link is set, HSDP default link will be used for password reset.
+            '{{link.verification}}': '- Account verification uri'
+            '{{password.expiresAfterPeriod}}': |-
+                - How long the current password is valid (in days)
+                The link can be configured to a custom login page. Upon login the user can be redirected to change password page where the user should be asked to enter old password and new password. If no link is set, HSDP default link will be used for password change.
+            '{{template.linkExpiryPeriod}}': |-
+                - How long the verification link is valid (in hours)
+                If link field is configured to a custom URL, upon clicking the verification link, the user will be redirected to the specified link with an OTP appended to it. If no link is set, HSDP default link will be used for account activation.
+            '{{user.email}}': '- Email address of user'
+            '{{user.familyName}}': '- User''s last name'
+            '{{user.givenName}}': '- User''s first name'
+            '{{user.lockoutPeriod}}': '- How long the account will be in locked state (in minutes)'
+            '{{user.userName}}': '- Unique login ID of the user'
+            format: '- (Required) The template format. Must be HTML currently'
+            from: '- (Optional) The From field of the email. Default value is default'
+            id: '- The GUID of the email template'
+            link: '- (Optional) A clickable link, depends on the template type'
+            locale: '- (Optional) The locale of the template. When not specified the template will become the default. Only a single default template is allowed of course.'
+            managing_organization: '- (Required) The UUID of the IAM Org to apply this email template to'
+            message: '- (Required) A boolean value indicating if challenges are enabled at organization level. If the value is set to true, challenge_policy attribute is mandatory.'
+            subject: '- (Optional) The Subject line of the email. Default value is default'
+            type: '- (Required) The email template. See the Type table above for available values'
+        importStatements: []
+    hsdp_iam_group:
+        subCategory: Identity and Access Management (IAM)
+        description: Manages HSDP IAM Group resources
+        name: hsdp_iam_group
+        title: hsdp_iam_group
+        examples:
+            - name: tdr_users
+              manifest: |-
+                {
+                  "description": "Group for TDR Users with Contract and Dataitem roles",
+                  "devices": [],
+                  "managing_organization": "${hsdp_iam_org.devorg.id}",
+                  "name": "TDR Users",
+                  "roles": [
+                    "${hsdp_iam_role.TDRALL.id}"
+                  ],
+                  "services": [
+                    "${hsdp_iam_service.test.id}"
+                  ],
+                  "users": [
+                    "${hsdp_iam_user.admin.id}",
+                    "${hsdp_iam_user.developer.id}"
+                  ]
+                }
+              references:
+                managing_organization: hsdp_iam_org.devorg.id
+        argumentDocs:
+            description: '- (Required) The description of the group'
+            devices: '- (Optional) The list of IAM device identity IDs to include in this group. See hsdp_iam_device'
+            drift_detection: |-
+                - (Optional, bool) While most resources do automatic drift detection, we are opting to make this
+                opt-in for IAM Groups due to insufficient IAM API capabilities to perform this operation efficiently.
+                A future version might change this to be always-on. When enabled, the provider will perform additional API calls
+                to determine if any changes were made outside of Terraform to user and service assignments of this Group. Default: true
+            id: '- The GUID of the group'
+            managing_organization: '- (Required) The managing organization ID'
+            name: '- (Required) The name of the group'
+            roles: '- (Required) The list of role IDS to assign to this group'
+            services: '- (Optional) The list of service identity IDs to include in this group. See hsdp_iam_service'
+            users: '- (Optional) The list of user IDs to include in this group. The provider only manages this list of users. Existing users added by others means to the group by the provider. It is not practical to manage hundreds or thousands of users this way of course.'
+        importStatements:
+            - terraform import hsdp_iam_group.mygroup a-guid
+    hsdp_iam_group_membership:
+        subCategory: Identity and Access Management (IAM)
+        description: Manages HSDP IAM Group membership resources
+        name: hsdp_iam_group_membership
+        title: hsdp_iam_group_membership
+        examples:
+            - name: remote_developers
+              manifest: |-
+                {
+                  "iam_group_id": "${data.hsdp_iam_group.developers.id}",
+                  "users": [
+                    "${hsdp_iam_user.developer1.id}",
+                    "${hsdp_iam_user.developer1.id}"
+                  ]
+                }
+              references:
+                iam_group_id: data.hsdp_iam_group.developers.id
+        argumentDocs:
+            iam_group_id: '- (Required) The ID of the IAM Group to add users or services to'
+            id: '- The GUID of the group membership resource'
+            services: '- (Optional) The list of service identity IDs to include in this group.'
+            users: '- (Optional) The list of user IDs to include in this group. The provider only manages this list of users.'
+        importStatements: []
+    hsdp_iam_mfa_policy:
+        subCategory: Identity and Access Management (IAM)
+        description: Manages HSDP IAM MFA Policy resources
+        name: hsdp_iam_mfa_policy
+        title: hsdp_iam_mfa_policy
+        examples:
+            - name: mymfapolicy
+              manifest: |-
+                {
+                  "active": true,
+                  "organization": "${var.my_org.id}",
+                  "type": "SOFT_OTP"
+                }
+              references:
+                organization: var.my_org.id
+            - name: joes_policy
+              manifest: |-
+                {
+                  "active": true,
+                  "type": "SERVER_OTP",
+                  "user": "${var.user_joe.id}"
+                }
+              references:
+                user: var.user_joe.id
+        argumentDocs:
+            active: '- (Required) Defaults to true. Setting to false will disable MFA for the subject.'
+            description: '- (Optional) The description of the policy'
+            id: '- The GUID of the MFA policy'
+            name: '- (Optional) The name of the policy'
+            organization: '- (Required) The organization to attach this policy to. Conflicts with user'
+            type: '- (Required) the OTP type. Valid values: [SOFT_OTP | SERVER_OTP | SERVER_OTP_EMAIL | SERVER_OTP_SMS | SERVER_OTP_ANY ]'
+            user: '- (Required) The user UUID to attach this policy to. Conflicts with organization'
+            version: '- The version of the MFA policy'
+        importStatements:
+            - terraform import hsdp_iam_mfa_policy.mymfapolicy a-guid
+    hsdp_iam_org:
+        subCategory: Identity and Access Management (IAM)
+        description: Manages HSDP IAM Organization resources
+        name: hsdp_iam_org
+        title: hsdp_iam_org
+        examples:
+            - name: testorg
+              manifest: |-
+                {
+                  "description": "Test Organization",
+                  "name": "TestOrg",
+                  "parent_org_id": "${hsdp_iam_org.myorg.id}"
+                }
+              references:
+                parent_org_id: hsdp_iam_org.myorg.id
+            - name: myorg
+              manifest: |-
+                {
+                  "description": "My IAM Organization",
+                  "is_root_org": true,
+                  "name": "MyOrg"
+                }
+        argumentDocs:
+            active: '- Boolean. Weather the organization is active or not.'
+            description: '- (Required) The description of the Org'
+            display_name: '- (Optional) The name of the organization suitable for display.'
+            external_id: '- (Optional)  Identifier defined by client which identifies the organization on the client side'
+            id: '- The GUID of the organization'
+            is_root_org: '- (Optional) Marks the Org as a root organization (boolean)'
+            name: '- (Required) The name of the Org in IAM'
+            parent_org_id: '- (Required if not root org) The parent Org ID (GUID)'
+            type: '- (Optional) The type of the organization e.g. Hospital'
+            wait_for_delete: |-
+                - (Optional) Blocks until the organization delete has completed. Default: false.
+                The organization delete process can take some time as all its associated resources like
+                users, groups, roles etc. are removed recursively. This option is useful for ephemeral environments
+                where the same organization might be recreated shortly after a destroy operation.
+        importStatements: []
+    hsdp_iam_password_policy:
+        subCategory: Identity and Access Management (IAM)
+        description: Manages HSDP IAM Password policy resources
+        name: hsdp_iam_password_policy
+        title: hsdp_iam_password_policy
+        examples:
+            - name: mypolicy
+              manifest: |-
+                {
+                  "complexity": [
+                    {
+                      "max_length": 32,
+                      "min_length": 8,
+                      "min_lowercase": 1,
+                      "min_numerics": 1,
+                      "min_special_chars": 1,
+                      "min_uppercase": 1
+                    }
+                  ],
+                  "expiry_period_in_days": 180,
+                  "history_count": 5,
+                  "managing_organization": "${data.hsdp_iam_org.myorg.id}"
+                }
+              references:
+                managing_organization: data.hsdp_iam_org.myorg.id
+        argumentDocs:
+            challenge_policy: '- (Mandatory, if challenges_enabled = true) Specify KBA settings'
+            challenge_policy.default_questions: '- (Mandatory) A Multi-valued String attribute that contains one or more default question a user may use when setting their challenge questions.'
+            challenge_policy.max_incorrect_attempts: '- (Mandatory) An Integer indicates the maximum number of failed reset password attempts using challenges.'
+            challenge_policy.min_answer_count: '- (Mandatory) An Integer indicating the minimum number of challenge answers a user MUST answer when attempting to reset their password.'
+            challenge_policy.min_question_count: '- (Mandatory) An Integer indicating the minimum number of challenge questions a user MUST answer when setting challenge question answers.'
+            challenges_enabled: '- (Optional) A boolean value indicating if challenges are enabled at organization level. If the value is set to true, challenge_policy attribute is mandatory.'
+            complexity: '- (Required) Different criteria that decides the strength of user password for an organization. Block'
+            complexity.max_length: '- (Optional) The maximum number of characters password can contain.'
+            complexity.min_length: '- (Optional) The minimum number of characters password can contain. Default 8'
+            complexity.min_lowercase: '- (Optional) The minimum number of lower characters password can contain.'
+            complexity.min_numeric: '- (Optional) The minimum number of numerical characters password can contain.'
+            complexity.min_special_chars: '- (Optional) The minimum number of special characters password can contain.'
+            complexity.min_uppercase: '- (Optional) The minimum number of uppercase characters password can contain.'
+            expiry_period_in_days: '- (Optional) number - The number of days after which the user''s password expires.'
+            history_count: '- (Optional) The number of previous passwords that cannot be used as new password.'
+            id: '- The GUID of the password policy'
+            managing_organization: '- (Required) The UUID of the IAM Org to apply this policy to'
+        importStatements: []
+    hsdp_iam_proposition:
+        subCategory: Identity and Access Management (IAM)
+        description: Manages HSDP IAM Proposition resources
+        name: hsdp_iam_proposition
+        title: hsdp_iam_proposition
+        examples:
+            - name: testprop
+              manifest: |-
+                {
+                  "description": "Test Proposition",
+                  "name": "TestProposition",
+                  "organization_id": "${hsdp_iam_org.devorg.id}"
+                }
+              references:
+                organization_id: hsdp_iam_org.devorg.id
+        argumentDocs:
+            description: '- (Required) The description of the application'
+            global_reference_id: '- (Optional, UUIDv4) Reference identifier defined by the provisioning user. Highly recommend to never set this and let Terraform generate a UUID for you.'
+            id: '- The GUID of the proposition'
+            name: '- (Required) The name of the application'
+            organization_id: '- (Required) the organization ID (GUID) to attach this a proposition to'
+        importStatements:
+            - terraform import hsdp_iam_proposition.myprop a-guid
+    hsdp_iam_role:
+        subCategory: Identity and Access Management (IAM)
+        description: Manages HSDP IAM Role resources
+        name: hsdp_iam_role
+        title: hsdp_iam_role
+        examples:
+            - name: TDRALL
+              manifest: |-
+                {
+                  "description": "Role for TDR users with ALL access",
+                  "managing_organization": "${hsdp_iam_org.testdev.id}",
+                  "name": "TDRALL",
+                  "permissions": [
+                    "DATAITEM.CREATEONBEHALF",
+                    "DATAITEM.READ",
+                    "DATAITEM.DELETEONBEHALF",
+                    "DATAITEM.DELETE",
+                    "CONTRACT.CREATE",
+                    "DATAITEM.READONBEHALF",
+                    "CONTRACT.READ",
+                    "DATAITEM.CREATE"
+                  ]
+                }
+              references:
+                managing_organization: hsdp_iam_org.testdev.id
+        argumentDocs:
+            description: '- (Optional) The description of the group'
+            id: '- The GUID of the role'
+            managing_organization: '- (Required) The managing organization ID of this role'
+            name: '- (Required) The name of the group'
+            permissions: '- (Required) The list of permission to assign to this role'
+            ticket_protection: '- (Optional) Defaults to true. Setting to false will remove e.g. CLIENT.SCOPES permission which is only addable using a HSDP support ticket.'
+        importStatements:
+            - '> terraform import hsdp_iam_role.myrole a-guid'
+    hsdp_iam_role_sharing_policy:
+        subCategory: Identity and Access Management (IAM)
+        description: Manages HSDP IAM Role sharing policy resources
+        name: hsdp_iam_role_sharing_policy
+        title: hsdp_iam_role_sharing_policy
+        examples:
+            - name: policy
+              manifest: |-
+                {
+                  "purpose": "Share SOME role with another organization",
+                  "role_id": "${hsdp_iam_role.shared.id}",
+                  "sharing_policy": "AllowChildren",
+                  "target_organization_id": "${hsdp_iam_org.another_org.id}"
+                }
+              references:
+                role_id: hsdp_iam_role.shared.id
+                target_organization_id: hsdp_iam_org.another_org.id
+              dependencies:
+                hsdp_iam_role.shared: |-
+                    {
+                      "description": "A role we want to share across ORGs",
+                      "managing_organization": "${hsdp_iam_org.my_org.id}",
+                      "name": "SOME Role",
+                      "permissions": [
+                        "PATIENT.READ",
+                        "PRACTITIONER.READ"
+                      ]
+                    }
+        argumentDocs:
+            id: '- The GUID of the role sharing policy (also known as internalId at the API level)'
+            purpose: '- (Optional) The purpose of this role sharing policy mapping'
+            role_id: '- (Required) The ID of the role to share'
+            role_name: '- The role name'
+            sharing_policy: |-
+                - (Required) The policy to use
+                Sharing of a role with a tenant organization can be in one of the following modes:
+            source_organization_id: '- The source organization ID'
+            target_organization_id: '- (Required) The target organization UUID to apply this policy for. This can either be a root IAM Org or a subOrg in an existing hierarchy'
+        importStatements:
+            - '> terraform import hsdp_iam_role_sharing_policy.mypolicy a-guid'
+    hsdp_iam_service:
+        subCategory: Identity and Access Management (IAM)
+        description: Manages HSDP IAM Service resources
+        name: hsdp_iam_service
+        title: hsdp_iam_service
+        examples:
+            - name: testservice
+              manifest: |-
+                {
+                  "application_id": "${var.app_id}",
+                  "default_scopes": [
+                    "openid"
+                  ],
+                  "description": "Test service",
+                  "name": "TESTSERVICE",
+                  "scopes": [
+                    "openid"
+                  ],
+                  "token_validity": 3600,
+                  "validity": 12
+                }
+              references:
+                application_id: var.app_id
+        argumentDocs:
+            application_id: '- (Required) the application ID (GUID) to attach this service to'
+            default_scopes: '- (Required) Array. Default scopes. You do not have to specify these explicitly when requesting a token. Minimum: ["openid"]'
+            description: '- (Required) The description of the service'
+            expires_on: '- (Generated) Sets the certificate validity. When not specified, the certificate will have a validity of 5 years.'
+            id: '- The GUID of the client'
+            name: '- (Required) The name of the service'
+            organization_id: '- The organization ID this service belongs to (via application and proposition)'
+            private_key: '- (Generated) The active private of the service'
+            scopes: '- (Required) Array. List of supported scopes for this service. Minimum: ["openid"]'
+            self_managed_expires_on: '- (Optional) Sets the certificate validity. When not specified, the certificate will have a validity of 5 years.'
+            self_managed_private_key: |-
+                - (Optional)  RSA private key in PEM format. When provided, overrides the generated certificate / private key combination of the
+                IAM service. This gives you full control over the credentials. When not specified, a private key will be generated by IAM
+            service_id: '- (Generated) The service id'
+            token_validity: '- (Optional) Integer. Access Token Lifetime (in seconds). Default: 1800 (30 minutes), Maximum: 2592000 (30 days)'
+            validity: '- (Optional) Integer. Validity of service (in months). Minimum: 1, Maximum: 600 (5 years), Default: 12'
+        importStatements: []
+    hsdp_iam_sms_gateway:
+        subCategory: Identity and Access Management (IAM)
+        description: Manages HSDP IAM SMS Gateway resources
+        name: hsdp_iam_sms_gateway
+        title: hsdp_iam_sms_gateway
+        examples:
+            - name: config
+              manifest: |-
+                {
+                  "activation_expiry": 15,
+                  "credentials": [
+                    {
+                      "token": "${var.twilio_sub_account_token}"
+                    }
+                  ],
+                  "gateway_provider": "twilio",
+                  "organization_id": "${var.iam_org_id}",
+                  "properties": [
+                    {
+                      "endpoint": "${var.twilio_endpoint}",
+                      "from_number": "${var.twilio_phone_number}",
+                      "sid": "${var.twilio_sub_account_sid}"
+                    }
+                  ]
+                }
+              references:
+                credentials.token: var.twilio_sub_account_token
+                organization_id: var.iam_org_id
+                properties.endpoint: var.twilio_endpoint
+                properties.from_number: var.twilio_phone_number
+                properties.sid: var.twilio_sub_account_sid
+        argumentDocs:
+            activation_expires_on: '- (Optional) Sets the expiry time in minutes of the OTP. Default: 15'
+            credentials: '- (Required) Credentials of the SMS gateway'
+            endpoint: '- (Required) The Twilio endpoint to use'
+            from_number: '- (Required) The Twilio phone number from which SMS messages will appear from'
+            gateway_provider: '- (Optional) The SMS gateway provider. Default: twilio. Supported: [ twilio ]'
+            id: '- The GUID of the SMS gateway config'
+            organization_id: '- (Required) the IAM organization ID (GUID) for which this SMS gateway should be'
+            properties: '- (Required) The properties of the SMS gateway'
+            sid: '- (Required) The Twilio sub-account SID (sensitive)'
+            token: '- (Required)  The Twilio sub-account token (sensitive)'
+        importStatements: []
+    hsdp_iam_sms_template:
+        subCategory: Identity and Access Management (IAM)
+        description: Manages HSDP IAM SMS Template resources
+        name: hsdp_iam_sms_template
+        title: hsdp_iam_sms_template
+        examples:
+            - name: mfa_otp_default
+              manifest: |-
+                {
+                  "message": "Hi {{user.givenName}}, your OTP code is {{template.otp}}, valid for {{template.otpExpiryPeriod}} minutes",
+                  "organization_id": "${var.org_id}",
+                  "type": "MFA_OTP"
+                }
+              references:
+                organization_id: var.org_id
+            - name: mfa_otp_nl
+              manifest: |-
+                {
+                  "locale": "nl-NL",
+                  "message": "Hallo {{user.givenName}}, jouw OTP code is {{template.otp}}, deze is {{template.otpExpiryPeriod}} minuten geldig",
+                  "organization_id": "${var.org_id}",
+                  "type": "MFA_OTP"
+                }
+              references:
+                organization_id: var.org_id
+        argumentDocs:
+            '{{template.otp}}': '- Generated OTP.'
+            '{{template.otpExpiryPeriod}}': '- How long the OTP is valid (in minutes)'
+            '{{template.phoneNumber}}': '- Phone number for verification.'
+            '{{user.displayName}}': '- User''s display name'
+            '{{user.familyName}}': '- User''s last name'
+            '{{user.givenName}}': '- User''s first name'
+            '{{user.lockoutPeriod}}': '- How long the account will be in locked state (in minutes)'
+            '{{user.userName}}': '- Unique login ID of the user'
+            id: '- The GUID of the email template'
+            locale: '- (string, Optional) The locale of the template. When not specified the template will become the default. Only a single default template is allowed of course.'
+            message: '- (string, Semi-Required) The message, including template placeholders. Max length is 160 chars. Take into account placeholder expansion'
+            message_base64: '- (base64, Semi-Required) Conflicts with message. Same as message but provided as a base64 string'
+            organization_id: '- (string, Required) The UUID of the IAM Org to apply this SMS template to'
+            type: '- (string, Required) The SMS template type. See the Type table above for available values'
+        importStatements: []
+    hsdp_iam_user:
+        subCategory: Identity and Access Management (IAM)
+        description: Manages HSDP IAM Users
+        name: hsdp_iam_user
+        title: hsdp_iam_user
+        examples:
+            - name: developer
+              manifest: |-
+                {
+                  "email": "developer@1e100.io",
+                  "first_name": "Devel",
+                  "last_name": "Oper",
+                  "login": "developer",
+                  "organization_id": "${hsdp_iam_org.testdev.id}"
+                }
+              references:
+                organization_id: hsdp_iam_org.testdev.id
+        argumentDocs:
+            email: '- (Semi-Required) The email address of the user'
+            first_name: '- (Required) First name of the user'
+            id: '- The GUID of the user'
+            last_name: '- (Required) Last name of the user'
+            login: '- (Required) The login ID of the user (NEW since v0.4.0)'
+            mobile: '- (Optional) Mobile number of the user. E.164 format'
+            organization_id: '- (Required) The managing organization of the user'
+            password: |-
+                - (Optional) When specified this will skip the email activation
+                flow and immediately activate the IAM account. Very Important: you are responsible
+                for sharing this password with the new IAM user through some channel of communication.
+                No email will be triggered by the system. If unsure, do not set a password so the normal
+                email activation flow is followed. Finally, any password value changes after user creation
+                will have no effect on the users' actual password.
+            preferred_communication_channel: |-
+                - (Optional) Preferred communication channel.
+                Email and SMS are supported channels. Email is the default channel if e-mail address is provided.
+                Values supported: [ email | sms ]
+            preferred_language: |-
+                - (Optional) Language preference for all communications.
+                Value can be a two letter language code as defined by ISO 639-1 (en, de) or it can be a combination
+                of language code and country code (en-gb, en-us). The country code is as per ISO 3166 two letter code (alpha-2)
+        importStatements:
+            - '> terraform import hsdp_iam_user.developer a-guid'
+    hsdp_metrics_autoscaler:
+        subCategory: Autoscaler
+        description: Manages HSDP Metrics autoscalers
+        name: hsdp_metrics_autoscaler
+        title: hsdp_metrics_autoscaler
+        examples:
+            - name: myapp_autoscaler
+              manifest: |-
+                {
+                  "app_name": "${cloudfoundry_app.myapp.name}",
+                  "enabled": true,
+                  "max_instances": 10,
+                  "metrics_instance_id": "${cloudfoundry_service_instance.metrics.id}",
+                  "min_instances": 1,
+                  "threshold_cpu": [
+                    {
+                      "enabled": true,
+                      "max": 90,
+                      "min": 5
+                    }
+                  ],
+                  "threshold_http_latency": [
+                    {
+                      "enabled": false
+                    }
+                  ],
+                  "threshold_http_rate": [
+                    {
+                      "enabled": false
+                    }
+                  ],
+                  "threshold_memory": [
+                    {
+                      "enabled": false
+                    }
+                  ]
+                }
+              references:
+                app_name: cloudfoundry_app.myapp.name
+                metrics_instance_id: cloudfoundry_service_instance.metrics.id
+        argumentDocs:
+            app_name: '- (Required) The CF app name to apply this autoscaler settings for.'
+            enabled: '- (Required) When set to true this threshold type is evaluated'
+            id: '- The resource instance ID'
+            max: '- (Optional) Maximum number of app instances. Default: 10'
+            metrics_instance_id: '- (Required) The Metrics service instance UUID running in the space where the app is hosted.'
+            min: '- (Optional) Minimum number of app instances. Default: 1'
+            threshold_cpu: '- (Required) CPU threshold block. Min/max values are %'
+            threshold_http_latency: '- (Required) HTTP latency threshold block. Min/max values are in ms'
+            threshold_http_rate: '- (Required) HTTP rate threshold block. Min/max values are in requests/minute'
+            threshold_memory: '- (Required) Memory threshold block. Min/max values are %'
+        importStatements: []
+    hsdp_notification_producer:
+        subCategory: Notification
+        description: Manages HSDP Notifation Producer resources
+        name: hsdp_notification_producer
+        title: hsdp_notification_producer
+        examples:
+            - name: producer
+              manifest: |-
+                {
+                  "description": "product description",
+                  "managing_organization": "exampleOrg",
+                  "managing_organization_id": "example-d8f5-4fe4-b486-29a7fd30c9ba",
+                  "producer_product_name": "exampleProduct",
+                  "producer_service_base_url": "https://ns-producer.cloud.pcftest.com/",
+                  "producer_service_instance_name": "exampleServiceInstance",
+                  "producer_service_name": "exampleServiceName",
+                  "producer_service_path_url": "notification/create"
+                }
+        argumentDocs:
+            description: '- (Optional) Description of the producer application'
+            endpoint: '- (Optional) The endpoint URL to use if applicable. When not set, the provider config is used'
+            environment: '- (Optional) Environment to use. When not set, the provider config is used'
+            id: '- The producer ID'
+            managing_organization: '- (Required) The name of IAM organization or tenant'
+            managing_organization_id: '- (Required) The UUID of the IAM organization or tenant'
+            oauth2_client_id: '- (Optional) The OAuth2 client id to authenticate the token endpoint. When not set, the provider config is used'
+            oauth2_password: '- (Optional) The Oauth2 password to authenticate the token endpoint. When not set, the provider config is used'
+            password: '- (Optional) The password of the IAM user principal'
+            principal: '- (Optional) The optional principal to use for this resource'
+            producer_product_name: '- (Required) TThe name of the product'
+            producer_service_base_url: '- (Required) The base URL of the producer'
+            producer_service_instance_name: '- (Required) The name of a service instance in the product. Used to differentiate multiple copies of the same service used in an organization'
+            producer_service_name: '- (Required) The name of the service within the product'
+            producer_service_path_url: '- (Required) The URL extension of the producer'
+            region: '- (Optional) Region to use. When not set, the provider config is used'
+            service_id: '- (Optional) The IAM service ID'
+            service_private_key: '- (Optional) The IAM service private key to use'
+            username: '- (Optional) The username of the IAM user principal'
+        importStatements: []
+    hsdp_notification_subscriber:
+        subCategory: Notification
+        description: Manages HSDP Notifation Subscriber resources
+        name: hsdp_notification_subscriber
+        title: hsdp_notification_subscriber
+        examples:
+            - name: subscriber
+              manifest: |-
+                {
+                  "description": "subscriber description",
+                  "managing_organization": "exampleOrg",
+                  "managing_organization_id": "example-d8f5-4fe4-b486-29a7fd30c9ba",
+                  "subscriber_product_name": "subsciberProd",
+                  "subscriber_service_base_url": "https://ns-client-logdev.cloud.pcftest.com/",
+                  "subscriber_service_instance_name": "serviceInsttest12",
+                  "subscriber_service_name": "subsciberService",
+                  "subscriber_service_path_url": "core"
+                }
+        argumentDocs:
+            description: '- (Optional) Description of the subscriber application'
+            endpoint: '- (Optional) The endpoint URL to use if applicable. When not set, the provider config is used'
+            environment: '- (Optional) Environment to use. When not set, the provider config is used'
+            id: '- The subscriber ID'
+            managing_organization: '- (Required) The name of IAM organization or tenant'
+            managing_organization_id: '- (Required) The UUID of the IAM organization or tenant'
+            principal: '- (Optional) The optional principal to use for this resource'
+            region: '- (Optional) Region to use. When not set, the provider config is used'
+            service_id: '- (Optional) The IAM service ID'
+            service_private_key: '- (Optional) The IAM service private key to use'
+            soft_delete: '- (Optional) Soft delete resource in case the subscription is still pending. Default: false'
+            subscriber_product_name: '- (Required) The name of the product'
+            subscriber_service_base_url: '- (Required) The base URL of the subscriber'
+            subscriber_service_instance_name: '- (Required) The name of a service instance, used to differentiate multiple copies of the same service used in an organization'
+            subscriber_service_name: '- (Required) The name of the subscriber service'
+            subscriber_service_path_url: '- (Required) The URL extension of the subscriber'
+        importStatements: []
+    hsdp_notification_subscription:
+        subCategory: Notification
+        description: Manages HSDP Notifation Subscription resources
+        name: hsdp_notification_subscription
+        title: hsdp_notification_subscription
+        examples:
+            - name: subscription
+              manifest: |-
+                {
+                  "subscriber_id": "4e2546a3-b162-47d1-8014-c89148def43f",
+                  "subscription_endpoint": "https://ns-client-logdev.cloud.pcftest.com/core/notification/Message",
+                  "topic_id": "ca1e3aa4-1409-4b1b-95e5-8795ecdecea7"
+                }
+        argumentDocs:
+            endpoint: '- (Optional) The endpoint URL to use if applicable. When not set, the provider config is used'
+            environment: '- (Optional) Environment to use. When not set, the provider config is used'
+            principal: '- (Optional) The optional principal to use for this resource'
+            region: '- (Optional) Region to use. When not set, the provider config is used'
+            service_id: '- (Optional) The IAM service ID'
+            service_private_key: '- (Optional) The IAM service private key to use'
+            subscriber_id: '- (Required) The UUID of the subscriber'
+            subscription_endpoint: '- (Required) The subscription endpoint. Only https protocol is allowed'
+            topic_id: '- (Required) The UUID of the topic'
+        importStatements: []
+    hsdp_notification_topic:
+        subCategory: Notification
+        description: Manages HSDP Notifation Topic resources
+        name: hsdp_notification_topic
+        title: hsdp_notification_topic
+        examples:
+            - name: topic
+              manifest: |-
+                {
+                  "allowed_scopes": [
+                    "*.*.*.NotificationTest"
+                  ],
+                  "description": "topic description",
+                  "is_auditable": true,
+                  "name": "Topic1",
+                  "producer_id": "036c8a21-6906-4485-b2e7-e31883d8f9ed",
+                  "scope": "public"
+                }
+        argumentDocs:
+            '*.*.*.*': -> ORGANIZATION.PROPOSITION.APPLICATION.SCOPE
+            '*.*.*.somescopevalue': . Public topics will not allow ? for organization value or * in scopevalues.
+            ?.*.*.*: '- Both producer and subscriber should belong to the same organization. Scope need not be present or it can be of any value.'
+            ?.*.*.somescope: '- Both producer and subscriber should belong to the same organization. Subscriber should have the same scope as mentioned in the allowedScopes property.'
+            Org1.*.*.somescope: |-
+                - Subscriber should belong to Org1 and should have the scope as specified.
+                Private topics will not allow * for the organization value.
+            allowed_scopes: '- (Required, list(string)) Validates whether the subscriber can access the topic'
+            description: '- (Optional) The intended usage of this topic'
+            endpoint: '- (Optional) The endpoint URL to use if applicable. When not set, the provider config is used'
+            environment: '- (Optional) Environment to use. When not set, the provider config is used'
+            id: '- The topic ID'
+            is_auditable: '- (Optional) Indicates whether the topic has to be audited whenever messages are published to it. Default value is false. User has to set to true for audit to happen.'
+            name: '- (Required) The name of a topic. The topic name length is restricted to a maximum of 256 characters. The special characters allowed are - and _.'
+            principal: '- (Optional) The optional principal to use for this resource'
+            producer_id: '- (Required) The UUID of the producer'
+            region: '- (Optional) Region to use. When not set, the provider config is used'
+            scope: '- (Required) The intended scope of this topic. Can be either public or private'
+            service_id: '- (Optional) The IAM service ID'
+            service_private_key: '- (Optional) The IAM service private key to use'
+        importStatements: []
+    hsdp_pki_cert:
+        subCategory: Public Key Infrastructure
+        description: Manages HSDP PKI certificates
+        name: hsdp_pki_cert
+        title: hsdp_pki_cert
+        examples:
+            - name: cert
+              manifest: |-
+                {
+                  "alt_names": "myapp.io,www.myapp.io",
+                  "common_name": "myapp.com",
+                  "exclude_cn_from_sans": false,
+                  "ip_sans": [],
+                  "other_sans": [],
+                  "role": "ec384",
+                  "tenant_id": "${hsdp_pki_tenant.tenant.id}",
+                  "ttl": "720h",
+                  "uri_sans": []
+                }
+              references:
+                tenant_id: hsdp_pki_tenant.tenant.id
+            - name: auto_refresh_cert
+              manifest: |-
+                {
+                  "alt_names": "myapp.io,www.myapp.io",
+                  "common_name": "myapp.com",
+                  "exclude_cn_from_sans": false,
+                  "ip_sans": [],
+                  "other_sans": [],
+                  "role": "ec384",
+                  "tenant_id": "${hsdp_pki_tenant.tenant.id}",
+                  "triggers": {
+                    "refresh": "${data.hsdp_config.pki.sliding_expires_on}"
+                  },
+                  "ttl": "720h",
+                  "uri_sans": []
+                }
+              references:
+                tenant_id: hsdp_pki_tenant.tenant.id
+        argumentDocs:
+            alt_names: '- (Optional) Alternative names to use, comma separated list.'
+            ca_chain_pem: '- The full CA chain in PEM format'
+            cert_pem: '- The certificate in PEM format'
+            common_name: '- (Required) The common name to use'
+            exclude_cn_from_sans: '- (Optional) Exclude common name from SAN'
+            expiration: '- (int) The Unix timestamp when the certificate will expire'
+            ip_sans: '- (Optional, list(string)) A list of IP SANS to include'
+            issuing_ca_pem: '- The issuing CA certicate in PEM format'
+            other_sans: '- (Optional, list(string)) A list of other SANS to include'
+            private_key_pem: '- The private key in PEM format'
+            role: '- (Required) the Role to use as defined under a PKI Tenant resource'
+            serial_number: '- The certificate serial number (equal to resource ID)'
+            tenant_id: '- (Required) The tenant ID to create this certificate under'
+            triggers: '- (Optional, list(string)) An list of strings which when changes will trigger recreation of the resource'
+            ttl: '- (Optional, string regex [0-9]+[hms]$) The TTL, example 720h for 1 month'
+            uri_sans: '- (Optional, list(string)) A list of URI SANS to include'
+        importStatements: []
+    hsdp_pki_tenant:
+        subCategory: Public Key Infrastructure
+        description: Manages HSDP PKI tenants
+        name: hsdp_pki_tenant
+        title: hsdp_pki_tenant
+        examples:
+            - name: tenant
+              manifest: |-
+                {
+                  "ca": [
+                    {
+                      "common_name": "common.name"
+                    }
+                  ],
+                  "iam_orgs": [
+                    "${var.iam_org_id}"
+                  ],
+                  "organization_name": "client-my-org",
+                  "role": [
+                    {
+                      "allow_any_name": true,
+                      "allow_ip_sans": true,
+                      "allow_subdomains": true,
+                      "allowed_domains": [],
+                      "allowed_other_sans": [
+                        "*"
+                      ],
+                      "allowed_uri_sans": [
+                        "*"
+                      ],
+                      "client_flag": true,
+                      "enforce_hostnames": false,
+                      "key_bits": 384,
+                      "key_type": "ec",
+                      "name": "ec384",
+                      "server_flag": true
+                    }
+                  ],
+                  "space_name": "prod"
+                }
+        argumentDocs:
+            allow_any_name: '- (Required, bool) Allow any name'
+            allow_ip_sans: '- (Required, bool) Allow IP Subject Alternative Names (SAN)'
+            allow_subdomains: '- (Required, bool) Allow subdomains to be created'
+            allowed_domains: '- (Optional, list(string)) List of allowed domains'
+            allowed_other_sans: |-
+                - (Required, list(string)) List of
+                allowed other SANs. Specifying a single '*' entry will allow any other sans
+            allowed_uri_sans: |-
+                - (Required, list(string)) List of allowed
+                URI SANs. Values can contain glob patterns (e.g. spiffe://hostname/*)
+            ca: '- (Required) The Certificate Authority information to use.'
+            client_flags: '- (Required, bool) Allow use on clients'
+            common_name: '- (Required) The common name to use'
+            enforce_hostnames: '- (Optional, bool) Enforce hostnames. Default: false'
+            id: |-
+                - The HSDP PKI logical_path of the tenant.
+                The Terraform provider uses this as the Tenant ID
+            key_bits: '- (Required, int) Key length. Typically 384 for ec key types.'
+            key_type: '- (Required) The key type. Values [ec, rsa]'
+            logical_path: '- Same as id. This is for consistency.'
+            name: '- (Required) The role name. This is used for lookup'
+            organization_name: '- (Required) The CF organization name to use'
+            private_key_pem: '- The private key in PEM format'
+            role: '- (Required) A role definition. Muliple roles are supported'
+            server_flags: '- (Required, bool) Allow use on servers'
+            space_name: '- (Required) The CF space name to verify the user is part of'
+            triggers: '- (Optional, list(string)) An list of strings which when changes will trigger recreation of the resource'
+            ttl: '- (Optional, string regex [0-9]+[hms]$) The TTL, example 8760h for 1 year'
+        importStatements: []
+    hsdp_s3creds_policy:
+        subCategory: S3 Credentials
+        description: Manages HSDP S3 Credentials policies
+        name: hsdp_s3creds_policy
+        title: hsdp_s3creds_policy
+        examples:
+            - name: policy1
+              manifest: |-
+                {
+                  "policy": "{\n  \"conditions\": {\n    \"managingOrganizations\": [ \"${var.org_id}\" ],\n    \"groups\": [ \"PublishGroup\" ]\n  },\n  \"allowed\": {\n    \"resources\": [ \"${var.org_id}/foo/*\" ],\n    \"actions\": [\n      \"GET\",\n      \"PUT\",\n      \"LIST\",\n      \"DELETE\"\n    ]\n  }\n}\n",
+                  "product_key": "${var.credentials_product_key}"
+                }
+              references:
+                product_key: var.credentials_product_key
+        argumentDocs:
+            id: '- The ID of the policy'
+            policy: |-
+                - (Required) The policy definition. This is a JSON string as per
+                HSDP S3 Credentials documentation
+            product_key: |-
+                - (Required) The product key (tenant) for which this
+                policy should apply to
+        importStatements: []

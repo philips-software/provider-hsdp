@@ -14,34 +14,45 @@ import (
 )
 
 type SubscriptionObservation struct {
+
+	// The ID of the CDR subscription
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// The status of the subscription (requested | active | error  | off)
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 type SubscriptionParameters struct {
 
+	// On which resource to notify
 	// +kubebuilder:validation:Required
 	Criteria *string `json:"criteria" tf:"criteria,omitempty"`
 
+	// The REST endpoint to call for DELETE operations. Must use https:// schema
 	// +kubebuilder:validation:Optional
 	DeleteEndpoint *string `json:"deleteEndpoint,omitempty" tf:"delete_endpoint,omitempty"`
 
+	// RFC3339 formatted timestamp when to end notifications
 	// +kubebuilder:validation:Required
 	End *string `json:"end" tf:"end,omitempty"`
 
+	// The REST endpoint to call. Must use https://  schema
 	// +kubebuilder:validation:Optional
 	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
 
+	// The CDR FHIR store endpoint to use
 	// +kubebuilder:validation:Required
 	FHIRStore *string `json:"fhirStore" tf:"fhir_store,omitempty"`
 
+	// List of headers to add to the REST call
 	// +kubebuilder:validation:Optional
 	Headers []*string `json:"headers,omitempty" tf:"headers,omitempty"`
 
+	// Reason for creating the subscription
 	// +kubebuilder:validation:Required
 	Reason *string `json:"reason" tf:"reason,omitempty"`
 
+	// The FHIR version to use. Options [ stu3 | r4 ]. Default is stu3
 	// +kubebuilder:validation:Optional
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
@@ -60,7 +71,7 @@ type SubscriptionStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Subscription is the Schema for the Subscriptions API. <no value>
+// Subscription is the Schema for the Subscriptions API. Manages HSDP CDR Subscription resources
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

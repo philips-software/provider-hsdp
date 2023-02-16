@@ -1,0 +1,24 @@
+apiVersion: iam.hsdp.crossplane.io/v1alpha1
+kind: Service
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iam/v1alpha1/service
+  labels:
+    testing.upbound.io/example-name: testservice
+  name: testservice
+spec:
+  forProvider:
+    applicationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    defaultScopes:
+    - openid
+    description: Test service
+    name: TESTSERVICE
+    scopes:
+    - openid
+    tokenValidity: 3600
+    validity: 12
+
+---
+

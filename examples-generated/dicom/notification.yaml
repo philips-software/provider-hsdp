@@ -1,0 +1,18 @@
+apiVersion: dicom.hsdp.crossplane.io/v1alpha1
+kind: Notification
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dicom/v1alpha1/notification
+  labels:
+    testing.upbound.io/example-name: topic
+  name: topic
+spec:
+  forProvider:
+    configUrl: ${hsdp_dicom_store_config.dicom.config_url}
+    defaultOrganizationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: tenant1
+    endpointUrl: ${var.notification_endpoint_url}
+
+---
+

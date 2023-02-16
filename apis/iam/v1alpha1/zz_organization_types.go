@@ -15,42 +15,55 @@ import (
 
 type OrganizationObservation struct {
 
+	// Boolean. Weather the organization is active or not.
 	// Weather the organization is active or not.
 	Active *bool `json:"active,omitempty" tf:"active,omitempty"`
 
+	// The GUID of the organization
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type OrganizationParameters struct {
 
+	// The description of the Org
 	// The description of the organization.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// The name of the organization suitable for display.
 	// The display name to use for this organization.
 	// +kubebuilder:validation:Optional
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
+	// Identifier defined by client which identifies the organization on the client side
 	// An optional external identifier for this organization.
 	// +kubebuilder:validation:Optional
 	ExternalID *string `json:"externalId,omitempty" tf:"external_id,omitempty"`
 
+	// Marks the Org as a root organization (boolean)
 	// Deprecated, do not use.
 	// +kubebuilder:validation:Optional
 	IsRootOrg *bool `json:"isRootOrg,omitempty" tf:"is_root_org,omitempty"`
 
+	// The name of the Org in IAM
 	// The name of the IAM Organization.
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// The parent Org ID (GUID)
 	// The parent organization ID.
 	// +kubebuilder:validation:Optional
 	ParentOrgID *string `json:"parentOrgId,omitempty" tf:"parent_org_id,omitempty"`
 
+	// The type of the organization e.g. Hospital
 	// The organization type.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
+	// Blocks until the organization delete has completed. Default: false.
+	// The organization delete process can take some time as all its associated resources like
+	// users, groups, roles etc. are removed recursively. This option is useful for ephemeral environments
+	// where the same organization might be recreated shortly after a destroy operation.
 	// Blocks until the organization delete has completed. Default: false. The organization delete process can take some time as all its associated resources like users, groups, roles etc. are removed recursively. This option is useful for ephemeral environments where the same organization might be recreated shortly after a destroy operation.
 	// +kubebuilder:validation:Optional
 	WaitForDelete *bool `json:"waitForDelete,omitempty" tf:"wait_for_delete,omitempty"`
@@ -70,7 +83,7 @@ type OrganizationStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Organization is the Schema for the Organizations API. <no value>
+// Organization is the Schema for the Organizations API. Manages HSDP IAM Organization resources
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

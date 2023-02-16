@@ -35,7 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Client is the Schema for the Clients API. <no value>
+        description: Client is the Schema for the Clients API. Manages HSDP IAM Client
+          resources
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -65,10 +66,13 @@ spec:
                 properties:
                   accessTokenLifetime:
                     description: Lifetime of the access token in seconds. If not specified,
-                      system default life time (1800 secs) will be considered.
+                      system default life time (1800 secs) will be considered. Lifetime
+                      of the access token in seconds. If not specified, system default
+                      life time (1800 secs) will be considered.
                     type: number
                   applicationId:
-                    description: The application ID to attach this client to.
+                    description: the application ID (GUID) to attach this client to
+                      The application ID to attach this client to.
                     type: string
                   applicationIdSelector:
                     description: Selector for a Application to populate applicationId.
@@ -144,37 +148,49 @@ spec:
                     - name
                     type: object
                   clientId:
-                    description: The client id
+                    description: The client id The client id
                     type: string
                   consentImplied:
                     description: Flag when enabled, the resource owner will not be
-                      asked for consent during authorization flows.
+                      asked for consent during authorization flows. Flag when enabled,
+                      the resource owner will not be asked for consent during authorization
+                      flows.
                     type: boolean
                   defaultScopes:
-                    description: Default scopes. You do not have to specify these
-                      explicitly when requesting a token.
+                    description: Array. Default scopes. You do not have to specify
+                      these explicitly when requesting a token Default scopes. You
+                      do not have to specify these explicitly when requesting a token.
                     items:
                       type: string
                     type: array
                   description:
-                    description: The description of the client.
+                    description: The description of the client The description of
+                      the client.
                     type: string
                   globalReferenceId:
                     description: Reference identifier defined by the provisioning
                       user. This reference Identifier will be carried over to identify
-                      the provisioned resource across deployment instances.
+                      the provisioned resource across deployment instances (ClientTest,
+                      Production). Invalid Characters:- "[&+’";=?()[]<>] Reference
+                      identifier defined by the provisioning user. This reference
+                      Identifier will be carried over to identify the provisioned
+                      resource across deployment instances.
                     type: string
                   idTokenLifetime:
                     description: Lifetime of the jwt token generated in case openid
                       scope is enabled for the client. If not specified, system default
-                      life time (3600 secs) will be considered.
+                      life time (3600 secs) will be considered. Lifetime of the jwt
+                      token generated in case openid scope is enabled for the client.
+                      If not specified, system default life time (3600 secs) will
+                      be considered.
                     type: number
                   name:
-                    description: Name of the client.
+                    description: The name of the client Name of the client.
                     type: string
                   passwordSecretRef:
                     description: The password to use (8-16 chars, at least one capital,
-                      number, special char).
+                      number, special char) The password to use (8-16 chars, at least
+                      one capital, number, special char).
                     properties:
                       key:
                         description: The key to select.
@@ -191,27 +207,33 @@ spec:
                     - namespace
                     type: object
                   redirectionUris:
-                    description: List of valid RedirectionURIs for this client.
+                    description: Array of valid RedirectionURIs for this client List
+                      of valid RedirectionURIs for this client.
                     items:
                       type: string
                     type: array
                   refreshTokenLifetime:
                     description: Lifetime of the refresh token in seconds. If not
                       specified, system default life time (2592000 secs) will be considered.
+                      Lifetime of the refresh token in seconds. If not specified,
+                      system default life time (2592000 secs) will be considered.
                     type: number
                   responseTypes:
-                    description: Examples of response types are 'code id_token', 'token
-                      id_token', etc.
+                    description: Array. Examples of response types are "code id_token",
+                      "token id_token", etc. Examples of response types are 'code
+                      id_token', 'token id_token', etc.
                     items:
                       type: string
                     type: array
                   scopes:
-                    description: List of supported scopes for this client.
+                    description: Array. List of supported scopes for this client List
+                      of supported scopes for this client.
                     items:
                       type: string
                     type: array
                   type:
-                    description: The type of the client. Either 'Public' or 'Confidential'.
+                    description: Either Public or Confidential The type of the client.
+                      Either 'Public' or 'Confidential'.
                     type: string
                 required:
                 - clientId
@@ -402,10 +424,12 @@ spec:
               atProvider:
                 properties:
                   disabled:
-                    description: True if the client is disabled e.g. because the managing
-                      Organization is disabled.
+                    description: True if the client is disabled e.g. because the Org
+                      is disabled True if the client is disabled e.g. because the
+                      managing Organization is disabled.
                     type: boolean
                   id:
+                    description: The GUID of the client
                     type: string
                 type: object
               conditions:

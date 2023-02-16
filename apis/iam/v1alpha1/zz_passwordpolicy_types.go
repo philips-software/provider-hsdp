@@ -18,15 +18,19 @@ type ChallengePolicyObservation struct {
 
 type ChallengePolicyParameters struct {
 
+	// (Mandatory) A Multi-valued String attribute that contains one or more default question a user may use when setting their challenge questions.
 	// +kubebuilder:validation:Optional
 	DefaultQuestions []*string `json:"defaultQuestions,omitempty" tf:"default_questions,omitempty"`
 
+	// (Mandatory) An Integer indicates the maximum number of failed reset password attempts using challenges.
 	// +kubebuilder:validation:Optional
 	MaxIncorrectAttempts *float64 `json:"maxIncorrectAttempts,omitempty" tf:"max_incorrect_attempts,omitempty"`
 
+	// (Mandatory) An Integer indicating the minimum number of challenge answers a user MUST answer when attempting to reset their password.
 	// +kubebuilder:validation:Optional
 	MinAnswerCount *float64 `json:"minAnswerCount,omitempty" tf:"min_answer_count,omitempty"`
 
+	// (Mandatory) An Integer indicating the minimum number of challenge questions a user MUST answer when setting challenge question answers.
 	// +kubebuilder:validation:Optional
 	MinQuestionCount *float64 `json:"minQuestionCount,omitempty" tf:"min_question_count,omitempty"`
 }
@@ -36,26 +40,33 @@ type ComplexityObservation struct {
 
 type ComplexityParameters struct {
 
+	// The maximum number of characters password can contain.
 	// +kubebuilder:validation:Optional
 	MaxLength *float64 `json:"maxLength,omitempty" tf:"max_length,omitempty"`
 
+	// The minimum number of characters password can contain. Default 8
 	// +kubebuilder:validation:Optional
 	MinLength *float64 `json:"minLength,omitempty" tf:"min_length,omitempty"`
 
+	// The minimum number of lower characters password can contain.
 	// +kubebuilder:validation:Optional
 	MinLowercase *float64 `json:"minLowercase,omitempty" tf:"min_lowercase,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	MinNumerics *float64 `json:"minNumerics,omitempty" tf:"min_numerics,omitempty"`
 
+	// The minimum number of special characters password can contain.
 	// +kubebuilder:validation:Optional
 	MinSpecialChars *float64 `json:"minSpecialChars,omitempty" tf:"min_special_chars,omitempty"`
 
+	// The minimum number of uppercase characters password can contain.
 	// +kubebuilder:validation:Optional
 	MinUppercase *float64 `json:"minUppercase,omitempty" tf:"min_uppercase,omitempty"`
 }
 
 type PasswordPolicyObservation struct {
+
+	// The GUID of the password policy
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	Policy *string `json:"Policy,omitempty" tf:"_policy,omitempty"`
@@ -63,21 +74,27 @@ type PasswordPolicyObservation struct {
 
 type PasswordPolicyParameters struct {
 
+	// (Mandatory, if challenges_enabled = true) Specify KBA settings
 	// +kubebuilder:validation:Optional
 	ChallengePolicy []ChallengePolicyParameters `json:"challengePolicy,omitempty" tf:"challenge_policy,omitempty"`
 
+	// A boolean value indicating if challenges are enabled at organization level. If the value is set to true, challenge_policy attribute is mandatory.
 	// +kubebuilder:validation:Optional
 	ChallengesEnabled *bool `json:"challengesEnabled,omitempty" tf:"challenges_enabled,omitempty"`
 
+	// Different criteria that decides the strength of user password for an organization. Block
 	// +kubebuilder:validation:Required
 	Complexity []ComplexityParameters `json:"complexity" tf:"complexity,omitempty"`
 
+	// number - The number of days after which the user's password expires.
 	// +kubebuilder:validation:Optional
 	ExpiryPeriodInDays *float64 `json:"expiryPeriodInDays,omitempty" tf:"expiry_period_in_days,omitempty"`
 
+	// The number of previous passwords that cannot be used as new password.
 	// +kubebuilder:validation:Optional
 	HistoryCount *float64 `json:"historyCount,omitempty" tf:"history_count,omitempty"`
 
+	// The UUID of the IAM Org to apply this policy to
 	// +crossplane:generate:reference:type=Organization
 	// +crossplane:generate:reference:refFieldName=OrganizationRef
 	// +kubebuilder:validation:Optional
@@ -106,7 +123,7 @@ type PasswordPolicyStatus struct {
 
 // +kubebuilder:object:root=true
 
-// PasswordPolicy is the Schema for the PasswordPolicys API. <no value>
+// PasswordPolicy is the Schema for the PasswordPolicys API. Manages HSDP IAM Password policy resources
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

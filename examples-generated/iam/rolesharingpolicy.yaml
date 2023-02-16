@@ -1,0 +1,42 @@
+apiVersion: iam.hsdp.crossplane.io/v1alpha1
+kind: RoleSharingPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iam/v1alpha1/rolesharingpolicy
+  labels:
+    testing.upbound.io/example-name: policy
+  name: policy
+spec:
+  forProvider:
+    purpose: Share SOME role with another organization
+    roleIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: shared
+    sharingPolicy: AllowChildren
+    targetOrganizationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: another_org
+
+---
+
+apiVersion: iam.hsdp.crossplane.io/v1alpha1
+kind: Role
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iam/v1alpha1/rolesharingpolicy
+  labels:
+    testing.upbound.io/example-name: shared
+  name: shared
+spec:
+  forProvider:
+    description: A role we want to share across ORGs
+    managingOrganizationSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_org
+    name: SOME Role
+    permissions:
+    - PATIENT.READ
+    - PRACTITIONER.READ
+
+---
+

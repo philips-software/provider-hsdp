@@ -14,6 +14,8 @@ import (
 )
 
 type EmailTemplateObservation struct {
+
+	// The GUID of the email template
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	MessageBase64 *string `json:"messageBase64,omitempty" tf:"message_base64,omitempty"`
@@ -21,21 +23,26 @@ type EmailTemplateObservation struct {
 
 type EmailTemplateParameters struct {
 
+	// The template format. Must be HTML currently
 	// The template format. Must be 'HTML' currently.
 	// +kubebuilder:validation:Optional
 	Format *string `json:"format,omitempty" tf:"format,omitempty"`
 
+	// The From field of the email. Default value is default
 	// +kubebuilder:validation:Optional
 	From *string `json:"from,omitempty" tf:"from,omitempty"`
 
+	// A clickable link, depends on the template type
 	// A clickable link, depends on the template type.
 	// +kubebuilder:validation:Optional
 	Link *string `json:"link,omitempty" tf:"link,omitempty"`
 
 	// The locale of the template. When not specified the template will become the default. Only a single default template is allowed of course.
+	// The locale of the template. When not specified the template will become the default. Only a single default template is allowed of course.
 	// +kubebuilder:validation:Optional
 	Locale *string `json:"locale,omitempty" tf:"locale,omitempty"`
 
+	// The UUID of the IAM Org to apply this email template to
 	// The Id of the IAM Org to apply this email template to.
 	// +crossplane:generate:reference:type=Organization
 	// +crossplane:generate:reference:refFieldName=OrganizationRef
@@ -46,6 +53,7 @@ type EmailTemplateParameters struct {
 	// +kubebuilder:validation:Optional
 	ManagingOrganizationSelector *v1.Selector `json:"managingOrganizationSelector,omitempty" tf:"-"`
 
+	// A boolean value indicating if challenges are enabled at organization level. If the value is set to true, challenge_policy attribute is mandatory.
 	// The message body.
 	// +kubebuilder:validation:Required
 	Message *string `json:"message" tf:"message,omitempty"`
@@ -54,10 +62,12 @@ type EmailTemplateParameters struct {
 	// +kubebuilder:validation:Optional
 	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
 
+	// The Subject line of the email. Default value is default
 	// The Subject line of the email.
 	// +kubebuilder:validation:Optional
 	Subject *string `json:"subject,omitempty" tf:"subject,omitempty"`
 
+	// The email template. See the Type table above for available values
 	// The email template type.
 	// +kubebuilder:validation:Required
 	Type *string `json:"type" tf:"type,omitempty"`
@@ -77,7 +87,7 @@ type EmailTemplateStatus struct {
 
 // +kubebuilder:object:root=true
 
-// EmailTemplate is the Schema for the EmailTemplates API. <no value>
+// EmailTemplate is the Schema for the EmailTemplates API. Manages HSDP IAM Email template resources
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

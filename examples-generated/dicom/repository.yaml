@@ -1,0 +1,20 @@
+apiVersion: dicom.hsdp.crossplane.io/v1alpha1
+kind: Repository
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dicom/v1alpha1/repository
+  labels:
+    testing.upbound.io/example-name: repo1
+  name: repo1
+spec:
+  forProvider:
+    configUrl: ${hsdp_dicom_store_config.dicom.config_url}
+    notification:
+    - organizationId: ${hsdp_iam_org.tenant1.id}
+    objectStoreId: ${hsdp_dicom_object_store.store1.id}
+    organizationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: root_org
+
+---
+

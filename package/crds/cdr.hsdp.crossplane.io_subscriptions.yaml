@@ -35,7 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Subscription is the Schema for the Subscriptions API. <no value>
+        description: Subscription is the Schema for the Subscriptions API. Manages
+          HSDP CDR Subscription resources
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,22 +65,32 @@ spec:
               forProvider:
                 properties:
                   criteria:
+                    description: On which resource to notify
                     type: string
                   deleteEndpoint:
+                    description: The REST endpoint to call for DELETE operations.
+                      Must use https:// schema
                     type: string
                   end:
+                    description: RFC3339 formatted timestamp when to end notifications
                     type: string
                   endpoint:
+                    description: The REST endpoint to call. Must use https://  schema
                     type: string
                   fhirStore:
+                    description: The CDR FHIR store endpoint to use
                     type: string
                   headers:
+                    description: List of headers to add to the REST call
                     items:
                       type: string
                     type: array
                   reason:
+                    description: Reason for creating the subscription
                     type: string
                   version:
+                    description: The FHIR version to use. Options [ stu3 | r4 ]. Default
+                      is stu3
                     type: string
                 required:
                 - criteria
@@ -264,8 +275,11 @@ spec:
               atProvider:
                 properties:
                   id:
+                    description: The ID of the CDR subscription
                     type: string
                   status:
+                    description: The status of the subscription (requested | active
+                      | error  | off)
                     type: string
                 type: object
               conditions:

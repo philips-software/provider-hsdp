@@ -18,9 +18,11 @@ type RepositoryNotificationObservation struct {
 
 type RepositoryNotificationParameters struct {
 
+	// Enable notifications or not. Default: true
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
+	// The organization ID
 	// +kubebuilder:validation:Required
 	OrganizationID *string `json:"organizationId" tf:"organization_id,omitempty"`
 }
@@ -31,15 +33,19 @@ type RepositoryObservation struct {
 
 type RepositoryParameters struct {
 
+	// The base config URL of the DICOM Store instance
 	// +kubebuilder:validation:Required
 	ConfigURL *string `json:"configUrl" tf:"config_url,omitempty"`
 
+	// (Block, Optional)
 	// +kubebuilder:validation:Optional
 	Notification []RepositoryNotificationParameters `json:"notification,omitempty" tf:"notification,omitempty"`
 
+	// the Object store ID
 	// +kubebuilder:validation:Required
 	ObjectStoreID *string `json:"objectStoreId" tf:"object_store_id,omitempty"`
 
+	// The organization ID
 	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Organization
 	// +crossplane:generate:reference:refFieldName=OrganizationRef
 	// +kubebuilder:validation:Optional
@@ -53,9 +59,12 @@ type RepositoryParameters struct {
 	// +kubebuilder:validation:Optional
 	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
 
+	// The organization ID attached to this repository.
+	// When not specified, the root organization is used.
 	// +kubebuilder:validation:Optional
 	RepositoryOrganizationID *string `json:"repositoryOrganizationId,omitempty" tf:"repository_organization_id,omitempty"`
 
+	// Configure this repository as store as composite.
 	// +kubebuilder:validation:Optional
 	StoreAsComposite *bool `json:"storeAsComposite,omitempty" tf:"store_as_composite,omitempty"`
 }
@@ -74,7 +83,7 @@ type RepositoryStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Repository is the Schema for the Repositorys API. <no value>
+// Repository is the Schema for the Repositorys API. Manages HSDP DICOM Repository resources
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

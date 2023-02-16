@@ -14,20 +14,26 @@ import (
 )
 
 type PropositionObservation struct {
+
+	// The GUID of the proposition
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type PropositionParameters struct {
 
+	// The description of the application
 	// +kubebuilder:validation:Required
 	Description *string `json:"description" tf:"description,omitempty"`
 
+	// Reference identifier defined by the provisioning user.
 	// +kubebuilder:validation:Optional
 	GlobalReferenceID *string `json:"globalReferenceId,omitempty" tf:"global_reference_id,omitempty"`
 
+	// The name of the application
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// the organization ID (GUID) to attach this a proposition to
 	// +crossplane:generate:reference:type=Organization
 	// +crossplane:generate:reference:refFieldName=OrganizationRef
 	// +kubebuilder:validation:Optional
@@ -56,7 +62,7 @@ type PropositionStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Proposition is the Schema for the Propositions API. <no value>
+// Proposition is the Schema for the Propositions API. Manages HSDP IAM Proposition resources
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

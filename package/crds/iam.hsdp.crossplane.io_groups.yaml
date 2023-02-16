@@ -35,7 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Group is the Schema for the Groups API. <no value>
+        description: Group is the Schema for the Groups API. Manages HSDP IAM Group
+          resources
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,21 +65,27 @@ spec:
               forProvider:
                 properties:
                   description:
-                    description: The group description.
+                    description: The description of the group The group description.
                     type: string
                   devices:
                     description: The list of IAM device identity IDs to include in
-                      this group.
+                      this group. See hsdp_iam_device The list of IAM device identity
+                      IDs to include in this group.
                     items:
                       type: string
                     type: array
                   driftDetection:
+                    description: While most resources do automatic drift detection,
+                      we are opting to make this opt-in for IAM Groups due to insufficient
+                      IAM API capabilities to perform this operation efficiently.
+                      A future version might change this to be always-on.
                     type: boolean
                   iamDeviceBugWorkaround:
                     description: Deprecated, do not use.
                     type: boolean
                   managingOrganization:
-                    description: The managing organization ID.
+                    description: The managing organization ID The managing organization
+                      ID.
                     type: string
                   managingOrganizationSelector:
                     description: Selector for a Organization to populate managingOrganization.
@@ -120,7 +127,7 @@ spec:
                         type: object
                     type: object
                   name:
-                    description: The group name.
+                    description: The name of the group The group name.
                     type: string
                   organizationRef:
                     description: Reference to a Organization to populate managingOrganization.
@@ -194,7 +201,8 @@ spec:
                       type: object
                     type: array
                   roles:
-                    description: The list of role IDS to assign to this group.
+                    description: The list of role IDS to assign to this group The
+                      list of role IDS to assign to this group.
                     items:
                       type: string
                     type: array
@@ -276,7 +284,8 @@ spec:
                     type: array
                   services:
                     description: The list of service identity IDs to include in this
-                      group.
+                      group. See hsdp_iam_service The list of service identity IDs
+                      to include in this group.
                     items:
                       type: string
                     type: array
@@ -361,6 +370,10 @@ spec:
                       provider only manages this list of users. Existing users added
                       by others means to the group by the provider. It is not practical
                       to manage hundreds or thousands of users this way of course.
+                      The list of user IDs to include in this group. The provider
+                      only manages this list of users. Existing users added by others
+                      means to the group by the provider. It is not practical to manage
+                      hundreds or thousands of users this way of course.
                     items:
                       type: string
                     type: array
@@ -583,6 +596,7 @@ spec:
               atProvider:
                 properties:
                   id:
+                    description: The GUID of the group
                     type: string
                 type: object
               conditions:

@@ -14,10 +14,14 @@ import (
 )
 
 type RoleSharingPolicyObservation struct {
+
+	// The GUID of the role sharing policy (also known as internalId at the API level)
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// The role name
 	RoleName *string `json:"roleName,omitempty" tf:"role_name,omitempty"`
 
+	// The source organization ID
 	SourceOrganizationID *string `json:"sourceOrganizationId,omitempty" tf:"source_organization_id,omitempty"`
 }
 
@@ -27,9 +31,11 @@ type RoleSharingPolicyParameters struct {
 	// +kubebuilder:validation:Optional
 	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
 
+	// The purpose of this role sharing policy mapping
 	// +kubebuilder:validation:Optional
 	Purpose *string `json:"purpose,omitempty" tf:"purpose,omitempty"`
 
+	// The ID of the role to share
 	// +crossplane:generate:reference:type=Role
 	// +crossplane:generate:reference:refFieldName=RoleRef
 	// +kubebuilder:validation:Optional
@@ -43,9 +49,12 @@ type RoleSharingPolicyParameters struct {
 	// +kubebuilder:validation:Optional
 	RoleRef *v1.Reference `json:"roleRef,omitempty" tf:"-"`
 
+	// The policy to use
+	// Sharing of a role with a tenant organization can be in one of the following modes:
 	// +kubebuilder:validation:Required
 	SharingPolicy *string `json:"sharingPolicy" tf:"sharing_policy,omitempty"`
 
+	// The target organization UUID to apply this policy for. This can either be a root IAM Org or a subOrg in an existing hierarchy
 	// +crossplane:generate:reference:type=Organization
 	// +crossplane:generate:reference:refFieldName=OrganizationRef
 	// +kubebuilder:validation:Optional
@@ -70,7 +79,7 @@ type RoleSharingPolicyStatus struct {
 
 // +kubebuilder:object:root=true
 
-// RoleSharingPolicy is the Schema for the RoleSharingPolicys API. <no value>
+// RoleSharingPolicy is the Schema for the RoleSharingPolicys API. Manages HSDP IAM Role sharing policy resources
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -14,19 +14,26 @@ import (
 )
 
 type GroupObservation struct {
+
+	// The GUID of the group
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type GroupParameters struct {
 
+	// The description of the group
 	// The group description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// The list of IAM device identity IDs to include in this group. See hsdp_iam_device
 	// The list of IAM device identity IDs to include in this group.
 	// +kubebuilder:validation:Optional
 	Devices []*string `json:"devices,omitempty" tf:"devices,omitempty"`
 
+	// While most resources do automatic drift detection, we are opting to make this
+	// opt-in for IAM Groups due to insufficient IAM API capabilities to perform this operation efficiently.
+	// A future version might change this to be always-on.
 	// +kubebuilder:validation:Optional
 	DriftDetection *bool `json:"driftDetection,omitempty" tf:"drift_detection,omitempty"`
 
@@ -34,6 +41,7 @@ type GroupParameters struct {
 	// +kubebuilder:validation:Optional
 	IAMDeviceBugWorkaround *bool `json:"iamDeviceBugWorkaround,omitempty" tf:"iam_device_bug_workaround,omitempty"`
 
+	// The managing organization ID
 	// The managing organization ID.
 	// +crossplane:generate:reference:type=Organization
 	// +crossplane:generate:reference:refFieldName=OrganizationRef
@@ -44,6 +52,7 @@ type GroupParameters struct {
 	// +kubebuilder:validation:Optional
 	ManagingOrganizationSelector *v1.Selector `json:"managingOrganizationSelector,omitempty" tf:"-"`
 
+	// The name of the group
 	// The group name.
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
@@ -56,6 +65,7 @@ type GroupParameters struct {
 	// +kubebuilder:validation:Optional
 	RoleRef []v1.Reference `json:"roleRef,omitempty" tf:"-"`
 
+	// The list of role IDS to assign to this group
 	// The list of role IDS to assign to this group.
 	// +crossplane:generate:reference:type=Role
 	// +crossplane:generate:reference:refFieldName=RoleRef
@@ -70,6 +80,7 @@ type GroupParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceRef []v1.Reference `json:"serviceRef,omitempty" tf:"-"`
 
+	// The list of service identity IDs to include in this group. See hsdp_iam_service
 	// The list of service identity IDs to include in this group.
 	// +crossplane:generate:reference:type=Service
 	// +crossplane:generate:reference:refFieldName=ServiceRef
@@ -84,6 +95,7 @@ type GroupParameters struct {
 	// +kubebuilder:validation:Optional
 	UserRef []v1.Reference `json:"userRef,omitempty" tf:"-"`
 
+	// The list of user IDs to include in this group. The provider only manages this list of users. Existing users added by others means to the group by the provider. It is not practical to manage hundreds or thousands of users this way of course.
 	// The list of user IDs to include in this group. The provider only manages this list of users. Existing users added by others means to the group by the provider. It is not practical to manage hundreds or thousands of users this way of course.
 	// +crossplane:generate:reference:type=User
 	// +crossplane:generate:reference:refFieldName=UserRef
@@ -109,7 +121,7 @@ type GroupStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Group is the Schema for the Groups API. <no value>
+// Group is the Schema for the Groups API. Manages HSDP IAM Group resources
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -36,7 +36,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: RoleSharingPolicy is the Schema for the RoleSharingPolicys API.
-          <no value>
+          Manages HSDP IAM Role sharing policy resources
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -99,8 +99,10 @@ spec:
                     - name
                     type: object
                   purpose:
+                    description: The purpose of this role sharing policy mapping
                     type: string
                   roleId:
+                    description: The ID of the role to share
                     type: string
                   roleIdSelector:
                     description: Selector for a Role to populate roleId.
@@ -176,8 +178,13 @@ spec:
                     - name
                     type: object
                   sharingPolicy:
+                    description: 'The policy to use Sharing of a role with a tenant
+                      organization can be in one of the following modes:'
                     type: string
                   targetOrganizationId:
+                    description: The target organization UUID to apply this policy
+                      for. This can either be a root IAM Org or a subOrg in an existing
+                      hierarchy
                     type: string
                   targetOrganizationIdSelector:
                     description: Selector for a Organization to populate targetOrganizationId.
@@ -398,10 +405,14 @@ spec:
               atProvider:
                 properties:
                   id:
+                    description: The GUID of the role sharing policy (also known as
+                      internalId at the API level)
                     type: string
                   roleName:
+                    description: The role name
                     type: string
                   sourceOrganizationId:
+                    description: The source organization ID
                     type: string
                 type: object
               conditions:
