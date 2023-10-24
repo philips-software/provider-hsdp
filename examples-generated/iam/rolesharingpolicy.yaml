@@ -37,6 +37,3 @@ spec:
     permissions:
     - PATIENT.READ
     - PRACTITIONER.READ
-
----
-

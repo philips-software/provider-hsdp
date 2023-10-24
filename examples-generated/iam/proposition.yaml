@@ -13,6 +13,3 @@ spec:
     organizationIdSelector:
       matchLabels:
         testing.upbound.io/example-name: devorg
-
----
-

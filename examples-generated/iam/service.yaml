@@ -19,6 +19,3 @@ spec:
     - openid
     tokenValidity: 3600
     validity: 12
-
----
-

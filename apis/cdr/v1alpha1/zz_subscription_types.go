@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -13,44 +17,95 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type SubscriptionInitParameters struct {
+
+	// On which resource to notify
+	Criteria *string `json:"criteria,omitempty" tf:"criteria,omitempty"`
+
+	// The REST endpoint to call for DELETE operations. Must use https:// schema
+	DeleteEndpoint *string `json:"deleteEndpoint,omitempty" tf:"delete_endpoint,omitempty"`
+
+	// RFC3339 formatted timestamp when to end notifications
+	End *string `json:"end,omitempty" tf:"end,omitempty"`
+
+	// The REST endpoint to call. Must use https://  schema
+	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
+
+	// The CDR FHIR store endpoint to use
+	FHIRStore *string `json:"fhirStore,omitempty" tf:"fhir_store,omitempty"`
+
+	// List of headers to add to the REST call
+	Headers []*string `json:"headers,omitempty" tf:"headers,omitempty"`
+
+	// Reason for creating the subscription
+	Reason *string `json:"reason,omitempty" tf:"reason,omitempty"`
+
+	// The FHIR version to use. Options [ stu3 | r4 ]. Default is stu3
+	Version *string `json:"version,omitempty" tf:"version,omitempty"`
+}
+
 type SubscriptionObservation struct {
+
+	// On which resource to notify
+	Criteria *string `json:"criteria,omitempty" tf:"criteria,omitempty"`
+
+	// The REST endpoint to call for DELETE operations. Must use https:// schema
+	DeleteEndpoint *string `json:"deleteEndpoint,omitempty" tf:"delete_endpoint,omitempty"`
+
+	// RFC3339 formatted timestamp when to end notifications
+	End *string `json:"end,omitempty" tf:"end,omitempty"`
+
+	// The REST endpoint to call. Must use https://  schema
+	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
+
+	// The CDR FHIR store endpoint to use
+	FHIRStore *string `json:"fhirStore,omitempty" tf:"fhir_store,omitempty"`
+
+	// List of headers to add to the REST call
+	Headers []*string `json:"headers,omitempty" tf:"headers,omitempty"`
 
 	// The ID of the CDR subscription
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// Reason for creating the subscription
+	Reason *string `json:"reason,omitempty" tf:"reason,omitempty"`
+
 	// The status of the subscription (requested | active | error  | off)
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+
+	// The FHIR version to use. Options [ stu3 | r4 ]. Default is stu3
+	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
 type SubscriptionParameters struct {
 
 	// On which resource to notify
-	// +kubebuilder:validation:Required
-	Criteria *string `json:"criteria" tf:"criteria,omitempty"`
+	// +kubebuilder:validation:Optional
+	Criteria *string `json:"criteria,omitempty" tf:"criteria,omitempty"`
 
 	// The REST endpoint to call for DELETE operations. Must use https:// schema
 	// +kubebuilder:validation:Optional
 	DeleteEndpoint *string `json:"deleteEndpoint,omitempty" tf:"delete_endpoint,omitempty"`
 
 	// RFC3339 formatted timestamp when to end notifications
-	// +kubebuilder:validation:Required
-	End *string `json:"end" tf:"end,omitempty"`
+	// +kubebuilder:validation:Optional
+	End *string `json:"end,omitempty" tf:"end,omitempty"`
 
 	// The REST endpoint to call. Must use https://  schema
 	// +kubebuilder:validation:Optional
 	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
 
 	// The CDR FHIR store endpoint to use
-	// +kubebuilder:validation:Required
-	FHIRStore *string `json:"fhirStore" tf:"fhir_store,omitempty"`
+	// +kubebuilder:validation:Optional
+	FHIRStore *string `json:"fhirStore,omitempty" tf:"fhir_store,omitempty"`
 
 	// List of headers to add to the REST call
 	// +kubebuilder:validation:Optional
 	Headers []*string `json:"headers,omitempty" tf:"headers,omitempty"`
 
 	// Reason for creating the subscription
-	// +kubebuilder:validation:Required
-	Reason *string `json:"reason" tf:"reason,omitempty"`
+	// +kubebuilder:validation:Optional
+	Reason *string `json:"reason,omitempty" tf:"reason,omitempty"`
 
 	// The FHIR version to use. Options [ stu3 | r4 ]. Default is stu3
 	// +kubebuilder:validation:Optional
@@ -61,6 +116,17 @@ type SubscriptionParameters struct {
 type SubscriptionSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     SubscriptionParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider SubscriptionInitParameters `json:"initProvider,omitempty"`
 }
 
 // SubscriptionStatus defines the observed state of Subscription.
@@ -81,8 +147,12 @@ type SubscriptionStatus struct {
 type Subscription struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              SubscriptionSpec   `json:"spec"`
-	Status            SubscriptionStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.criteria) || (has(self.initProvider) && has(self.initProvider.criteria))",message="spec.forProvider.criteria is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.end) || (has(self.initProvider) && has(self.initProvider.end))",message="spec.forProvider.end is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.fhirStore) || (has(self.initProvider) && has(self.initProvider.fhirStore))",message="spec.forProvider.fhirStore is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.reason) || (has(self.initProvider) && has(self.initProvider.reason))",message="spec.forProvider.reason is a required parameter"
+	Spec   SubscriptionSpec   `json:"spec"`
+	Status SubscriptionStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

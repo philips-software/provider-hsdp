@@ -21,6 +21,3 @@ spec:
     userRef:
     - name: admin
     - name: developer
-
----
-

@@ -13,6 +13,3 @@ spec:
     propositionIdSelector:
       matchLabels:
         testing.upbound.io/example-name: testprop
-
----
-

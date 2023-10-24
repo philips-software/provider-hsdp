@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -13,15 +17,44 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type NotificationInitParameters struct {
+
+	// The base config URL of the DICOM Store instance
+	ConfigURL *string `json:"configUrl,omitempty" tf:"config_url,omitempty"`
+
+	// Enable the notification or not. Default: true
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// The notification endpoint URL. Example: https://notification-dev.us-east.philips-healthsuite.com
+	EndpointURL *string `json:"endpointUrl,omitempty" tf:"endpoint_url,omitempty"`
+
+	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
+}
+
 type NotificationObservation struct {
+
+	// The base config URL of the DICOM Store instance
+	ConfigURL *string `json:"configUrl,omitempty" tf:"config_url,omitempty"`
+
+	// The default organization ID
+	DefaultOrganizationID *string `json:"defaultOrganizationId,omitempty" tf:"default_organization_id,omitempty"`
+
+	// Enable the notification or not. Default: true
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// The notification endpoint URL. Example: https://notification-dev.us-east.philips-healthsuite.com
+	EndpointURL *string `json:"endpointUrl,omitempty" tf:"endpoint_url,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
 }
 
 type NotificationParameters struct {
 
 	// The base config URL of the DICOM Store instance
-	// +kubebuilder:validation:Required
-	ConfigURL *string `json:"configUrl" tf:"config_url,omitempty"`
+	// +kubebuilder:validation:Optional
+	ConfigURL *string `json:"configUrl,omitempty" tf:"config_url,omitempty"`
 
 	// The default organization ID
 	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Organization
@@ -38,8 +71,8 @@ type NotificationParameters struct {
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
 	// The notification endpoint URL. Example: https://notification-dev.us-east.philips-healthsuite.com
-	// +kubebuilder:validation:Required
-	EndpointURL *string `json:"endpointUrl" tf:"endpoint_url,omitempty"`
+	// +kubebuilder:validation:Optional
+	EndpointURL *string `json:"endpointUrl,omitempty" tf:"endpoint_url,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
@@ -53,6 +86,17 @@ type NotificationParameters struct {
 type NotificationSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     NotificationParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider NotificationInitParameters `json:"initProvider,omitempty"`
 }
 
 // NotificationStatus defines the observed state of Notification.
@@ -73,8 +117,10 @@ type NotificationStatus struct {
 type Notification struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              NotificationSpec   `json:"spec"`
-	Status            NotificationStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.configUrl) || (has(self.initProvider) && has(self.initProvider.configUrl))",message="spec.forProvider.configUrl is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.endpointUrl) || (has(self.initProvider) && has(self.initProvider.endpointUrl))",message="spec.forProvider.endpointUrl is a required parameter"
+	Spec   NotificationSpec   `json:"spec"`
+	Status NotificationStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

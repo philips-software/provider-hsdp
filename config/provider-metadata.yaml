@@ -245,6 +245,84 @@ resources:
             name: '- (Required) The name of the Model'
             storage: '- (Required) The storage to allocate'
         importStatements: []
+    hsdp_blr_blob_store_policy:
+        subCategory: Blob Repository (BLR)
+        description: Manages HSDP Connect Blob Store Repository Policies
+        name: hsdp_blr_blob_store_policy
+        title: hsdp_blr_blob_store_policy
+        examples:
+            - name: policy
+              manifest: |-
+                {
+                  "statement": [
+                    {
+                      "action": [
+                        "GET",
+                        "PUT",
+                        "DELETE"
+                      ],
+                      "effect": "Allow",
+                      "principal": [
+                        "prn:hsdp:iam:${data.hsdp_iam_org.myorg.id}:${hsdp_connect_mdm_proposition.first.guid}:User/*"
+                      ],
+                      "resource": [
+                        "${hsdp_blr_bucket.store.name}/*"
+                      ]
+                    }
+                  ]
+                }
+        argumentDocs:
+            action: '- (Required, list(string)) Allowed methods: [GET, PUT, DELETE]'
+            effect: '- (Required, string) Effect of policy [Allow, Deny]'
+            guid: '- The GUID of the bucket'
+            id: '- The ID reference of the service action (format: BlobStorePolicy/${GUID})'
+            principal: '- (Required, list(string)) The principals the policy applies to'
+            resource: '- (Required, list(string)) The resources the policy applies to'
+            statement: '- (Required)'
+        importStatements: []
+    hsdp_blr_bucket:
+        subCategory: Blob Repository (BLR)
+        description: Manages HSDP Connect Blob Repository Buckets
+        name: hsdp_blr_bucket
+        title: hsdp_blr_bucket
+        examples:
+            - name: store
+              manifest: |-
+                {
+                  "cors_configuration": [
+                    {
+                      "allowed_methods": [
+                        "GET"
+                      ],
+                      "allowed_origins": [
+                        "https://foo.hsdp.io"
+                      ],
+                      "expose_headers": [
+                        "X-Hsdp-Signature"
+                      ]
+                    }
+                  ],
+                  "enable_cdn": false,
+                  "name": "bucket-store-1",
+                  "proposition_id": "${data.hsdp_connect_mdm_propososition.prop.id}"
+                }
+              references:
+                proposition_id: data.hsdp_connect_mdm_propososition.prop.id
+        argumentDocs:
+            allowed_methods: '- (Required, list(string)) Allowed methods: [GET, PUT, POST, DELETE, HEAD]'
+            allowed_origins: '- (Required, list(string)) List of allowed origins'
+            cache_control_age: '- (Optional) Cache control age settings (Max: 1800, Min: 300, Default: 1)'
+            cors_configuration: '- (Optional)'
+            enable_cdn: '- (Optional) Enable CDN or not'
+            enable_create_or_delete_blob_meta: '- (Optional) Enables creation or deletion of Blob meta data'
+            enable_hsdp_domain: '- (Optional) Enable HSDP domain mapping'
+            expose_headers: '- (Optional, list(string)) List of headers to expose'
+            guid: '- The GUID of the bucket'
+            id: '- The ID reference of the service action (format: Bucket/${GUID})'
+            max_age_seconds: '- (Optional) Max age in seconds'
+            name: '- (Required) The name of the device group'
+            proposition_id: '- (Required) The proposition ID where this bucket falls under'
+        importStatements: []
     hsdp_cdl_data_type_definition:
         subCategory: Clinical Data Lake (CDL)
         description: Manages HSDP CDL Data Type Definitions

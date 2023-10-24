@@ -13,6 +13,3 @@ spec:
       matchLabels:
         testing.upbound.io/example-name: tenant1
     endpointUrl: ${var.notification_endpoint_url}
-
----
-

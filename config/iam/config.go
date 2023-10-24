@@ -5,7 +5,7 @@ Copyright 2022 Koninklijke Philips N.V., https://www.philips.com
 */
 
 import (
-	"github.com/upbound/upjet/pkg/config"
+	"github.com/crossplane/upjet/pkg/config"
 )
 
 const (

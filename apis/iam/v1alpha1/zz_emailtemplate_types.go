@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -13,12 +17,73 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type EmailTemplateInitParameters struct {
+
+	// The template format. Must be HTML currently
+	// The template format. Must be 'HTML' currently.
+	Format *string `json:"format,omitempty" tf:"format,omitempty"`
+
+	// The From field of the email. Default value is default
+	From *string `json:"from,omitempty" tf:"from,omitempty"`
+
+	// A clickable link, depends on the template type
+	// A clickable link, depends on the template type.
+	Link *string `json:"link,omitempty" tf:"link,omitempty"`
+
+	// The locale of the template. When not specified the template will become the default. Only a single default template is allowed of course.
+	// The locale of the template. When not specified the template will become the default. Only a single default template is allowed of course.
+	Locale *string `json:"locale,omitempty" tf:"locale,omitempty"`
+
+	// A boolean value indicating if challenges are enabled at organization level. If the value is set to true, challenge_policy attribute is mandatory.
+	// The message body.
+	Message *string `json:"message,omitempty" tf:"message,omitempty"`
+
+	// The Subject line of the email. Default value is default
+	// The Subject line of the email.
+	Subject *string `json:"subject,omitempty" tf:"subject,omitempty"`
+
+	// The email template. See the Type table above for available values
+	// The email template type.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
 type EmailTemplateObservation struct {
+
+	// The template format. Must be HTML currently
+	// The template format. Must be 'HTML' currently.
+	Format *string `json:"format,omitempty" tf:"format,omitempty"`
+
+	// The From field of the email. Default value is default
+	From *string `json:"from,omitempty" tf:"from,omitempty"`
 
 	// The GUID of the email template
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// A clickable link, depends on the template type
+	// A clickable link, depends on the template type.
+	Link *string `json:"link,omitempty" tf:"link,omitempty"`
+
+	// The locale of the template. When not specified the template will become the default. Only a single default template is allowed of course.
+	// The locale of the template. When not specified the template will become the default. Only a single default template is allowed of course.
+	Locale *string `json:"locale,omitempty" tf:"locale,omitempty"`
+
+	// The UUID of the IAM Org to apply this email template to
+	// The Id of the IAM Org to apply this email template to.
+	ManagingOrganization *string `json:"managingOrganization,omitempty" tf:"managing_organization,omitempty"`
+
+	// A boolean value indicating if challenges are enabled at organization level. If the value is set to true, challenge_policy attribute is mandatory.
+	// The message body.
+	Message *string `json:"message,omitempty" tf:"message,omitempty"`
+
 	MessageBase64 *string `json:"messageBase64,omitempty" tf:"message_base64,omitempty"`
+
+	// The Subject line of the email. Default value is default
+	// The Subject line of the email.
+	Subject *string `json:"subject,omitempty" tf:"subject,omitempty"`
+
+	// The email template. See the Type table above for available values
+	// The email template type.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type EmailTemplateParameters struct {
@@ -55,8 +120,8 @@ type EmailTemplateParameters struct {
 
 	// A boolean value indicating if challenges are enabled at organization level. If the value is set to true, challenge_policy attribute is mandatory.
 	// The message body.
-	// +kubebuilder:validation:Required
-	Message *string `json:"message" tf:"message,omitempty"`
+	// +kubebuilder:validation:Optional
+	Message *string `json:"message,omitempty" tf:"message,omitempty"`
 
 	// Reference to a Organization to populate managingOrganization.
 	// +kubebuilder:validation:Optional
@@ -69,14 +134,25 @@ type EmailTemplateParameters struct {
 
 	// The email template. See the Type table above for available values
 	// The email template type.
-	// +kubebuilder:validation:Required
-	Type *string `json:"type" tf:"type,omitempty"`
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 // EmailTemplateSpec defines the desired state of EmailTemplate
 type EmailTemplateSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     EmailTemplateParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider EmailTemplateInitParameters `json:"initProvider,omitempty"`
 }
 
 // EmailTemplateStatus defines the observed state of EmailTemplate.
@@ -97,8 +173,10 @@ type EmailTemplateStatus struct {
 type EmailTemplate struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              EmailTemplateSpec   `json:"spec"`
-	Status            EmailTemplateStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.message) || (has(self.initProvider) && has(self.initProvider.message))",message="spec.forProvider.message is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.type) || (has(self.initProvider) && has(self.initProvider.type))",message="spec.forProvider.type is a required parameter"
+	Spec   EmailTemplateSpec   `json:"spec"`
+	Status EmailTemplateStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

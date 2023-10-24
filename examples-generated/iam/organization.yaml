@@ -11,6 +11,3 @@ spec:
     description: Test Organization
     name: TestOrg
     parentOrgId: ${hsdp_iam_org.myorg.id}
-
----
-

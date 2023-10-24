@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -13,14 +17,87 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type OrganizationInitParameters struct {
+
+	// The description of the Org
+	// The description of the organization.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The name of the organization suitable for display.
+	// The display name to use for this organization.
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// Identifier defined by client which identifies the organization on the client side
+	// An optional external identifier for this organization.
+	ExternalID *string `json:"externalId,omitempty" tf:"external_id,omitempty"`
+
+	// Marks the Org as a root organization (boolean)
+	// Deprecated, do not use.
+	IsRootOrg *bool `json:"isRootOrg,omitempty" tf:"is_root_org,omitempty"`
+
+	// The name of the Org in IAM
+	// The name of the IAM Organization.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The parent Org ID (GUID)
+	// The parent organization ID.
+	ParentOrgID *string `json:"parentOrgId,omitempty" tf:"parent_org_id,omitempty"`
+
+	// The type of the organization e.g. Hospital
+	// The organization type.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	// Blocks until the organization delete has completed. Default: false.
+	// The organization delete process can take some time as all its associated resources like
+	// users, groups, roles etc. are removed recursively. This option is useful for ephemeral environments
+	// where the same organization might be recreated shortly after a destroy operation.
+	// Blocks until the organization delete has completed. Default: false. The organization delete process can take some time as all its associated resources like users, groups, roles etc. are removed recursively. This option is useful for ephemeral environments where the same organization might be recreated shortly after a destroy operation.
+	WaitForDelete *bool `json:"waitForDelete,omitempty" tf:"wait_for_delete,omitempty"`
+}
+
 type OrganizationObservation struct {
 
 	// Boolean. Weather the organization is active or not.
 	// Weather the organization is active or not.
 	Active *bool `json:"active,omitempty" tf:"active,omitempty"`
 
+	// The description of the Org
+	// The description of the organization.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The name of the organization suitable for display.
+	// The display name to use for this organization.
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// Identifier defined by client which identifies the organization on the client side
+	// An optional external identifier for this organization.
+	ExternalID *string `json:"externalId,omitempty" tf:"external_id,omitempty"`
+
 	// The GUID of the organization
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Marks the Org as a root organization (boolean)
+	// Deprecated, do not use.
+	IsRootOrg *bool `json:"isRootOrg,omitempty" tf:"is_root_org,omitempty"`
+
+	// The name of the Org in IAM
+	// The name of the IAM Organization.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The parent Org ID (GUID)
+	// The parent organization ID.
+	ParentOrgID *string `json:"parentOrgId,omitempty" tf:"parent_org_id,omitempty"`
+
+	// The type of the organization e.g. Hospital
+	// The organization type.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	// Blocks until the organization delete has completed. Default: false.
+	// The organization delete process can take some time as all its associated resources like
+	// users, groups, roles etc. are removed recursively. This option is useful for ephemeral environments
+	// where the same organization might be recreated shortly after a destroy operation.
+	// Blocks until the organization delete has completed. Default: false. The organization delete process can take some time as all its associated resources like users, groups, roles etc. are removed recursively. This option is useful for ephemeral environments where the same organization might be recreated shortly after a destroy operation.
+	WaitForDelete *bool `json:"waitForDelete,omitempty" tf:"wait_for_delete,omitempty"`
 }
 
 type OrganizationParameters struct {
@@ -47,8 +124,8 @@ type OrganizationParameters struct {
 
 	// The name of the Org in IAM
 	// The name of the IAM Organization.
-	// +kubebuilder:validation:Required
-	Name *string `json:"name" tf:"name,omitempty"`
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The parent Org ID (GUID)
 	// The parent organization ID.
@@ -73,6 +150,17 @@ type OrganizationParameters struct {
 type OrganizationSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     OrganizationParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider OrganizationInitParameters `json:"initProvider,omitempty"`
 }
 
 // OrganizationStatus defines the observed state of Organization.
@@ -93,8 +181,9 @@ type OrganizationStatus struct {
 type Organization struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              OrganizationSpec   `json:"spec"`
-	Status            OrganizationStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
+	Spec   OrganizationSpec   `json:"spec"`
+	Status OrganizationStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

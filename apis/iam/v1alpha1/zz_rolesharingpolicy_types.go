@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -13,16 +17,39 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type RoleSharingPolicyInitParameters struct {
+
+	// The purpose of this role sharing policy mapping
+	Purpose *string `json:"purpose,omitempty" tf:"purpose,omitempty"`
+
+	// The policy to use
+	// Sharing of a role with a tenant organization can be in one of the following modes:
+	SharingPolicy *string `json:"sharingPolicy,omitempty" tf:"sharing_policy,omitempty"`
+}
+
 type RoleSharingPolicyObservation struct {
 
 	// The GUID of the role sharing policy (also known as internalId at the API level)
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// The purpose of this role sharing policy mapping
+	Purpose *string `json:"purpose,omitempty" tf:"purpose,omitempty"`
+
+	// The ID of the role to share
+	RoleID *string `json:"roleId,omitempty" tf:"role_id,omitempty"`
+
 	// The role name
 	RoleName *string `json:"roleName,omitempty" tf:"role_name,omitempty"`
 
+	// The policy to use
+	// Sharing of a role with a tenant organization can be in one of the following modes:
+	SharingPolicy *string `json:"sharingPolicy,omitempty" tf:"sharing_policy,omitempty"`
+
 	// The source organization ID
 	SourceOrganizationID *string `json:"sourceOrganizationId,omitempty" tf:"source_organization_id,omitempty"`
+
+	// The target organization UUID to apply this policy for. This can either be a root IAM Org or a subOrg in an existing hierarchy
+	TargetOrganizationID *string `json:"targetOrganizationId,omitempty" tf:"target_organization_id,omitempty"`
 }
 
 type RoleSharingPolicyParameters struct {
@@ -51,8 +78,8 @@ type RoleSharingPolicyParameters struct {
 
 	// The policy to use
 	// Sharing of a role with a tenant organization can be in one of the following modes:
-	// +kubebuilder:validation:Required
-	SharingPolicy *string `json:"sharingPolicy" tf:"sharing_policy,omitempty"`
+	// +kubebuilder:validation:Optional
+	SharingPolicy *string `json:"sharingPolicy,omitempty" tf:"sharing_policy,omitempty"`
 
 	// The target organization UUID to apply this policy for. This can either be a root IAM Org or a subOrg in an existing hierarchy
 	// +crossplane:generate:reference:type=Organization
@@ -69,6 +96,17 @@ type RoleSharingPolicyParameters struct {
 type RoleSharingPolicySpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     RoleSharingPolicyParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider RoleSharingPolicyInitParameters `json:"initProvider,omitempty"`
 }
 
 // RoleSharingPolicyStatus defines the observed state of RoleSharingPolicy.
@@ -89,8 +127,9 @@ type RoleSharingPolicyStatus struct {
 type RoleSharingPolicy struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              RoleSharingPolicySpec   `json:"spec"`
-	Status            RoleSharingPolicyStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.sharingPolicy) || (has(self.initProvider) && has(self.initProvider.sharingPolicy))",message="spec.forProvider.sharingPolicy is a required parameter"
+	Spec   RoleSharingPolicySpec   `json:"spec"`
+	Status RoleSharingPolicyStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

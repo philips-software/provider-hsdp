@@ -29,6 +29,3 @@ spec:
           namespace: upbound-system
         serviceId: a@b.com
         tokenEndpoint: ${data.hsdp_config.iam.url}/authorize/oauth2/token
-
----
-

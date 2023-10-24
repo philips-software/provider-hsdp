@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.10.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.13.0
   name: users.iam.hsdp.crossplane.io
 spec:
   group: iam.hsdp.crossplane.io
@@ -54,9 +53,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -209,54 +212,89 @@ spec:
                     type: string
                   username:
                     type: string
-                required:
-                - email
-                - firstName
-                - lastName
-                - login
                 type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  email:
+                    description: (Semi-Required) The email address of the user The
+                      email address of the user.
+                    type: string
+                  firstName:
+                    description: First name of the user The first name of the user.
+                    type: string
+                  lastName:
+                    description: Last name of the user The last name of the user.
+                    type: string
+                  login:
+                    description: The login ID of the user (NEW since v0.4.0)
+                    type: string
+                  mobile:
+                    description: Mobile number of the user. E.164 format The optional
+                      mobile phone number of the user.
+                    type: string
+                  preferredCommunicationChannel:
+                    description: 'Preferred communication channel. Email and SMS are
+                      supported channels. Email is the default channel if e-mail address
+                      is provided. Values supported: [ email | sms ] Preferred communication
+                      channel. Email and SMS are supported channels. Email is the
+                      default channel if e-mail address is provided. Values supported:
+                      [ email | sms ].'
+                    type: string
+                  preferredLanguage:
+                    description: Language preference for all communications. Value
+                      can be a two letter language code as defined by ISO 639-1 (en,
+                      de) or it can be a combination of language code and country
+                      code (en-gb, en-us). The country code is as per ISO 3166 two
+                      letter code (alpha-2) Language preference for all communications.
+                      Value can be a two letter language code as defined by ISO 639-1
+                      (en, de) or it can be a combination of language code and country
+                      code (en-gb, en-us). The country code is as per ISO 3166 two
+                      letter code (alpha-2).
+                    type: string
+                  username:
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -386,13 +424,72 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.email is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.email)
+                || (has(self.initProvider) && has(self.initProvider.email))'
+            - message: spec.forProvider.firstName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.firstName)
+                || (has(self.initProvider) && has(self.initProvider.firstName))'
+            - message: spec.forProvider.lastName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.lastName)
+                || (has(self.initProvider) && has(self.initProvider.lastName))'
+            - message: spec.forProvider.login is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.login)
+                || (has(self.initProvider) && has(self.initProvider.login))'
           status:
             description: UserStatus defines the observed state of User.
             properties:
               atProvider:
                 properties:
+                  email:
+                    description: (Semi-Required) The email address of the user The
+                      email address of the user.
+                    type: string
+                  firstName:
+                    description: First name of the user The first name of the user.
+                    type: string
                   id:
                     description: The GUID of the user
+                    type: string
+                  lastName:
+                    description: Last name of the user The last name of the user.
+                    type: string
+                  login:
+                    description: The login ID of the user (NEW since v0.4.0)
+                    type: string
+                  mobile:
+                    description: Mobile number of the user. E.164 format The optional
+                      mobile phone number of the user.
+                    type: string
+                  organizationId:
+                    description: The managing organization of the user The managing
+                      organization of the user.
+                    type: string
+                  preferredCommunicationChannel:
+                    description: 'Preferred communication channel. Email and SMS are
+                      supported channels. Email is the default channel if e-mail address
+                      is provided. Values supported: [ email | sms ] Preferred communication
+                      channel. Email and SMS are supported channels. Email is the
+                      default channel if e-mail address is provided. Values supported:
+                      [ email | sms ].'
+                    type: string
+                  preferredLanguage:
+                    description: Language preference for all communications. Value
+                      can be a two letter language code as defined by ISO 639-1 (en,
+                      de) or it can be a combination of language code and country
+                      code (en-gb, en-us). The country code is as per ISO 3166 two
+                      letter code (alpha-2) Language preference for all communications.
+                      Value can be a two letter language code as defined by ISO 639-1
+                      (en, de) or it can be a combination of language code and country
+                      code (en-gb, en-us). The country code is as per ISO 3166 two
+                      letter code (alpha-2).
+                    type: string
+                  username:
                     type: string
                 type: object
               conditions:
@@ -428,6 +525,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec
