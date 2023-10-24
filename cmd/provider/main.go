@@ -22,7 +22,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/tools/leaderelection/resourcelock"
 	ctrl "sigs.k8s.io/controller-runtime"
-        "sigs.k8s.io/controller-runtime/pkg/cache"
+	"sigs.k8s.io/controller-runtime/pkg/cache"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
 	"github.com/philips-software/provider-hsdp/apis"
@@ -37,9 +37,9 @@ func main() {
 	var (
 		app              = kingpin.New(filepath.Base(os.Args[0]), "Terraform based Crossplane provider for HSDP").DefaultEnvars()
 		debug            = app.Flag("debug", "Run with debug logging.").Short('d').Bool()
-      		syncInterval               = app.Flag("sync", "Sync interval controls how often all resources will be double checked for drift.").Short('s').Default("1h").Duration()
-                pollInterval               = app.Flag("poll", "Poll interval controls how often an individual resource should be checked for drift.").Default("10m").Duration()
-		pollJitter                 = app.Flag("poll-jitter", "If non-zero, varies the poll interval by a random amount up to plus-or-minus this value.").Default("1m").Duration()
+		syncInterval     = app.Flag("sync", "Sync interval controls how often all resources will be double checked for drift.").Short('s').Default("1h").Duration()
+		pollInterval     = app.Flag("poll", "Poll interval controls how often an individual resource should be checked for drift.").Default("10m").Duration()
+		pollJitter       = app.Flag("poll-jitter", "If non-zero, varies the poll interval by a random amount up to plus-or-minus this value.").Default("1m").Duration()
 		leaderElection   = app.Flag("leader-election", "Use leader election for the controller manager.").Short('l').Default("false").OverrideDefaultFromEnvar("LEADER_ELECTION").Bool()
 		terraformVersion = app.Flag("terraform-version", "Terraform version.").Required().Envar("TERRAFORM_VERSION").String()
 		providerSource   = app.Flag("terraform-provider-source", "Terraform provider source.").Required().Envar("TERRAFORM_PROVIDER_SOURCE").String()
@@ -60,8 +60,8 @@ func main() {
 		// logger when we're running in debug mode.
 		ctrl.SetLogger(zl)
 	}
-         
-        log.Debug("Starting",
+
+	log.Debug("Starting",
 		"sync-period", syncInterval.String(),
 		"poll-interval", pollInterval.String(),
 		"poll-jitter", pollJitter.String(),
@@ -71,7 +71,7 @@ func main() {
 	kingpin.FatalIfError(err, "Cannot get API server rest config")
 
 	mgr, err := ctrl.NewManager(cfg, ctrl.Options{
-                Cache: cache.Options{
+		Cache: cache.Options{
 			SyncPeriod: syncInterval,
 		},
 		LeaderElection:             *leaderElection,
@@ -95,8 +95,8 @@ func main() {
 		WorkspaceStore: terraform.NewWorkspaceStore(log),
 		SetupFn:        clients.TerraformSetupBuilder(*terraformVersion, *providerSource, *providerVersion),
 	}
-        
-        if *enableExternalSecretStores {
+
+	if *enableExternalSecretStores {
 		o.Features.Enable(features.EnableAlphaExternalSecretStores)
 		log.Info("Alpha feature enabled", "flag", features.EnableAlphaExternalSecretStores)
 
