@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -13,32 +17,105 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type UserInitParameters struct {
+
+	// (Semi-Required) The email address of the user
+	// The email address of the user.
+	Email *string `json:"email,omitempty" tf:"email,omitempty"`
+
+	// First name of the user
+	// The first name of the user.
+	FirstName *string `json:"firstName,omitempty" tf:"first_name,omitempty"`
+
+	// Last name of the user
+	// The last name of the user.
+	LastName *string `json:"lastName,omitempty" tf:"last_name,omitempty"`
+
+	// The login ID of the user (NEW since v0.4.0)
+	Login *string `json:"login,omitempty" tf:"login,omitempty"`
+
+	// Mobile number of the user. E.164 format
+	// The optional mobile phone number of the user.
+	Mobile *string `json:"mobile,omitempty" tf:"mobile,omitempty"`
+
+	// Preferred communication channel.
+	// Email and SMS are supported channels. Email is the default channel if e-mail address is provided.
+	// Values supported: [ email | sms ]
+	// Preferred communication channel. Email and SMS are supported channels. Email is the default channel if e-mail address is provided. Values supported: [ email | sms ].
+	PreferredCommunicationChannel *string `json:"preferredCommunicationChannel,omitempty" tf:"preferred_communication_channel,omitempty"`
+
+	// Language preference for all communications.
+	// Value can be a two letter language code as defined by ISO 639-1 (en, de) or it can be a combination
+	// of language code and country code (en-gb, en-us). The country code is as per ISO 3166 two letter code (alpha-2)
+	// Language preference for all communications. Value can be a two letter language code as defined by ISO 639-1 (en, de) or it can be a combination of language code and country code (en-gb, en-us). The country code is as per ISO 3166 two letter code (alpha-2).
+	PreferredLanguage *string `json:"preferredLanguage,omitempty" tf:"preferred_language,omitempty"`
+
+	Username *string `json:"username,omitempty" tf:"username,omitempty"`
+}
+
 type UserObservation struct {
+
+	// (Semi-Required) The email address of the user
+	// The email address of the user.
+	Email *string `json:"email,omitempty" tf:"email,omitempty"`
+
+	// First name of the user
+	// The first name of the user.
+	FirstName *string `json:"firstName,omitempty" tf:"first_name,omitempty"`
 
 	// The GUID of the user
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Last name of the user
+	// The last name of the user.
+	LastName *string `json:"lastName,omitempty" tf:"last_name,omitempty"`
+
+	// The login ID of the user (NEW since v0.4.0)
+	Login *string `json:"login,omitempty" tf:"login,omitempty"`
+
+	// Mobile number of the user. E.164 format
+	// The optional mobile phone number of the user.
+	Mobile *string `json:"mobile,omitempty" tf:"mobile,omitempty"`
+
+	// The managing organization of the user
+	// The managing organization of the user.
+	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
+
+	// Preferred communication channel.
+	// Email and SMS are supported channels. Email is the default channel if e-mail address is provided.
+	// Values supported: [ email | sms ]
+	// Preferred communication channel. Email and SMS are supported channels. Email is the default channel if e-mail address is provided. Values supported: [ email | sms ].
+	PreferredCommunicationChannel *string `json:"preferredCommunicationChannel,omitempty" tf:"preferred_communication_channel,omitempty"`
+
+	// Language preference for all communications.
+	// Value can be a two letter language code as defined by ISO 639-1 (en, de) or it can be a combination
+	// of language code and country code (en-gb, en-us). The country code is as per ISO 3166 two letter code (alpha-2)
+	// Language preference for all communications. Value can be a two letter language code as defined by ISO 639-1 (en, de) or it can be a combination of language code and country code (en-gb, en-us). The country code is as per ISO 3166 two letter code (alpha-2).
+	PreferredLanguage *string `json:"preferredLanguage,omitempty" tf:"preferred_language,omitempty"`
+
+	Username *string `json:"username,omitempty" tf:"username,omitempty"`
 }
 
 type UserParameters struct {
 
 	// (Semi-Required) The email address of the user
 	// The email address of the user.
-	// +kubebuilder:validation:Required
-	Email *string `json:"email" tf:"email,omitempty"`
+	// +kubebuilder:validation:Optional
+	Email *string `json:"email,omitempty" tf:"email,omitempty"`
 
 	// First name of the user
 	// The first name of the user.
-	// +kubebuilder:validation:Required
-	FirstName *string `json:"firstName" tf:"first_name,omitempty"`
+	// +kubebuilder:validation:Optional
+	FirstName *string `json:"firstName,omitempty" tf:"first_name,omitempty"`
 
 	// Last name of the user
 	// The last name of the user.
-	// +kubebuilder:validation:Required
-	LastName *string `json:"lastName" tf:"last_name,omitempty"`
+	// +kubebuilder:validation:Optional
+	LastName *string `json:"lastName,omitempty" tf:"last_name,omitempty"`
 
 	// The login ID of the user (NEW since v0.4.0)
-	// +kubebuilder:validation:Required
-	Login *string `json:"login" tf:"login,omitempty"`
+	// +kubebuilder:validation:Optional
+	Login *string `json:"login,omitempty" tf:"login,omitempty"`
 
 	// Mobile number of the user. E.164 format
 	// The optional mobile phone number of the user.
@@ -92,6 +169,17 @@ type UserParameters struct {
 type UserSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     UserParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider UserInitParameters `json:"initProvider,omitempty"`
 }
 
 // UserStatus defines the observed state of User.
@@ -112,8 +200,12 @@ type UserStatus struct {
 type User struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              UserSpec   `json:"spec"`
-	Status            UserStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.email) || (has(self.initProvider) && has(self.initProvider.email))",message="spec.forProvider.email is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.firstName) || (has(self.initProvider) && has(self.initProvider.firstName))",message="spec.forProvider.firstName is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.lastName) || (has(self.initProvider) && has(self.initProvider.lastName))",message="spec.forProvider.lastName is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.login) || (has(self.initProvider) && has(self.initProvider.login))",message="spec.forProvider.login is a required parameter"
+	Spec   UserSpec   `json:"spec"`
+	Status UserStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

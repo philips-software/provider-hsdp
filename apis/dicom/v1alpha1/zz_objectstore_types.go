@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -13,19 +17,57 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type ObjectStoreInitParameters struct {
+
+	// The base config URL of the DICOM Object store instance
+	ConfigURL *string `json:"configUrl,omitempty" tf:"config_url,omitempty"`
+
+	// Description of the object store
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// By default object stores will not be deleted by the provider (soft-delete).
+	// By setting this value to true the provider removes the object store. We strongly suggest enabling this only for ephemeral deployments.
+	ForceDelete *bool `json:"forceDelete,omitempty" tf:"force_delete,omitempty"`
+
+	// the FHIR store configuration
+	S3CredsAccess []S3CredsAccessInitParameters `json:"s3credsAccess,omitempty" tf:"s3creds_access,omitempty"`
+
+	// Details of the CDR service account
+	StaticAccess []StaticAccessInitParameters `json:"staticAccess,omitempty" tf:"static_access,omitempty"`
+}
+
 type ObjectStoreObservation struct {
 
 	// The access type for this object store
 	AccessType *string `json:"accessType,omitempty" tf:"access_type,omitempty"`
 
+	// The base config URL of the DICOM Object store instance
+	ConfigURL *string `json:"configUrl,omitempty" tf:"config_url,omitempty"`
+
+	// Description of the object store
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// By default object stores will not be deleted by the provider (soft-delete).
+	// By setting this value to true the provider removes the object store. We strongly suggest enabling this only for ephemeral deployments.
+	ForceDelete *bool `json:"forceDelete,omitempty" tf:"force_delete,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// the IAM organization ID to use for authorization
+	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
+
+	// the FHIR store configuration
+	S3CredsAccess []S3CredsAccessObservation `json:"s3credsAccess,omitempty" tf:"s3creds_access,omitempty"`
+
+	// Details of the CDR service account
+	StaticAccess []StaticAccessObservation `json:"staticAccess,omitempty" tf:"static_access,omitempty"`
 }
 
 type ObjectStoreParameters struct {
 
 	// The base config URL of the DICOM Object store instance
-	// +kubebuilder:validation:Required
-	ConfigURL *string `json:"configUrl" tf:"config_url,omitempty"`
+	// +kubebuilder:validation:Optional
+	ConfigURL *string `json:"configUrl,omitempty" tf:"config_url,omitempty"`
 
 	// Description of the object store
 	// +kubebuilder:validation:Optional
@@ -59,21 +101,48 @@ type ObjectStoreParameters struct {
 	StaticAccess []StaticAccessParameters `json:"staticAccess,omitempty" tf:"static_access,omitempty"`
 }
 
+type S3CredsAccessInitParameters struct {
+
+	// The S3 bucket name
+	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
+
+	// The S3 bucket endpoint
+	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
+
+	// The S3Creds folder path to use
+	FolderPath *string `json:"folderPath,omitempty" tf:"folder_path,omitempty"`
+
+	// The IAM service account to use
+	ServiceAccount []ServiceAccountInitParameters `json:"serviceAccount,omitempty" tf:"service_account,omitempty"`
+}
+
 type S3CredsAccessObservation struct {
+
+	// The S3 bucket name
+	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
+
+	// The S3 bucket endpoint
+	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
+
+	// The S3Creds folder path to use
+	FolderPath *string `json:"folderPath,omitempty" tf:"folder_path,omitempty"`
+
+	// The IAM service account to use
+	ServiceAccount []ServiceAccountObservation `json:"serviceAccount,omitempty" tf:"service_account,omitempty"`
 }
 
 type S3CredsAccessParameters struct {
 
 	// The S3 bucket name
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	BucketName *string `json:"bucketName" tf:"bucket_name,omitempty"`
 
 	// The S3 bucket endpoint
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Endpoint *string `json:"endpoint" tf:"endpoint,omitempty"`
 
 	// The S3Creds folder path to use
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	FolderPath *string `json:"folderPath" tf:"folder_path,omitempty"`
 
 	// The S3Creds product key
@@ -85,13 +154,40 @@ type S3CredsAccessParameters struct {
 	ServiceAccount []ServiceAccountParameters `json:"serviceAccount,omitempty" tf:"service_account,omitempty"`
 }
 
+type ServiceAccountInitParameters struct {
+
+	// The IAM access token endpoint
+	AccessTokenEndpoint *string `json:"accessTokenEndpoint,omitempty" tf:"access_token_endpoint,omitempty"`
+
+	// Name of the service
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The IAM service id
+	ServiceID *string `json:"serviceId,omitempty" tf:"service_id,omitempty"`
+
+	// The IAM token endpoint
+	TokenEndpoint *string `json:"tokenEndpoint,omitempty" tf:"token_endpoint,omitempty"`
+}
+
 type ServiceAccountObservation struct {
+
+	// The IAM access token endpoint
+	AccessTokenEndpoint *string `json:"accessTokenEndpoint,omitempty" tf:"access_token_endpoint,omitempty"`
+
+	// Name of the service
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The IAM service id
+	ServiceID *string `json:"serviceId,omitempty" tf:"service_id,omitempty"`
+
+	// The IAM token endpoint
+	TokenEndpoint *string `json:"tokenEndpoint,omitempty" tf:"token_endpoint,omitempty"`
 }
 
 type ServiceAccountParameters struct {
 
 	// The IAM access token endpoint
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	AccessTokenEndpoint *string `json:"accessTokenEndpoint" tf:"access_token_endpoint,omitempty"`
 
 	// Name of the service
@@ -103,15 +199,30 @@ type ServiceAccountParameters struct {
 	PrivateKeySecretRef v1.SecretKeySelector `json:"privateKeySecretRef" tf:"-"`
 
 	// The IAM service id
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	ServiceID *string `json:"serviceId" tf:"service_id,omitempty"`
 
 	// The IAM token endpoint
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	TokenEndpoint *string `json:"tokenEndpoint" tf:"token_endpoint,omitempty"`
 }
 
+type StaticAccessInitParameters struct {
+
+	// The S3 bucket name
+	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
+
+	// The S3 bucket endpoint
+	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
+}
+
 type StaticAccessObservation struct {
+
+	// The S3 bucket name
+	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
+
+	// The S3 bucket endpoint
+	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
 }
 
 type StaticAccessParameters struct {
@@ -121,11 +232,11 @@ type StaticAccessParameters struct {
 	AccessKeySecretRef v1.SecretKeySelector `json:"accessKeySecretRef" tf:"-"`
 
 	// The S3 bucket name
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	BucketName *string `json:"bucketName" tf:"bucket_name,omitempty"`
 
 	// The S3 bucket endpoint
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Endpoint *string `json:"endpoint" tf:"endpoint,omitempty"`
 
 	// The S3 secret key
@@ -137,6 +248,17 @@ type StaticAccessParameters struct {
 type ObjectStoreSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     ObjectStoreParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider ObjectStoreInitParameters `json:"initProvider,omitempty"`
 }
 
 // ObjectStoreStatus defines the observed state of ObjectStore.
@@ -157,8 +279,9 @@ type ObjectStoreStatus struct {
 type ObjectStore struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              ObjectStoreSpec   `json:"spec"`
-	Status            ObjectStoreStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.configUrl) || (has(self.initProvider) && has(self.initProvider.configUrl))",message="spec.forProvider.configUrl is a required parameter"
+	Spec   ObjectStoreSpec   `json:"spec"`
+	Status ObjectStoreStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

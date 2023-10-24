@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -13,40 +17,84 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type CdrServiceAccountInitParameters struct {
+
+	// the service private key
+	PrivateKey *string `json:"privateKey,omitempty" tf:"private_key,omitempty"`
+
+	// the service id
+	ServiceID *string `json:"serviceId,omitempty" tf:"service_id,omitempty"`
+}
+
 type CdrServiceAccountObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// the service private key
+	PrivateKey *string `json:"privateKey,omitempty" tf:"private_key,omitempty"`
+
+	// the service id
+	ServiceID *string `json:"serviceId,omitempty" tf:"service_id,omitempty"`
 }
 
 type CdrServiceAccountParameters struct {
 
 	// the service private key
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	PrivateKey *string `json:"privateKey" tf:"private_key,omitempty"`
 
 	// the service id
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	ServiceID *string `json:"serviceId" tf:"service_id,omitempty"`
 }
 
+type FHIRStoreInitParameters struct {
+
+	// the FHIR mpi endpoint
+	MpiEndpoint *string `json:"mpiEndpoint,omitempty" tf:"mpi_endpoint,omitempty"`
+}
+
 type FHIRStoreObservation struct {
+
+	// the FHIR mpi endpoint
+	MpiEndpoint *string `json:"mpiEndpoint,omitempty" tf:"mpi_endpoint,omitempty"`
 }
 
 type FHIRStoreParameters struct {
 
 	// the FHIR mpi endpoint
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	MpiEndpoint *string `json:"mpiEndpoint" tf:"mpi_endpoint,omitempty"`
+}
+
+type StoreConfigInitParameters struct {
+
+	// Details of the CDR service account
+	CdrServiceAccount []CdrServiceAccountInitParameters `json:"cdrServiceAccount,omitempty" tf:"cdr_service_account,omitempty"`
+
+	// The base config URL of the DICOM Store instance
+	ConfigURL *string `json:"configUrl,omitempty" tf:"config_url,omitempty"`
+
+	// the FHIR store configuration
+	FHIRStore []FHIRStoreInitParameters `json:"fhirStore,omitempty" tf:"fhir_store,omitempty"`
 }
 
 type StoreConfigObservation struct {
 
 	// Details of the CDR service account
-	// +kubebuilder:validation:Optional
 	CdrServiceAccount []CdrServiceAccountObservation `json:"cdrServiceAccount,omitempty" tf:"cdr_service_account,omitempty"`
+
+	// The base config URL of the DICOM Store instance
+	ConfigURL *string `json:"configUrl,omitempty" tf:"config_url,omitempty"`
 
 	DataManagementURL *string `json:"dataManagementUrl,omitempty" tf:"data_management_url,omitempty"`
 
+	// the FHIR store configuration
+	FHIRStore []FHIRStoreObservation `json:"fhirStore,omitempty" tf:"fhir_store,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// the IAM organization ID to use for authorization
+	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
 
 	// QIDO API endpoint URL
 	QidoURL *string `json:"qidoUrl,omitempty" tf:"qido_url,omitempty"`
@@ -65,8 +113,8 @@ type StoreConfigParameters struct {
 	CdrServiceAccount []CdrServiceAccountParameters `json:"cdrServiceAccount,omitempty" tf:"cdr_service_account,omitempty"`
 
 	// The base config URL of the DICOM Store instance
-	// +kubebuilder:validation:Required
-	ConfigURL *string `json:"configUrl" tf:"config_url,omitempty"`
+	// +kubebuilder:validation:Optional
+	ConfigURL *string `json:"configUrl,omitempty" tf:"config_url,omitempty"`
 
 	// the FHIR store configuration
 	// +kubebuilder:validation:Optional
@@ -91,6 +139,17 @@ type StoreConfigParameters struct {
 type StoreConfigSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     StoreConfigParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider StoreConfigInitParameters `json:"initProvider,omitempty"`
 }
 
 // StoreConfigStatus defines the observed state of StoreConfig.
@@ -111,8 +170,9 @@ type StoreConfigStatus struct {
 type StoreConfig struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              StoreConfigSpec   `json:"spec"`
-	Status            StoreConfigStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.configUrl) || (has(self.initProvider) && has(self.initProvider.configUrl))",message="spec.forProvider.configUrl is a required parameter"
+	Spec   StoreConfigSpec   `json:"spec"`
+	Status StoreConfigStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

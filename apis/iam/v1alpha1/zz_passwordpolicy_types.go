@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -13,7 +17,34 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type ChallengePolicyInitParameters struct {
+
+	// (Mandatory) A Multi-valued String attribute that contains one or more default question a user may use when setting their challenge questions.
+	DefaultQuestions []*string `json:"defaultQuestions,omitempty" tf:"default_questions,omitempty"`
+
+	// (Mandatory) An Integer indicates the maximum number of failed reset password attempts using challenges.
+	MaxIncorrectAttempts *float64 `json:"maxIncorrectAttempts,omitempty" tf:"max_incorrect_attempts,omitempty"`
+
+	// (Mandatory) An Integer indicating the minimum number of challenge answers a user MUST answer when attempting to reset their password.
+	MinAnswerCount *float64 `json:"minAnswerCount,omitempty" tf:"min_answer_count,omitempty"`
+
+	// (Mandatory) An Integer indicating the minimum number of challenge questions a user MUST answer when setting challenge question answers.
+	MinQuestionCount *float64 `json:"minQuestionCount,omitempty" tf:"min_question_count,omitempty"`
+}
+
 type ChallengePolicyObservation struct {
+
+	// (Mandatory) A Multi-valued String attribute that contains one or more default question a user may use when setting their challenge questions.
+	DefaultQuestions []*string `json:"defaultQuestions,omitempty" tf:"default_questions,omitempty"`
+
+	// (Mandatory) An Integer indicates the maximum number of failed reset password attempts using challenges.
+	MaxIncorrectAttempts *float64 `json:"maxIncorrectAttempts,omitempty" tf:"max_incorrect_attempts,omitempty"`
+
+	// (Mandatory) An Integer indicating the minimum number of challenge answers a user MUST answer when attempting to reset their password.
+	MinAnswerCount *float64 `json:"minAnswerCount,omitempty" tf:"min_answer_count,omitempty"`
+
+	// (Mandatory) An Integer indicating the minimum number of challenge questions a user MUST answer when setting challenge question answers.
+	MinQuestionCount *float64 `json:"minQuestionCount,omitempty" tf:"min_question_count,omitempty"`
 }
 
 type ChallengePolicyParameters struct {
@@ -35,7 +66,44 @@ type ChallengePolicyParameters struct {
 	MinQuestionCount *float64 `json:"minQuestionCount,omitempty" tf:"min_question_count,omitempty"`
 }
 
+type ComplexityInitParameters struct {
+
+	// The maximum number of characters password can contain.
+	MaxLength *float64 `json:"maxLength,omitempty" tf:"max_length,omitempty"`
+
+	// The minimum number of characters password can contain. Default 8
+	MinLength *float64 `json:"minLength,omitempty" tf:"min_length,omitempty"`
+
+	// The minimum number of lower characters password can contain.
+	MinLowercase *float64 `json:"minLowercase,omitempty" tf:"min_lowercase,omitempty"`
+
+	MinNumerics *float64 `json:"minNumerics,omitempty" tf:"min_numerics,omitempty"`
+
+	// The minimum number of special characters password can contain.
+	MinSpecialChars *float64 `json:"minSpecialChars,omitempty" tf:"min_special_chars,omitempty"`
+
+	// The minimum number of uppercase characters password can contain.
+	MinUppercase *float64 `json:"minUppercase,omitempty" tf:"min_uppercase,omitempty"`
+}
+
 type ComplexityObservation struct {
+
+	// The maximum number of characters password can contain.
+	MaxLength *float64 `json:"maxLength,omitempty" tf:"max_length,omitempty"`
+
+	// The minimum number of characters password can contain. Default 8
+	MinLength *float64 `json:"minLength,omitempty" tf:"min_length,omitempty"`
+
+	// The minimum number of lower characters password can contain.
+	MinLowercase *float64 `json:"minLowercase,omitempty" tf:"min_lowercase,omitempty"`
+
+	MinNumerics *float64 `json:"minNumerics,omitempty" tf:"min_numerics,omitempty"`
+
+	// The minimum number of special characters password can contain.
+	MinSpecialChars *float64 `json:"minSpecialChars,omitempty" tf:"min_special_chars,omitempty"`
+
+	// The minimum number of uppercase characters password can contain.
+	MinUppercase *float64 `json:"minUppercase,omitempty" tf:"min_uppercase,omitempty"`
 }
 
 type ComplexityParameters struct {
@@ -64,10 +132,46 @@ type ComplexityParameters struct {
 	MinUppercase *float64 `json:"minUppercase,omitempty" tf:"min_uppercase,omitempty"`
 }
 
+type PasswordPolicyInitParameters struct {
+
+	// (Mandatory, if challenges_enabled = true) Specify KBA settings
+	ChallengePolicy []ChallengePolicyInitParameters `json:"challengePolicy,omitempty" tf:"challenge_policy,omitempty"`
+
+	// A boolean value indicating if challenges are enabled at organization level. If the value is set to true, challenge_policy attribute is mandatory.
+	ChallengesEnabled *bool `json:"challengesEnabled,omitempty" tf:"challenges_enabled,omitempty"`
+
+	// Different criteria that decides the strength of user password for an organization. Block
+	Complexity []ComplexityInitParameters `json:"complexity,omitempty" tf:"complexity,omitempty"`
+
+	// number - The number of days after which the user's password expires.
+	ExpiryPeriodInDays *float64 `json:"expiryPeriodInDays,omitempty" tf:"expiry_period_in_days,omitempty"`
+
+	// The number of previous passwords that cannot be used as new password.
+	HistoryCount *float64 `json:"historyCount,omitempty" tf:"history_count,omitempty"`
+}
+
 type PasswordPolicyObservation struct {
+
+	// (Mandatory, if challenges_enabled = true) Specify KBA settings
+	ChallengePolicy []ChallengePolicyObservation `json:"challengePolicy,omitempty" tf:"challenge_policy,omitempty"`
+
+	// A boolean value indicating if challenges are enabled at organization level. If the value is set to true, challenge_policy attribute is mandatory.
+	ChallengesEnabled *bool `json:"challengesEnabled,omitempty" tf:"challenges_enabled,omitempty"`
+
+	// Different criteria that decides the strength of user password for an organization. Block
+	Complexity []ComplexityObservation `json:"complexity,omitempty" tf:"complexity,omitempty"`
+
+	// number - The number of days after which the user's password expires.
+	ExpiryPeriodInDays *float64 `json:"expiryPeriodInDays,omitempty" tf:"expiry_period_in_days,omitempty"`
+
+	// The number of previous passwords that cannot be used as new password.
+	HistoryCount *float64 `json:"historyCount,omitempty" tf:"history_count,omitempty"`
 
 	// The GUID of the password policy
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// The UUID of the IAM Org to apply this policy to
+	ManagingOrganization *string `json:"managingOrganization,omitempty" tf:"managing_organization,omitempty"`
 
 	Policy *string `json:"Policy,omitempty" tf:"_policy,omitempty"`
 }
@@ -83,8 +187,8 @@ type PasswordPolicyParameters struct {
 	ChallengesEnabled *bool `json:"challengesEnabled,omitempty" tf:"challenges_enabled,omitempty"`
 
 	// Different criteria that decides the strength of user password for an organization. Block
-	// +kubebuilder:validation:Required
-	Complexity []ComplexityParameters `json:"complexity" tf:"complexity,omitempty"`
+	// +kubebuilder:validation:Optional
+	Complexity []ComplexityParameters `json:"complexity,omitempty" tf:"complexity,omitempty"`
 
 	// number - The number of days after which the user's password expires.
 	// +kubebuilder:validation:Optional
@@ -113,6 +217,17 @@ type PasswordPolicyParameters struct {
 type PasswordPolicySpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     PasswordPolicyParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider PasswordPolicyInitParameters `json:"initProvider,omitempty"`
 }
 
 // PasswordPolicyStatus defines the observed state of PasswordPolicy.
@@ -133,8 +248,9 @@ type PasswordPolicyStatus struct {
 type PasswordPolicy struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              PasswordPolicySpec   `json:"spec"`
-	Status            PasswordPolicyStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.complexity) || (has(self.initProvider) && has(self.initProvider.complexity))",message="spec.forProvider.complexity is a required parameter"
+	Spec   PasswordPolicySpec   `json:"spec"`
+	Status PasswordPolicyStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

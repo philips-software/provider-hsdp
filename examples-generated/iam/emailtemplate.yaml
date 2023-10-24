@@ -22,6 +22,3 @@ spec:
       IAM Team
     subject: Your IAM account password was changed
     type: PASSWORD_CHANGED
-
----
-

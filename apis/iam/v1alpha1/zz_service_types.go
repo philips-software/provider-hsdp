@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -13,7 +17,50 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type ServiceInitParameters struct {
+
+	// Array. Default scopes. You do not have to specify these explicitly when requesting a token. Minimum: ["openid"]
+	// Default scopes. You do not have to specify these explicitly when requesting a token.
+	DefaultScopes []*string `json:"defaultScopes,omitempty" tf:"default_scopes,omitempty"`
+
+	// The description of the service
+	// The service description.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The name of the service
+	// The service name.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Array. List of supported scopes for this service. Minimum: ["openid"]
+	// List of supported scopes for this service.
+	Scopes []*string `json:"scopes,omitempty" tf:"scopes,omitempty"`
+
+	// Sets the certificate validity. When not specified, the certificate will have a validity of 5 years.
+	// Sets the certificate validity. When not specified, the certificate will have a validity of 5 years.
+	SelfManagedExpiresOn *string `json:"selfManagedExpiresOn,omitempty" tf:"self_managed_expires_on,omitempty"`
+
+	// Integer. Access Token Lifetime (in seconds). Default: 1800 (30 minutes), Maximum: 2592000 (30 days)
+	// Access Token Lifetime (in seconds). Default: 1800 (30 minutes), Maximum: 2592000 (30 days).
+	TokenValidity *float64 `json:"tokenValidity,omitempty" tf:"token_validity,omitempty"`
+
+	// Integer. Validity of service (in months). Minimum: 1, Maximum: 600 (5 years), Default: 12
+	// The validity of the service credentials in months.
+	Validity *float64 `json:"validity,omitempty" tf:"validity,omitempty"`
+}
+
 type ServiceObservation struct {
+
+	// the application ID (GUID) to attach this service to
+	// The application ID this service falls under.
+	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
+
+	// Array. Default scopes. You do not have to specify these explicitly when requesting a token. Minimum: ["openid"]
+	// Default scopes. You do not have to specify these explicitly when requesting a token.
+	DefaultScopes []*string `json:"defaultScopes,omitempty" tf:"default_scopes,omitempty"`
+
+	// The description of the service
+	// The service description.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// (Generated) Sets the certificate validity. When not specified, the certificate will have a validity of 5 years.
 	// The expiration date of the service credentials.
@@ -22,13 +69,33 @@ type ServiceObservation struct {
 	// The GUID of the client
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// The name of the service
+	// The service name.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
 	// The organization ID this service belongs to (via application and proposition)
 	// The organization this service falls under. Relationship established through application.
 	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
 
+	// Array. List of supported scopes for this service. Minimum: ["openid"]
+	// List of supported scopes for this service.
+	Scopes []*string `json:"scopes,omitempty" tf:"scopes,omitempty"`
+
+	// Sets the certificate validity. When not specified, the certificate will have a validity of 5 years.
+	// Sets the certificate validity. When not specified, the certificate will have a validity of 5 years.
+	SelfManagedExpiresOn *string `json:"selfManagedExpiresOn,omitempty" tf:"self_managed_expires_on,omitempty"`
+
 	// (Generated) The service id
 	// The service ID
 	ServiceID *string `json:"serviceId,omitempty" tf:"service_id,omitempty"`
+
+	// Integer. Access Token Lifetime (in seconds). Default: 1800 (30 minutes), Maximum: 2592000 (30 days)
+	// Access Token Lifetime (in seconds). Default: 1800 (30 minutes), Maximum: 2592000 (30 days).
+	TokenValidity *float64 `json:"tokenValidity,omitempty" tf:"token_validity,omitempty"`
+
+	// Integer. Validity of service (in months). Minimum: 1, Maximum: 600 (5 years), Default: 12
+	// The validity of the service credentials in months.
+	Validity *float64 `json:"validity,omitempty" tf:"validity,omitempty"`
 }
 
 type ServiceParameters struct {
@@ -50,23 +117,23 @@ type ServiceParameters struct {
 
 	// Array. Default scopes. You do not have to specify these explicitly when requesting a token. Minimum: ["openid"]
 	// Default scopes. You do not have to specify these explicitly when requesting a token.
-	// +kubebuilder:validation:Required
-	DefaultScopes []*string `json:"defaultScopes" tf:"default_scopes,omitempty"`
+	// +kubebuilder:validation:Optional
+	DefaultScopes []*string `json:"defaultScopes,omitempty" tf:"default_scopes,omitempty"`
 
 	// The description of the service
 	// The service description.
-	// +kubebuilder:validation:Required
-	Description *string `json:"description" tf:"description,omitempty"`
+	// +kubebuilder:validation:Optional
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// The name of the service
 	// The service name.
-	// +kubebuilder:validation:Required
-	Name *string `json:"name" tf:"name,omitempty"`
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Array. List of supported scopes for this service. Minimum: ["openid"]
 	// List of supported scopes for this service.
-	// +kubebuilder:validation:Required
-	Scopes []*string `json:"scopes" tf:"scopes,omitempty"`
+	// +kubebuilder:validation:Optional
+	Scopes []*string `json:"scopes,omitempty" tf:"scopes,omitempty"`
 
 	// Sets the certificate validity. When not specified, the certificate will have a validity of 5 years.
 	// Sets the certificate validity. When not specified, the certificate will have a validity of 5 years.
@@ -94,6 +161,17 @@ type ServiceParameters struct {
 type ServiceSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     ServiceParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider ServiceInitParameters `json:"initProvider,omitempty"`
 }
 
 // ServiceStatus defines the observed state of Service.
@@ -114,8 +192,12 @@ type ServiceStatus struct {
 type Service struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              ServiceSpec   `json:"spec"`
-	Status            ServiceStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.defaultScopes) || (has(self.initProvider) && has(self.initProvider.defaultScopes))",message="spec.forProvider.defaultScopes is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.description) || (has(self.initProvider) && has(self.initProvider.description))",message="spec.forProvider.description is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.scopes) || (has(self.initProvider) && has(self.initProvider.scopes))",message="spec.forProvider.scopes is a required parameter"
+	Spec   ServiceSpec   `json:"spec"`
+	Status ServiceStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

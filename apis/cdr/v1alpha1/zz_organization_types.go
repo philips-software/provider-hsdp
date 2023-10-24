@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -13,21 +17,57 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type OrganizationInitParameters struct {
+
+	// The CDR FHIR store to use
+	FHIRStore *string `json:"fhirStore,omitempty" tf:"fhir_store,omitempty"`
+
+	// The name of the FHIR Org
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The parent Organization ID (GUID) this Org is part of
+	PartOf *string `json:"partOf,omitempty" tf:"part_of,omitempty"`
+
+	// If set to true, when the resource is destroyed the provider will purge all FHIR resources associated with the Organization. The ORGANIZATION.PURGE IAM permission is required for this to work. Default: false
+	PurgeDelete *bool `json:"purgeDelete,omitempty" tf:"purge_delete,omitempty"`
+
+	// The FHIR version to use. Options [ stu3 | r4 ]. Default is stu3
+	Version *string `json:"version,omitempty" tf:"version,omitempty"`
+}
+
 type OrganizationObservation struct {
+
+	// The CDR FHIR store to use
+	FHIRStore *string `json:"fhirStore,omitempty" tf:"fhir_store,omitempty"`
 
 	// The GUID of the organization
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// The name of the FHIR Org
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The Org ID (GUID) under which to onboard. Usually same as IAM Org ID
+	OrgID *string `json:"orgId,omitempty" tf:"org_id,omitempty"`
+
+	// The parent Organization ID (GUID) this Org is part of
+	PartOf *string `json:"partOf,omitempty" tf:"part_of,omitempty"`
+
+	// If set to true, when the resource is destroyed the provider will purge all FHIR resources associated with the Organization. The ORGANIZATION.PURGE IAM permission is required for this to work. Default: false
+	PurgeDelete *bool `json:"purgeDelete,omitempty" tf:"purge_delete,omitempty"`
+
+	// The FHIR version to use. Options [ stu3 | r4 ]. Default is stu3
+	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
 type OrganizationParameters struct {
 
 	// The CDR FHIR store to use
-	// +kubebuilder:validation:Required
-	FHIRStore *string `json:"fhirStore" tf:"fhir_store,omitempty"`
+	// +kubebuilder:validation:Optional
+	FHIRStore *string `json:"fhirStore,omitempty" tf:"fhir_store,omitempty"`
 
 	// The name of the FHIR Org
-	// +kubebuilder:validation:Required
-	Name *string `json:"name" tf:"name,omitempty"`
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The Org ID (GUID) under which to onboard. Usually same as IAM Org ID
 	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Organization
@@ -60,6 +100,17 @@ type OrganizationParameters struct {
 type OrganizationSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     OrganizationParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider OrganizationInitParameters `json:"initProvider,omitempty"`
 }
 
 // OrganizationStatus defines the observed state of Organization.
@@ -80,8 +131,10 @@ type OrganizationStatus struct {
 type Organization struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              OrganizationSpec   `json:"spec"`
-	Status            OrganizationStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.fhirStore) || (has(self.initProvider) && has(self.initProvider.fhirStore))",message="spec.forProvider.fhirStore is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
+	Spec   OrganizationSpec   `json:"spec"`
+	Status OrganizationStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

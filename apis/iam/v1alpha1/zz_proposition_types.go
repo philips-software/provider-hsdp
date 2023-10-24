@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -13,25 +17,49 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type PropositionInitParameters struct {
+
+	// The description of the application
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// Reference identifier defined by the provisioning user.
+	GlobalReferenceID *string `json:"globalReferenceId,omitempty" tf:"global_reference_id,omitempty"`
+
+	// The name of the application
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+}
+
 type PropositionObservation struct {
+
+	// The description of the application
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// Reference identifier defined by the provisioning user.
+	GlobalReferenceID *string `json:"globalReferenceId,omitempty" tf:"global_reference_id,omitempty"`
 
 	// The GUID of the proposition
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// The name of the application
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// the organization ID (GUID) to attach this a proposition to
+	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
 }
 
 type PropositionParameters struct {
 
 	// The description of the application
-	// +kubebuilder:validation:Required
-	Description *string `json:"description" tf:"description,omitempty"`
+	// +kubebuilder:validation:Optional
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// Reference identifier defined by the provisioning user.
 	// +kubebuilder:validation:Optional
 	GlobalReferenceID *string `json:"globalReferenceId,omitempty" tf:"global_reference_id,omitempty"`
 
 	// The name of the application
-	// +kubebuilder:validation:Required
-	Name *string `json:"name" tf:"name,omitempty"`
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// the organization ID (GUID) to attach this a proposition to
 	// +crossplane:generate:reference:type=Organization
@@ -52,6 +80,17 @@ type PropositionParameters struct {
 type PropositionSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     PropositionParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider PropositionInitParameters `json:"initProvider,omitempty"`
 }
 
 // PropositionStatus defines the observed state of Proposition.
@@ -72,8 +111,10 @@ type PropositionStatus struct {
 type Proposition struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              PropositionSpec   `json:"spec"`
-	Status            PropositionStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.description) || (has(self.initProvider) && has(self.initProvider.description))",message="spec.forProvider.description is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
+	Spec   PropositionSpec   `json:"spec"`
+	Status PropositionStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

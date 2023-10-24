@@ -3,7 +3,7 @@ package common
 import (
 	"github.com/crossplane/crossplane-runtime/pkg/reference"
 	"github.com/crossplane/crossplane-runtime/pkg/resource"
-	jresource "github.com/upbound/upjet/pkg/resource"
+	jresource "github.com/crossplane/upjet/pkg/resource"
 )
 
 const (

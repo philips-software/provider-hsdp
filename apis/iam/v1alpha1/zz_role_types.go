@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -13,10 +17,49 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type RoleInitParameters struct {
+
+	// The description of the group
+	// The role description.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The name of the group
+	// The role name.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The list of permission to assign to this role
+	// List of permissions IDs assigned to this role.
+	Permissions []*string `json:"permissions,omitempty" tf:"permissions,omitempty"`
+
+	// Defaults to true. Setting to false will remove e.g. CLIENT.SCOPES permission which is only addable using a HSDP support ticket.
+	// Removal protection of some ticket only permissions.
+	TicketProtection *bool `json:"ticketProtection,omitempty" tf:"ticket_protection,omitempty"`
+}
+
 type RoleObservation struct {
+
+	// The description of the group
+	// The role description.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// The GUID of the role
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// The managing organization ID of this role
+	// The managing organization of the role.
+	ManagingOrganization *string `json:"managingOrganization,omitempty" tf:"managing_organization,omitempty"`
+
+	// The name of the group
+	// The role name.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The list of permission to assign to this role
+	// List of permissions IDs assigned to this role.
+	Permissions []*string `json:"permissions,omitempty" tf:"permissions,omitempty"`
+
+	// Defaults to true. Setting to false will remove e.g. CLIENT.SCOPES permission which is only addable using a HSDP support ticket.
+	// Removal protection of some ticket only permissions.
+	TicketProtection *bool `json:"ticketProtection,omitempty" tf:"ticket_protection,omitempty"`
 }
 
 type RoleParameters struct {
@@ -39,8 +82,8 @@ type RoleParameters struct {
 
 	// The name of the group
 	// The role name.
-	// +kubebuilder:validation:Required
-	Name *string `json:"name" tf:"name,omitempty"`
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Reference to a Organization to populate managingOrganization.
 	// +kubebuilder:validation:Optional
@@ -48,8 +91,8 @@ type RoleParameters struct {
 
 	// The list of permission to assign to this role
 	// List of permissions IDs assigned to this role.
-	// +kubebuilder:validation:Required
-	Permissions []*string `json:"permissions" tf:"permissions,omitempty"`
+	// +kubebuilder:validation:Optional
+	Permissions []*string `json:"permissions,omitempty" tf:"permissions,omitempty"`
 
 	// Defaults to true. Setting to false will remove e.g. CLIENT.SCOPES permission which is only addable using a HSDP support ticket.
 	// Removal protection of some ticket only permissions.
@@ -61,6 +104,17 @@ type RoleParameters struct {
 type RoleSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     RoleParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider RoleInitParameters `json:"initProvider,omitempty"`
 }
 
 // RoleStatus defines the observed state of Role.
@@ -81,8 +135,10 @@ type RoleStatus struct {
 type Role struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              RoleSpec   `json:"spec"`
-	Status            RoleStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.permissions) || (has(self.initProvider) && has(self.initProvider.permissions))",message="spec.forProvider.permissions is a required parameter"
+	Spec   RoleSpec   `json:"spec"`
+	Status RoleStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

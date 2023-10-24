@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -13,10 +17,69 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type GroupInitParameters struct {
+
+	// The description of the group
+	// The group description.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The list of IAM device identity IDs to include in this group. See hsdp_iam_device
+	// The list of IAM device identity IDs to include in this group.
+	Devices []*string `json:"devices,omitempty" tf:"devices,omitempty"`
+
+	// While most resources do automatic drift detection, we are opting to make this
+	// opt-in for IAM Groups due to insufficient IAM API capabilities to perform this operation efficiently.
+	// A future version might change this to be always-on.
+	DriftDetection *bool `json:"driftDetection,omitempty" tf:"drift_detection,omitempty"`
+
+	// Deprecated, do not use.
+	IAMDeviceBugWorkaround *bool `json:"iamDeviceBugWorkaround,omitempty" tf:"iam_device_bug_workaround,omitempty"`
+
+	// The name of the group
+	// The group name.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+}
+
 type GroupObservation struct {
+
+	// The description of the group
+	// The group description.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The list of IAM device identity IDs to include in this group. See hsdp_iam_device
+	// The list of IAM device identity IDs to include in this group.
+	Devices []*string `json:"devices,omitempty" tf:"devices,omitempty"`
+
+	// While most resources do automatic drift detection, we are opting to make this
+	// opt-in for IAM Groups due to insufficient IAM API capabilities to perform this operation efficiently.
+	// A future version might change this to be always-on.
+	DriftDetection *bool `json:"driftDetection,omitempty" tf:"drift_detection,omitempty"`
+
+	// Deprecated, do not use.
+	IAMDeviceBugWorkaround *bool `json:"iamDeviceBugWorkaround,omitempty" tf:"iam_device_bug_workaround,omitempty"`
 
 	// The GUID of the group
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// The managing organization ID
+	// The managing organization ID.
+	ManagingOrganization *string `json:"managingOrganization,omitempty" tf:"managing_organization,omitempty"`
+
+	// The name of the group
+	// The group name.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The list of role IDS to assign to this group
+	// The list of role IDS to assign to this group.
+	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
+
+	// The list of service identity IDs to include in this group. See hsdp_iam_service
+	// The list of service identity IDs to include in this group.
+	Services []*string `json:"services,omitempty" tf:"services,omitempty"`
+
+	// The list of user IDs to include in this group. The provider only manages this list of users. Existing users added by others means to the group by the provider. It is not practical to manage hundreds or thousands of users this way of course.
+	// The list of user IDs to include in this group. The provider only manages this list of users. Existing users added by others means to the group by the provider. It is not practical to manage hundreds or thousands of users this way of course.
+	Users []*string `json:"users,omitempty" tf:"users,omitempty"`
 }
 
 type GroupParameters struct {
@@ -54,8 +117,8 @@ type GroupParameters struct {
 
 	// The name of the group
 	// The group name.
-	// +kubebuilder:validation:Required
-	Name *string `json:"name" tf:"name,omitempty"`
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Reference to a Organization to populate managingOrganization.
 	// +kubebuilder:validation:Optional
@@ -111,6 +174,17 @@ type GroupParameters struct {
 type GroupSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     GroupParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider GroupInitParameters `json:"initProvider,omitempty"`
 }
 
 // GroupStatus defines the observed state of Group.
@@ -131,8 +205,9 @@ type GroupStatus struct {
 type Group struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              GroupSpec   `json:"spec"`
-	Status            GroupStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
+	Spec   GroupSpec   `json:"spec"`
+	Status GroupStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
