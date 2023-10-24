@@ -8,9 +8,9 @@ import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
 
+	ujconfig "github.com/crossplane/upjet/pkg/config"
 	"github.com/philips-software/provider-hsdp/config/cdr"
 	"github.com/philips-software/provider-hsdp/config/dicom"
-	ujconfig "github.com/crossplane/upjet/pkg/config"
 
 	"github.com/philips-software/provider-hsdp/config/iam"
 )
