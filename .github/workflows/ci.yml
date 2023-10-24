@@ -10,7 +10,7 @@ on:
 
 env:
   # Common versions
-  GO_VERSION: '1.20.1'
+  GO_VERSION: '1.20.10'
   GOLANGCI_VERSION: 'v1.51.1'
   DOCKER_BUILDX_VERSION: 'v0.8.2'
 
@@ -112,6 +112,9 @@ jobs:
 
       - name: Vendor Dependencies
         run: make vendor vendor.check
+
+      - name: get scraper
+        run: go get github.com/upbound/upjet/cmd/scraper
 
       - name: Check Diff
         run: make check-diff
