@@ -32,9 +32,6 @@ type GroupInitParameters struct {
 	// A future version might change this to be always-on.
 	DriftDetection *bool `json:"driftDetection,omitempty" tf:"drift_detection,omitempty"`
 
-	// Deprecated, do not use.
-	IAMDeviceBugWorkaround *bool `json:"iamDeviceBugWorkaround,omitempty" tf:"iam_device_bug_workaround,omitempty"`
-
 	// The name of the group
 	// The group name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -54,9 +51,6 @@ type GroupObservation struct {
 	// opt-in for IAM Groups due to insufficient IAM API capabilities to perform this operation efficiently.
 	// A future version might change this to be always-on.
 	DriftDetection *bool `json:"driftDetection,omitempty" tf:"drift_detection,omitempty"`
-
-	// Deprecated, do not use.
-	IAMDeviceBugWorkaround *bool `json:"iamDeviceBugWorkaround,omitempty" tf:"iam_device_bug_workaround,omitempty"`
 
 	// The GUID of the group
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -99,10 +93,6 @@ type GroupParameters struct {
 	// A future version might change this to be always-on.
 	// +kubebuilder:validation:Optional
 	DriftDetection *bool `json:"driftDetection,omitempty" tf:"drift_detection,omitempty"`
-
-	// Deprecated, do not use.
-	// +kubebuilder:validation:Optional
-	IAMDeviceBugWorkaround *bool `json:"iamDeviceBugWorkaround,omitempty" tf:"iam_device_bug_workaround,omitempty"`
 
 	// The managing organization ID
 	// The managing organization ID.

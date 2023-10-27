@@ -83,9 +83,6 @@ spec:
                       IAM API capabilities to perform this operation efficiently.
                       A future version might change this to be always-on.
                     type: boolean
-                  iamDeviceBugWorkaround:
-                    description: Deprecated, do not use.
-                    type: boolean
                   managingOrganization:
                     description: The managing organization ID The managing organization
                       ID.
@@ -448,9 +445,6 @@ spec:
                       IAM API capabilities to perform this operation efficiently.
                       A future version might change this to be always-on.
                     type: boolean
-                  iamDeviceBugWorkaround:
-                    description: Deprecated, do not use.
-                    type: boolean
                   name:
                     description: The name of the group The group name.
                     type: string
@@ -640,9 +634,6 @@ spec:
                       we are opting to make this opt-in for IAM Groups due to insufficient
                       IAM API capabilities to perform this operation efficiently.
                       A future version might change this to be always-on.
-                    type: boolean
-                  iamDeviceBugWorkaround:
-                    description: Deprecated, do not use.
                     type: boolean
                   id:
                     description: The GUID of the group
