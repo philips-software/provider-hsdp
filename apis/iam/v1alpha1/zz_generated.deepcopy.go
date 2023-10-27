@@ -1257,11 +1257,6 @@ func (in *GroupInitParameters) DeepCopyInto(out *GroupInitParameters) {
 		*out = new(bool)
 		**out = **in
 	}
-	if in.IAMDeviceBugWorkaround != nil {
-		in, out := &in.IAMDeviceBugWorkaround, &out.IAMDeviceBugWorkaround
-		*out = new(bool)
-		**out = **in
-	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
@@ -1332,11 +1327,6 @@ func (in *GroupObservation) DeepCopyInto(out *GroupObservation) {
 	}
 	if in.DriftDetection != nil {
 		in, out := &in.DriftDetection, &out.DriftDetection
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IAMDeviceBugWorkaround != nil {
-		in, out := &in.IAMDeviceBugWorkaround, &out.IAMDeviceBugWorkaround
 		*out = new(bool)
 		**out = **in
 	}
@@ -1421,11 +1411,6 @@ func (in *GroupParameters) DeepCopyInto(out *GroupParameters) {
 	}
 	if in.DriftDetection != nil {
 		in, out := &in.DriftDetection, &out.DriftDetection
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IAMDeviceBugWorkaround != nil {
-		in, out := &in.IAMDeviceBugWorkaround, &out.IAMDeviceBugWorkaround
 		*out = new(bool)
 		**out = **in
 	}

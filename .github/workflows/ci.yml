@@ -113,7 +113,7 @@ jobs:
       - name: Vendor Dependencies
         run: make vendor vendor.check
 
-      - name: get scraper
+      - name: Get scraper
         run: go get github.com/upbound/upjet/cmd/scraper
 
       - name: Check Diff
