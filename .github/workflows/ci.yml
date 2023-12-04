@@ -114,7 +114,7 @@ jobs:
         run: make vendor vendor.check
 
       - name: Get scraper
-        run: go get github.com/upbound/upjet/cmd/scraper
+        run: go get github.com/crossplane/upjet/cmd/scraper
 
       - name: Check Diff
         run: make check-diff
