@@ -32,6 +32,7 @@ func GetProvider() *ujconfig.Provider {
 		ujconfig.WithShortName("hsdp"),
 		ujconfig.WithRootGroup("hsdp.crossplane.io"),
 		ujconfig.WithIncludeList(ExternalNameConfigured()),
+		ujconfig.WithFeaturesPackage("internal/features"),
 		ujconfig.WithDefaultResourceOptions(
 			ExternalNameConfigurations(),
 		))
