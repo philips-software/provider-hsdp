@@ -2531,6 +2531,7 @@ resources:
                 of language code and country code (en-gb, en-us). The country code is as per ISO 3166 two letter code (alpha-2)
         importStatements:
             - '> terraform import hsdp_iam_user.developer a-guid'
+            - '> terraform import hsdp_iam_user.developer login/developer'
     hsdp_metrics_autoscaler:
         subCategory: Autoscaler
         description: Manages HSDP Metrics autoscalers
