@@ -41,7 +41,7 @@ OLMBUNDLE_VERSION ?= v0.5.2
 OLMBUNDLE := $(TOOLS_HOST_DIR)/olm-bundle-$(OLMBUNDLE_VERSION)
 
 # the version of up to use
-UP_VERSION ?= v0.12.2
+UP_VERSION ?= v0.16.1
 UP_CHANNEL ?= stable
 UP := $(TOOLS_HOST_DIR)/up-$(UP_VERSION)
 
@@ -154,6 +154,7 @@ $(HELM3):
 # kuttl download and install
 $(KUTTL):
 	@$(INFO) installing kuttl $(KUTTL_VERSION)
+	@mkdir -p $(TOOLS_HOST_DIR)
 	@curl -fsSLo $(KUTTL) --create-dirs https://github.com/kudobuilder/kuttl/releases/download/v$(KUTTL_VERSION)/kubectl-kuttl_$(KUTTL_VERSION)_$(HOST_PLATFORM) || $(FAIL)
 	@chmod +x $(KUTTL)
 	@$(OK) installing kuttl $(KUTTL_VERSION)
@@ -161,6 +162,7 @@ $(KUTTL):
 # uptest download and install
 $(UPTEST):
 	@$(INFO) installing uptest $(UPTEST)
+	@mkdir -p $(TOOLS_HOST_DIR)
 	@curl -fsSLo $(UPTEST) https://github.com/upbound/uptest/releases/download/$(UPTEST_VERSION)/uptest_$(SAFEHOSTPLATFORM) || $(FAIL)
 	@chmod +x $(UPTEST)
 	@$(OK) installing uptest $(UPTEST)
