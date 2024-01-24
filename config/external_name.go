@@ -4,7 +4,10 @@ Copyright 2022 Koninklijke Philips N.V., https://www.philips.com
 
 package config
 
-import "github.com/crossplane/upjet/pkg/config"
+import (
+	"fmt"
+	"github.com/crossplane/upjet/pkg/config"
+)
 
 // ExternalNameConfigs contains all external name configurations for this
 // provider.
@@ -36,6 +39,7 @@ func ExternalNameConfigurations() config.ResourceOption {
 	return func(r *config.Resource) {
 		if e, ok := ExternalNameConfigs[r.Name]; ok {
 			r.ExternalName = e
+			fmt.Println(r.Name, r.ShouldUseNoForkClient())
 		}
 	}
 }
@@ -51,4 +55,12 @@ func ExternalNameConfigured() []string {
 		i++
 	}
 	return l
+}
+
+// NoAsync disables the async-by-default behavior of upjet. Unlike many resources in cloud providers, Kafka resources
+// are fast to create. None of them need to be done asynchronously.
+func NoAsync() config.ResourceOption {
+	return func(r *config.Resource) {
+		r.UseAsync = false
+	}
 }
