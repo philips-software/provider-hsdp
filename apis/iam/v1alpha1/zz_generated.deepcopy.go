@@ -58,6 +58,21 @@ func (in *ApplicationInitParameters) DeepCopyInto(out *ApplicationInitParameters
 		*out = new(string)
 		**out = **in
 	}
+	if in.PropositionID != nil {
+		in, out := &in.PropositionID, &out.PropositionID
+		*out = new(string)
+		**out = **in
+	}
+	if in.PropositionIDSelector != nil {
+		in, out := &in.PropositionIDSelector, &out.PropositionIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.PropositionRef != nil {
+		in, out := &in.PropositionRef, &out.PropositionRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.WaitForDelete != nil {
 		in, out := &in.WaitForDelete, &out.WaitForDelete
 		*out = new(bool)
@@ -253,17 +268,17 @@ func (in *ChallengePolicyInitParameters) DeepCopyInto(out *ChallengePolicyInitPa
 	}
 	if in.MaxIncorrectAttempts != nil {
 		in, out := &in.MaxIncorrectAttempts, &out.MaxIncorrectAttempts
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinAnswerCount != nil {
 		in, out := &in.MinAnswerCount, &out.MinAnswerCount
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinQuestionCount != nil {
 		in, out := &in.MinQuestionCount, &out.MinQuestionCount
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -294,17 +309,17 @@ func (in *ChallengePolicyObservation) DeepCopyInto(out *ChallengePolicyObservati
 	}
 	if in.MaxIncorrectAttempts != nil {
 		in, out := &in.MaxIncorrectAttempts, &out.MaxIncorrectAttempts
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinAnswerCount != nil {
 		in, out := &in.MinAnswerCount, &out.MinAnswerCount
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinQuestionCount != nil {
 		in, out := &in.MinQuestionCount, &out.MinQuestionCount
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -335,17 +350,17 @@ func (in *ChallengePolicyParameters) DeepCopyInto(out *ChallengePolicyParameters
 	}
 	if in.MaxIncorrectAttempts != nil {
 		in, out := &in.MaxIncorrectAttempts, &out.MaxIncorrectAttempts
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinAnswerCount != nil {
 		in, out := &in.MinAnswerCount, &out.MinAnswerCount
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinQuestionCount != nil {
 		in, out := &in.MinQuestionCount, &out.MinQuestionCount
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -392,8 +407,23 @@ func (in *ClientInitParameters) DeepCopyInto(out *ClientInitParameters) {
 	*out = *in
 	if in.AccessTokenLifetime != nil {
 		in, out := &in.AccessTokenLifetime, &out.AccessTokenLifetime
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
+	}
+	if in.ApplicationID != nil {
+		in, out := &in.ApplicationID, &out.ApplicationID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ApplicationIDSelector != nil {
+		in, out := &in.ApplicationIDSelector, &out.ApplicationIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ApplicationRef != nil {
+		in, out := &in.ApplicationRef, &out.ApplicationRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.ClientID != nil {
 		in, out := &in.ClientID, &out.ClientID
@@ -428,7 +458,7 @@ func (in *ClientInitParameters) DeepCopyInto(out *ClientInitParameters) {
 	}
 	if in.IDTokenLifetime != nil {
 		in, out := &in.IDTokenLifetime, &out.IDTokenLifetime
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Name != nil {
@@ -449,7 +479,7 @@ func (in *ClientInitParameters) DeepCopyInto(out *ClientInitParameters) {
 	}
 	if in.RefreshTokenLifetime != nil {
 		in, out := &in.RefreshTokenLifetime, &out.RefreshTokenLifetime
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ResponseTypes != nil {
@@ -528,7 +558,7 @@ func (in *ClientObservation) DeepCopyInto(out *ClientObservation) {
 	*out = *in
 	if in.AccessTokenLifetime != nil {
 		in, out := &in.AccessTokenLifetime, &out.AccessTokenLifetime
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ApplicationID != nil {
@@ -579,7 +609,7 @@ func (in *ClientObservation) DeepCopyInto(out *ClientObservation) {
 	}
 	if in.IDTokenLifetime != nil {
 		in, out := &in.IDTokenLifetime, &out.IDTokenLifetime
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Name != nil {
@@ -600,7 +630,7 @@ func (in *ClientObservation) DeepCopyInto(out *ClientObservation) {
 	}
 	if in.RefreshTokenLifetime != nil {
 		in, out := &in.RefreshTokenLifetime, &out.RefreshTokenLifetime
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ResponseTypes != nil {
@@ -647,7 +677,7 @@ func (in *ClientParameters) DeepCopyInto(out *ClientParameters) {
 	*out = *in
 	if in.AccessTokenLifetime != nil {
 		in, out := &in.AccessTokenLifetime, &out.AccessTokenLifetime
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ApplicationID != nil {
@@ -698,7 +728,7 @@ func (in *ClientParameters) DeepCopyInto(out *ClientParameters) {
 	}
 	if in.IDTokenLifetime != nil {
 		in, out := &in.IDTokenLifetime, &out.IDTokenLifetime
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Name != nil {
@@ -720,7 +750,7 @@ func (in *ClientParameters) DeepCopyInto(out *ClientParameters) {
 	}
 	if in.RefreshTokenLifetime != nil {
 		in, out := &in.RefreshTokenLifetime, &out.RefreshTokenLifetime
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ResponseTypes != nil {
@@ -802,32 +832,32 @@ func (in *ComplexityInitParameters) DeepCopyInto(out *ComplexityInitParameters) 
 	*out = *in
 	if in.MaxLength != nil {
 		in, out := &in.MaxLength, &out.MaxLength
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinLength != nil {
 		in, out := &in.MinLength, &out.MinLength
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinLowercase != nil {
 		in, out := &in.MinLowercase, &out.MinLowercase
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinNumerics != nil {
 		in, out := &in.MinNumerics, &out.MinNumerics
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinSpecialChars != nil {
 		in, out := &in.MinSpecialChars, &out.MinSpecialChars
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinUppercase != nil {
 		in, out := &in.MinUppercase, &out.MinUppercase
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -847,32 +877,32 @@ func (in *ComplexityObservation) DeepCopyInto(out *ComplexityObservation) {
 	*out = *in
 	if in.MaxLength != nil {
 		in, out := &in.MaxLength, &out.MaxLength
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinLength != nil {
 		in, out := &in.MinLength, &out.MinLength
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinLowercase != nil {
 		in, out := &in.MinLowercase, &out.MinLowercase
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinNumerics != nil {
 		in, out := &in.MinNumerics, &out.MinNumerics
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinSpecialChars != nil {
 		in, out := &in.MinSpecialChars, &out.MinSpecialChars
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinUppercase != nil {
 		in, out := &in.MinUppercase, &out.MinUppercase
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -892,32 +922,32 @@ func (in *ComplexityParameters) DeepCopyInto(out *ComplexityParameters) {
 	*out = *in
 	if in.MaxLength != nil {
 		in, out := &in.MaxLength, &out.MaxLength
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinLength != nil {
 		in, out := &in.MinLength, &out.MinLength
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinLowercase != nil {
 		in, out := &in.MinLowercase, &out.MinLowercase
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinNumerics != nil {
 		in, out := &in.MinNumerics, &out.MinNumerics
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinSpecialChars != nil {
 		in, out := &in.MinSpecialChars, &out.MinSpecialChars
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinUppercase != nil {
 		in, out := &in.MinUppercase, &out.MinUppercase
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -982,10 +1012,25 @@ func (in *EmailTemplateInitParameters) DeepCopyInto(out *EmailTemplateInitParame
 		*out = new(string)
 		**out = **in
 	}
+	if in.ManagingOrganization != nil {
+		in, out := &in.ManagingOrganization, &out.ManagingOrganization
+		*out = new(string)
+		**out = **in
+	}
+	if in.ManagingOrganizationSelector != nil {
+		in, out := &in.ManagingOrganizationSelector, &out.ManagingOrganizationSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Message != nil {
 		in, out := &in.Message, &out.Message
 		*out = new(string)
 		**out = **in
+	}
+	if in.OrganizationRef != nil {
+		in, out := &in.OrganizationRef, &out.OrganizationRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Subject != nil {
 		in, out := &in.Subject, &out.Subject
@@ -1257,10 +1302,94 @@ func (in *GroupInitParameters) DeepCopyInto(out *GroupInitParameters) {
 		*out = new(bool)
 		**out = **in
 	}
+	if in.ManagingOrganization != nil {
+		in, out := &in.ManagingOrganization, &out.ManagingOrganization
+		*out = new(string)
+		**out = **in
+	}
+	if in.ManagingOrganizationSelector != nil {
+		in, out := &in.ManagingOrganizationSelector, &out.ManagingOrganizationSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
 		**out = **in
+	}
+	if in.OrganizationRef != nil {
+		in, out := &in.OrganizationRef, &out.OrganizationRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.RoleRef != nil {
+		in, out := &in.RoleRef, &out.RoleRef
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.Roles != nil {
+		in, out := &in.Roles, &out.Roles
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.RolesSelector != nil {
+		in, out := &in.RolesSelector, &out.RolesSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ServiceRef != nil {
+		in, out := &in.ServiceRef, &out.ServiceRef
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.Services != nil {
+		in, out := &in.Services, &out.Services
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.ServicesSelector != nil {
+		in, out := &in.ServicesSelector, &out.ServicesSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.UserRef != nil {
+		in, out := &in.UserRef, &out.UserRef
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.Users != nil {
+		in, out := &in.Users, &out.Users
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.UsersSelector != nil {
+		in, out := &in.UsersSelector, &out.UsersSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -1870,13 +1999,28 @@ func (in *PasswordPolicyInitParameters) DeepCopyInto(out *PasswordPolicyInitPara
 	}
 	if in.ExpiryPeriodInDays != nil {
 		in, out := &in.ExpiryPeriodInDays, &out.ExpiryPeriodInDays
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.HistoryCount != nil {
 		in, out := &in.HistoryCount, &out.HistoryCount
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
+	}
+	if in.ManagingOrganization != nil {
+		in, out := &in.ManagingOrganization, &out.ManagingOrganization
+		*out = new(string)
+		**out = **in
+	}
+	if in.ManagingOrganizationSelector != nil {
+		in, out := &in.ManagingOrganizationSelector, &out.ManagingOrganizationSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.OrganizationRef != nil {
+		in, out := &in.OrganizationRef, &out.OrganizationRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -1946,12 +2090,12 @@ func (in *PasswordPolicyObservation) DeepCopyInto(out *PasswordPolicyObservation
 	}
 	if in.ExpiryPeriodInDays != nil {
 		in, out := &in.ExpiryPeriodInDays, &out.ExpiryPeriodInDays
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.HistoryCount != nil {
 		in, out := &in.HistoryCount, &out.HistoryCount
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ID != nil {
@@ -2005,12 +2149,12 @@ func (in *PasswordPolicyParameters) DeepCopyInto(out *PasswordPolicyParameters) 
 	}
 	if in.ExpiryPeriodInDays != nil {
 		in, out := &in.ExpiryPeriodInDays, &out.ExpiryPeriodInDays
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.HistoryCount != nil {
 		in, out := &in.HistoryCount, &out.HistoryCount
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ManagingOrganization != nil {
@@ -2119,6 +2263,21 @@ func (in *PropositionInitParameters) DeepCopyInto(out *PropositionInitParameters
 		in, out := &in.Name, &out.Name
 		*out = new(string)
 		**out = **in
+	}
+	if in.OrganizationID != nil {
+		in, out := &in.OrganizationID, &out.OrganizationID
+		*out = new(string)
+		**out = **in
+	}
+	if in.OrganizationIDSelector != nil {
+		in, out := &in.OrganizationIDSelector, &out.OrganizationIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.OrganizationRef != nil {
+		in, out := &in.OrganizationRef, &out.OrganizationRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -2319,10 +2478,25 @@ func (in *RoleInitParameters) DeepCopyInto(out *RoleInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ManagingOrganization != nil {
+		in, out := &in.ManagingOrganization, &out.ManagingOrganization
+		*out = new(string)
+		**out = **in
+	}
+	if in.ManagingOrganizationSelector != nil {
+		in, out := &in.ManagingOrganizationSelector, &out.ManagingOrganizationSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
 		**out = **in
+	}
+	if in.OrganizationRef != nil {
+		in, out := &in.OrganizationRef, &out.OrganizationRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Permissions != nil {
 		in, out := &in.Permissions, &out.Permissions
@@ -2521,15 +2695,45 @@ func (in *RoleSharingPolicy) DeepCopyObject() runtime.Object {
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *RoleSharingPolicyInitParameters) DeepCopyInto(out *RoleSharingPolicyInitParameters) {
 	*out = *in
+	if in.OrganizationRef != nil {
+		in, out := &in.OrganizationRef, &out.OrganizationRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Purpose != nil {
 		in, out := &in.Purpose, &out.Purpose
 		*out = new(string)
 		**out = **in
 	}
+	if in.RoleID != nil {
+		in, out := &in.RoleID, &out.RoleID
+		*out = new(string)
+		**out = **in
+	}
+	if in.RoleIDSelector != nil {
+		in, out := &in.RoleIDSelector, &out.RoleIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.RoleRef != nil {
+		in, out := &in.RoleRef, &out.RoleRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.SharingPolicy != nil {
 		in, out := &in.SharingPolicy, &out.SharingPolicy
 		*out = new(string)
 		**out = **in
+	}
+	if in.TargetOrganizationID != nil {
+		in, out := &in.TargetOrganizationID, &out.TargetOrganizationID
+		*out = new(string)
+		**out = **in
+	}
+	if in.TargetOrganizationIDSelector != nil {
+		in, out := &in.TargetOrganizationIDSelector, &out.TargetOrganizationIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -2780,6 +2984,21 @@ func (in *Service) DeepCopyObject() runtime.Object {
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *ServiceInitParameters) DeepCopyInto(out *ServiceInitParameters) {
 	*out = *in
+	if in.ApplicationID != nil {
+		in, out := &in.ApplicationID, &out.ApplicationID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ApplicationIDSelector != nil {
+		in, out := &in.ApplicationIDSelector, &out.ApplicationIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ApplicationRef != nil {
+		in, out := &in.ApplicationRef, &out.ApplicationRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.DefaultScopes != nil {
 		in, out := &in.DefaultScopes, &out.DefaultScopes
 		*out = make([]*string, len(*in))
@@ -2819,12 +3038,12 @@ func (in *ServiceInitParameters) DeepCopyInto(out *ServiceInitParameters) {
 	}
 	if in.TokenValidity != nil {
 		in, out := &in.TokenValidity, &out.TokenValidity
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Validity != nil {
 		in, out := &in.Validity, &out.Validity
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -2938,12 +3157,12 @@ func (in *ServiceObservation) DeepCopyInto(out *ServiceObservation) {
 	}
 	if in.TokenValidity != nil {
 		in, out := &in.TokenValidity, &out.TokenValidity
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Validity != nil {
 		in, out := &in.Validity, &out.Validity
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -3020,12 +3239,12 @@ func (in *ServiceParameters) DeepCopyInto(out *ServiceParameters) {
 	}
 	if in.TokenValidity != nil {
 		in, out := &in.TokenValidity, &out.TokenValidity
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Validity != nil {
 		in, out := &in.Validity, &out.Validity
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -3129,6 +3348,21 @@ func (in *UserInitParameters) DeepCopyInto(out *UserInitParameters) {
 		in, out := &in.Mobile, &out.Mobile
 		*out = new(string)
 		**out = **in
+	}
+	if in.OrganizationID != nil {
+		in, out := &in.OrganizationID, &out.OrganizationID
+		*out = new(string)
+		**out = **in
+	}
+	if in.OrganizationIDSelector != nil {
+		in, out := &in.OrganizationIDSelector, &out.OrganizationIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.OrganizationRef != nil {
+		in, out := &in.OrganizationRef, &out.OrganizationRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.PreferredCommunicationChannel != nil {
 		in, out := &in.PreferredCommunicationChannel, &out.PreferredCommunicationChannel

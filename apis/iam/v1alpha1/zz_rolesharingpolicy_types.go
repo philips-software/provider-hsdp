@@ -19,12 +19,38 @@ import (
 
 type RoleSharingPolicyInitParameters struct {
 
+	// Reference to a Organization to populate targetOrganizationId.
+	// +kubebuilder:validation:Optional
+	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
+
 	// The purpose of this role sharing policy mapping
 	Purpose *string `json:"purpose,omitempty" tf:"purpose,omitempty"`
+
+	// The ID of the role to share
+	// +crossplane:generate:reference:type=Role
+	// +crossplane:generate:reference:refFieldName=RoleRef
+	RoleID *string `json:"roleId,omitempty" tf:"role_id,omitempty"`
+
+	// Selector for a Role to populate roleId.
+	// +kubebuilder:validation:Optional
+	RoleIDSelector *v1.Selector `json:"roleIdSelector,omitempty" tf:"-"`
+
+	// Reference to a Role to populate roleId.
+	// +kubebuilder:validation:Optional
+	RoleRef *v1.Reference `json:"roleRef,omitempty" tf:"-"`
 
 	// The policy to use
 	// Sharing of a role with a tenant organization can be in one of the following modes:
 	SharingPolicy *string `json:"sharingPolicy,omitempty" tf:"sharing_policy,omitempty"`
+
+	// The target organization UUID to apply this policy for. This can either be a root IAM Org or a subOrg in an existing hierarchy
+	// +crossplane:generate:reference:type=Organization
+	// +crossplane:generate:reference:refFieldName=OrganizationRef
+	TargetOrganizationID *string `json:"targetOrganizationId,omitempty" tf:"target_organization_id,omitempty"`
+
+	// Selector for a Organization to populate targetOrganizationId.
+	// +kubebuilder:validation:Optional
+	TargetOrganizationIDSelector *v1.Selector `json:"targetOrganizationIdSelector,omitempty" tf:"-"`
 }
 
 type RoleSharingPolicyObservation struct {

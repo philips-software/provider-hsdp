@@ -25,6 +25,19 @@ type OrganizationInitParameters struct {
 	// The name of the FHIR Org
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// The Org ID (GUID) under which to onboard. Usually same as IAM Org ID
+	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Organization
+	// +crossplane:generate:reference:refFieldName=OrganizationRef
+	OrgID *string `json:"orgId,omitempty" tf:"org_id,omitempty"`
+
+	// Selector for a Organization in iam to populate orgId.
+	// +kubebuilder:validation:Optional
+	OrgIDSelector *v1.Selector `json:"orgIdSelector,omitempty" tf:"-"`
+
+	// Reference to a Organization in iam to populate orgId.
+	// +kubebuilder:validation:Optional
+	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
+
 	// The parent Organization ID (GUID) this Org is part of
 	PartOf *string `json:"partOf,omitempty" tf:"part_of,omitempty"`
 

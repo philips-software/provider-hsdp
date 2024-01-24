@@ -23,12 +23,27 @@ type RoleInitParameters struct {
 	// The role description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// The managing organization ID of this role
+	// The managing organization of the role.
+	// +crossplane:generate:reference:type=Organization
+	// +crossplane:generate:reference:refFieldName=OrganizationRef
+	ManagingOrganization *string `json:"managingOrganization,omitempty" tf:"managing_organization,omitempty"`
+
+	// Selector for a Organization to populate managingOrganization.
+	// +kubebuilder:validation:Optional
+	ManagingOrganizationSelector *v1.Selector `json:"managingOrganizationSelector,omitempty" tf:"-"`
+
 	// The name of the group
 	// The role name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// Reference to a Organization to populate managingOrganization.
+	// +kubebuilder:validation:Optional
+	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
+
 	// The list of permission to assign to this role
 	// List of permissions IDs assigned to this role.
+	// +listType=set
 	Permissions []*string `json:"permissions,omitempty" tf:"permissions,omitempty"`
 
 	// Defaults to true. Setting to false will remove e.g. CLIENT.SCOPES permission which is only addable using a HSDP support ticket.
@@ -55,6 +70,7 @@ type RoleObservation struct {
 
 	// The list of permission to assign to this role
 	// List of permissions IDs assigned to this role.
+	// +listType=set
 	Permissions []*string `json:"permissions,omitempty" tf:"permissions,omitempty"`
 
 	// Defaults to true. Setting to false will remove e.g. CLIENT.SCOPES permission which is only addable using a HSDP support ticket.
@@ -92,6 +108,7 @@ type RoleParameters struct {
 	// The list of permission to assign to this role
 	// List of permissions IDs assigned to this role.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Permissions []*string `json:"permissions,omitempty" tf:"permissions,omitempty"`
 
 	// Defaults to true. Setting to false will remove e.g. CLIENT.SCOPES permission which is only addable using a HSDP support ticket.

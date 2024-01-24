@@ -20,116 +20,119 @@ import (
 type ChallengePolicyInitParameters struct {
 
 	// (Mandatory) A Multi-valued String attribute that contains one or more default question a user may use when setting their challenge questions.
+	// +listType=set
 	DefaultQuestions []*string `json:"defaultQuestions,omitempty" tf:"default_questions,omitempty"`
 
 	// (Mandatory) An Integer indicates the maximum number of failed reset password attempts using challenges.
-	MaxIncorrectAttempts *float64 `json:"maxIncorrectAttempts,omitempty" tf:"max_incorrect_attempts,omitempty"`
+	MaxIncorrectAttempts *int64 `json:"maxIncorrectAttempts,omitempty" tf:"max_incorrect_attempts,omitempty"`
 
 	// (Mandatory) An Integer indicating the minimum number of challenge answers a user MUST answer when attempting to reset their password.
-	MinAnswerCount *float64 `json:"minAnswerCount,omitempty" tf:"min_answer_count,omitempty"`
+	MinAnswerCount *int64 `json:"minAnswerCount,omitempty" tf:"min_answer_count,omitempty"`
 
 	// (Mandatory) An Integer indicating the minimum number of challenge questions a user MUST answer when setting challenge question answers.
-	MinQuestionCount *float64 `json:"minQuestionCount,omitempty" tf:"min_question_count,omitempty"`
+	MinQuestionCount *int64 `json:"minQuestionCount,omitempty" tf:"min_question_count,omitempty"`
 }
 
 type ChallengePolicyObservation struct {
 
 	// (Mandatory) A Multi-valued String attribute that contains one or more default question a user may use when setting their challenge questions.
+	// +listType=set
 	DefaultQuestions []*string `json:"defaultQuestions,omitempty" tf:"default_questions,omitempty"`
 
 	// (Mandatory) An Integer indicates the maximum number of failed reset password attempts using challenges.
-	MaxIncorrectAttempts *float64 `json:"maxIncorrectAttempts,omitempty" tf:"max_incorrect_attempts,omitempty"`
+	MaxIncorrectAttempts *int64 `json:"maxIncorrectAttempts,omitempty" tf:"max_incorrect_attempts,omitempty"`
 
 	// (Mandatory) An Integer indicating the minimum number of challenge answers a user MUST answer when attempting to reset their password.
-	MinAnswerCount *float64 `json:"minAnswerCount,omitempty" tf:"min_answer_count,omitempty"`
+	MinAnswerCount *int64 `json:"minAnswerCount,omitempty" tf:"min_answer_count,omitempty"`
 
 	// (Mandatory) An Integer indicating the minimum number of challenge questions a user MUST answer when setting challenge question answers.
-	MinQuestionCount *float64 `json:"minQuestionCount,omitempty" tf:"min_question_count,omitempty"`
+	MinQuestionCount *int64 `json:"minQuestionCount,omitempty" tf:"min_question_count,omitempty"`
 }
 
 type ChallengePolicyParameters struct {
 
 	// (Mandatory) A Multi-valued String attribute that contains one or more default question a user may use when setting their challenge questions.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	DefaultQuestions []*string `json:"defaultQuestions,omitempty" tf:"default_questions,omitempty"`
 
 	// (Mandatory) An Integer indicates the maximum number of failed reset password attempts using challenges.
 	// +kubebuilder:validation:Optional
-	MaxIncorrectAttempts *float64 `json:"maxIncorrectAttempts,omitempty" tf:"max_incorrect_attempts,omitempty"`
+	MaxIncorrectAttempts *int64 `json:"maxIncorrectAttempts,omitempty" tf:"max_incorrect_attempts,omitempty"`
 
 	// (Mandatory) An Integer indicating the minimum number of challenge answers a user MUST answer when attempting to reset their password.
 	// +kubebuilder:validation:Optional
-	MinAnswerCount *float64 `json:"minAnswerCount,omitempty" tf:"min_answer_count,omitempty"`
+	MinAnswerCount *int64 `json:"minAnswerCount,omitempty" tf:"min_answer_count,omitempty"`
 
 	// (Mandatory) An Integer indicating the minimum number of challenge questions a user MUST answer when setting challenge question answers.
 	// +kubebuilder:validation:Optional
-	MinQuestionCount *float64 `json:"minQuestionCount,omitempty" tf:"min_question_count,omitempty"`
+	MinQuestionCount *int64 `json:"minQuestionCount,omitempty" tf:"min_question_count,omitempty"`
 }
 
 type ComplexityInitParameters struct {
 
 	// The maximum number of characters password can contain.
-	MaxLength *float64 `json:"maxLength,omitempty" tf:"max_length,omitempty"`
+	MaxLength *int64 `json:"maxLength,omitempty" tf:"max_length,omitempty"`
 
 	// The minimum number of characters password can contain. Default 8
-	MinLength *float64 `json:"minLength,omitempty" tf:"min_length,omitempty"`
+	MinLength *int64 `json:"minLength,omitempty" tf:"min_length,omitempty"`
 
 	// The minimum number of lower characters password can contain.
-	MinLowercase *float64 `json:"minLowercase,omitempty" tf:"min_lowercase,omitempty"`
+	MinLowercase *int64 `json:"minLowercase,omitempty" tf:"min_lowercase,omitempty"`
 
-	MinNumerics *float64 `json:"minNumerics,omitempty" tf:"min_numerics,omitempty"`
+	MinNumerics *int64 `json:"minNumerics,omitempty" tf:"min_numerics,omitempty"`
 
 	// The minimum number of special characters password can contain.
-	MinSpecialChars *float64 `json:"minSpecialChars,omitempty" tf:"min_special_chars,omitempty"`
+	MinSpecialChars *int64 `json:"minSpecialChars,omitempty" tf:"min_special_chars,omitempty"`
 
 	// The minimum number of uppercase characters password can contain.
-	MinUppercase *float64 `json:"minUppercase,omitempty" tf:"min_uppercase,omitempty"`
+	MinUppercase *int64 `json:"minUppercase,omitempty" tf:"min_uppercase,omitempty"`
 }
 
 type ComplexityObservation struct {
 
 	// The maximum number of characters password can contain.
-	MaxLength *float64 `json:"maxLength,omitempty" tf:"max_length,omitempty"`
+	MaxLength *int64 `json:"maxLength,omitempty" tf:"max_length,omitempty"`
 
 	// The minimum number of characters password can contain. Default 8
-	MinLength *float64 `json:"minLength,omitempty" tf:"min_length,omitempty"`
+	MinLength *int64 `json:"minLength,omitempty" tf:"min_length,omitempty"`
 
 	// The minimum number of lower characters password can contain.
-	MinLowercase *float64 `json:"minLowercase,omitempty" tf:"min_lowercase,omitempty"`
+	MinLowercase *int64 `json:"minLowercase,omitempty" tf:"min_lowercase,omitempty"`
 
-	MinNumerics *float64 `json:"minNumerics,omitempty" tf:"min_numerics,omitempty"`
+	MinNumerics *int64 `json:"minNumerics,omitempty" tf:"min_numerics,omitempty"`
 
 	// The minimum number of special characters password can contain.
-	MinSpecialChars *float64 `json:"minSpecialChars,omitempty" tf:"min_special_chars,omitempty"`
+	MinSpecialChars *int64 `json:"minSpecialChars,omitempty" tf:"min_special_chars,omitempty"`
 
 	// The minimum number of uppercase characters password can contain.
-	MinUppercase *float64 `json:"minUppercase,omitempty" tf:"min_uppercase,omitempty"`
+	MinUppercase *int64 `json:"minUppercase,omitempty" tf:"min_uppercase,omitempty"`
 }
 
 type ComplexityParameters struct {
 
 	// The maximum number of characters password can contain.
 	// +kubebuilder:validation:Optional
-	MaxLength *float64 `json:"maxLength,omitempty" tf:"max_length,omitempty"`
+	MaxLength *int64 `json:"maxLength,omitempty" tf:"max_length,omitempty"`
 
 	// The minimum number of characters password can contain. Default 8
 	// +kubebuilder:validation:Optional
-	MinLength *float64 `json:"minLength,omitempty" tf:"min_length,omitempty"`
+	MinLength *int64 `json:"minLength,omitempty" tf:"min_length,omitempty"`
 
 	// The minimum number of lower characters password can contain.
 	// +kubebuilder:validation:Optional
-	MinLowercase *float64 `json:"minLowercase,omitempty" tf:"min_lowercase,omitempty"`
+	MinLowercase *int64 `json:"minLowercase,omitempty" tf:"min_lowercase,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	MinNumerics *float64 `json:"minNumerics,omitempty" tf:"min_numerics,omitempty"`
+	MinNumerics *int64 `json:"minNumerics,omitempty" tf:"min_numerics,omitempty"`
 
 	// The minimum number of special characters password can contain.
 	// +kubebuilder:validation:Optional
-	MinSpecialChars *float64 `json:"minSpecialChars,omitempty" tf:"min_special_chars,omitempty"`
+	MinSpecialChars *int64 `json:"minSpecialChars,omitempty" tf:"min_special_chars,omitempty"`
 
 	// The minimum number of uppercase characters password can contain.
 	// +kubebuilder:validation:Optional
-	MinUppercase *float64 `json:"minUppercase,omitempty" tf:"min_uppercase,omitempty"`
+	MinUppercase *int64 `json:"minUppercase,omitempty" tf:"min_uppercase,omitempty"`
 }
 
 type PasswordPolicyInitParameters struct {
@@ -144,10 +147,23 @@ type PasswordPolicyInitParameters struct {
 	Complexity []ComplexityInitParameters `json:"complexity,omitempty" tf:"complexity,omitempty"`
 
 	// number - The number of days after which the user's password expires.
-	ExpiryPeriodInDays *float64 `json:"expiryPeriodInDays,omitempty" tf:"expiry_period_in_days,omitempty"`
+	ExpiryPeriodInDays *int64 `json:"expiryPeriodInDays,omitempty" tf:"expiry_period_in_days,omitempty"`
 
 	// The number of previous passwords that cannot be used as new password.
-	HistoryCount *float64 `json:"historyCount,omitempty" tf:"history_count,omitempty"`
+	HistoryCount *int64 `json:"historyCount,omitempty" tf:"history_count,omitempty"`
+
+	// The UUID of the IAM Org to apply this policy to
+	// +crossplane:generate:reference:type=Organization
+	// +crossplane:generate:reference:refFieldName=OrganizationRef
+	ManagingOrganization *string `json:"managingOrganization,omitempty" tf:"managing_organization,omitempty"`
+
+	// Selector for a Organization to populate managingOrganization.
+	// +kubebuilder:validation:Optional
+	ManagingOrganizationSelector *v1.Selector `json:"managingOrganizationSelector,omitempty" tf:"-"`
+
+	// Reference to a Organization to populate managingOrganization.
+	// +kubebuilder:validation:Optional
+	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
 }
 
 type PasswordPolicyObservation struct {
@@ -162,10 +178,10 @@ type PasswordPolicyObservation struct {
 	Complexity []ComplexityObservation `json:"complexity,omitempty" tf:"complexity,omitempty"`
 
 	// number - The number of days after which the user's password expires.
-	ExpiryPeriodInDays *float64 `json:"expiryPeriodInDays,omitempty" tf:"expiry_period_in_days,omitempty"`
+	ExpiryPeriodInDays *int64 `json:"expiryPeriodInDays,omitempty" tf:"expiry_period_in_days,omitempty"`
 
 	// The number of previous passwords that cannot be used as new password.
-	HistoryCount *float64 `json:"historyCount,omitempty" tf:"history_count,omitempty"`
+	HistoryCount *int64 `json:"historyCount,omitempty" tf:"history_count,omitempty"`
 
 	// The GUID of the password policy
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -192,11 +208,11 @@ type PasswordPolicyParameters struct {
 
 	// number - The number of days after which the user's password expires.
 	// +kubebuilder:validation:Optional
-	ExpiryPeriodInDays *float64 `json:"expiryPeriodInDays,omitempty" tf:"expiry_period_in_days,omitempty"`
+	ExpiryPeriodInDays *int64 `json:"expiryPeriodInDays,omitempty" tf:"expiry_period_in_days,omitempty"`
 
 	// The number of previous passwords that cannot be used as new password.
 	// +kubebuilder:validation:Optional
-	HistoryCount *float64 `json:"historyCount,omitempty" tf:"history_count,omitempty"`
+	HistoryCount *int64 `json:"historyCount,omitempty" tf:"history_count,omitempty"`
 
 	// The UUID of the IAM Org to apply this policy to
 	// +crossplane:generate:reference:type=Organization

@@ -38,10 +38,12 @@ DOCS_VERSION_DIR := $(DOCS_WORK_DIR)/$(DEST_DOCS_DIR)/$(DOCS_VERSION)
 # ====================================================================================
 # Targets
 
-docs.generate:
+docs.init:
 	rm -rf $(DOCS_WORK_DIR)
 	mkdir -p $(DOCS_WORK_DIR)
 	git clone --depth=1 -b master $(DOCS_GIT_REPO) $(DOCS_WORK_DIR)
+
+docs.generate: docs.init
 	rm -rf $(DOCS_VERSION_DIR)
 	@if [ "$(DOCS_VERSION_ACTIVE)" == "true" ]; then \
 		$(INFO) Including version in documentation ; \
@@ -49,7 +51,12 @@ docs.generate:
 		$(OK) Version included in documentation ; \
 	fi
 
-docs.run: docs.generate
+docs.run: docs.init
+	@if [ "$(DOCS_VERSION_ACTIVE)" == "true" ]; then \
+		$(INFO) Including version in documentation ; \
+		ln -s $(ROOT_DIR)/$(SOURCE_DOCS_DIR) $(DOCS_VERSION_DIR); \
+		$(OK) Version included in documentation ; \
+	fi
 	cd $(DOCS_WORK_DIR) && DOCS_VERSION=$(DOCS_VERSION) $(MAKE) run
 
 docs.validate: docs.generate

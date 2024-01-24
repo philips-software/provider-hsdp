@@ -35,6 +35,7 @@ type SubscriptionInitParameters struct {
 	FHIRStore *string `json:"fhirStore,omitempty" tf:"fhir_store,omitempty"`
 
 	// List of headers to add to the REST call
+	// +listType=set
 	Headers []*string `json:"headers,omitempty" tf:"headers,omitempty"`
 
 	// Reason for creating the subscription
@@ -62,6 +63,7 @@ type SubscriptionObservation struct {
 	FHIRStore *string `json:"fhirStore,omitempty" tf:"fhir_store,omitempty"`
 
 	// List of headers to add to the REST call
+	// +listType=set
 	Headers []*string `json:"headers,omitempty" tf:"headers,omitempty"`
 
 	// The ID of the CDR subscription
@@ -101,6 +103,7 @@ type SubscriptionParameters struct {
 
 	// List of headers to add to the REST call
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Headers []*string `json:"headers,omitempty" tf:"headers,omitempty"`
 
 	// Reason for creating the subscription

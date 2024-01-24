@@ -38,6 +38,20 @@ type UserInitParameters struct {
 	// The optional mobile phone number of the user.
 	Mobile *string `json:"mobile,omitempty" tf:"mobile,omitempty"`
 
+	// The managing organization of the user
+	// The managing organization of the user.
+	// +crossplane:generate:reference:type=Organization
+	// +crossplane:generate:reference:refFieldName=OrganizationRef
+	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
+
+	// Selector for a Organization to populate organizationId.
+	// +kubebuilder:validation:Optional
+	OrganizationIDSelector *v1.Selector `json:"organizationIdSelector,omitempty" tf:"-"`
+
+	// Reference to a Organization to populate organizationId.
+	// +kubebuilder:validation:Optional
+	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
+
 	// Preferred communication channel.
 	// Email and SMS are supported channels. Email is the default channel if e-mail address is provided.
 	// Values supported: [ email | sms ]

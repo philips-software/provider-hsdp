@@ -28,6 +28,19 @@ type RepositoryInitParameters struct {
 	// the Object store ID
 	ObjectStoreID *string `json:"objectStoreId,omitempty" tf:"object_store_id,omitempty"`
 
+	// The organization ID
+	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Organization
+	// +crossplane:generate:reference:refFieldName=OrganizationRef
+	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
+
+	// Selector for a Organization in iam to populate organizationId.
+	// +kubebuilder:validation:Optional
+	OrganizationIDSelector *v1.Selector `json:"organizationIdSelector,omitempty" tf:"-"`
+
+	// Reference to a Organization in iam to populate organizationId.
+	// +kubebuilder:validation:Optional
+	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
+
 	// The organization ID attached to this repository.
 	// When not specified, the root organization is used.
 	RepositoryOrganizationID *string `json:"repositoryOrganizationId,omitempty" tf:"repository_organization_id,omitempty"`

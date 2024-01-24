@@ -76,6 +76,19 @@ type StoreConfigInitParameters struct {
 
 	// the FHIR store configuration
 	FHIRStore []FHIRStoreInitParameters `json:"fhirStore,omitempty" tf:"fhir_store,omitempty"`
+
+	// the IAM organization ID to use for authorization
+	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Organization
+	// +crossplane:generate:reference:refFieldName=OrganizationRef
+	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
+
+	// Selector for a Organization in iam to populate organizationId.
+	// +kubebuilder:validation:Optional
+	OrganizationIDSelector *v1.Selector `json:"organizationIdSelector,omitempty" tf:"-"`
+
+	// Reference to a Organization in iam to populate organizationId.
+	// +kubebuilder:validation:Optional
+	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
 }
 
 type StoreConfigObservation struct {

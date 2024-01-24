@@ -72,7 +72,8 @@ spec:
                       system default life time (1800 secs) will be considered. Lifetime
                       of the access token in seconds. If not specified, system default
                       life time (1800 secs) will be considered.
-                    type: number
+                    format: int64
+                    type: integer
                   applicationId:
                     description: the application ID (GUID) to attach this client to
                       The application ID to attach this client to.
@@ -166,6 +167,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   description:
                     description: The description of the client The description of
                       the client.
@@ -186,7 +188,8 @@ spec:
                       token generated in case openid scope is enabled for the client.
                       If not specified, system default life time (3600 secs) will
                       be considered.
-                    type: number
+                    format: int64
+                    type: integer
                   name:
                     description: The name of the client Name of the client.
                     type: string
@@ -215,12 +218,14 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   refreshTokenLifetime:
                     description: Lifetime of the refresh token in seconds. If not
                       specified, system default life time (2592000 secs) will be considered.
                       Lifetime of the refresh token in seconds. If not specified,
                       system default life time (2592000 secs) will be considered.
-                    type: number
+                    format: int64
+                    type: integer
                   responseTypes:
                     description: Array. Examples of response types are "code id_token",
                       "token id_token", etc. Examples of response types are 'code
@@ -228,12 +233,14 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   scopes:
                     description: Array. List of supported scopes for this client List
                       of supported scopes for this client.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   type:
                     description: Either Public or Confidential The type of the client.
                       Either 'Public' or 'Confidential'.
@@ -256,7 +263,85 @@ spec:
                       system default life time (1800 secs) will be considered. Lifetime
                       of the access token in seconds. If not specified, system default
                       life time (1800 secs) will be considered.
-                    type: number
+                    format: int64
+                    type: integer
+                  applicationId:
+                    description: the application ID (GUID) to attach this client to
+                      The application ID to attach this client to.
+                    type: string
+                  applicationIdSelector:
+                    description: Selector for a Application to populate applicationId.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  applicationRef:
+                    description: Reference to a Application to populate applicationId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
                   clientId:
                     description: The client id The client id
                     type: string
@@ -273,6 +358,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   description:
                     description: The description of the client The description of
                       the client.
@@ -293,7 +379,8 @@ spec:
                       token generated in case openid scope is enabled for the client.
                       If not specified, system default life time (3600 secs) will
                       be considered.
-                    type: number
+                    format: int64
+                    type: integer
                   name:
                     description: The name of the client Name of the client.
                     type: string
@@ -303,12 +390,14 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   refreshTokenLifetime:
                     description: Lifetime of the refresh token in seconds. If not
                       specified, system default life time (2592000 secs) will be considered.
                       Lifetime of the refresh token in seconds. If not specified,
                       system default life time (2592000 secs) will be considered.
-                    type: number
+                    format: int64
+                    type: integer
                   responseTypes:
                     description: Array. Examples of response types are "code id_token",
                       "token id_token", etc. Examples of response types are 'code
@@ -316,12 +405,14 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   scopes:
                     description: Array. List of supported scopes for this client List
                       of supported scopes for this client.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   type:
                     description: Either Public or Confidential The type of the client.
                       Either 'Public' or 'Confidential'.
@@ -537,7 +628,8 @@ spec:
                       system default life time (1800 secs) will be considered. Lifetime
                       of the access token in seconds. If not specified, system default
                       life time (1800 secs) will be considered.
-                    type: number
+                    format: int64
+                    type: integer
                   applicationId:
                     description: the application ID (GUID) to attach this client to
                       The application ID to attach this client to.
@@ -558,6 +650,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   description:
                     description: The description of the client The description of
                       the client.
@@ -586,7 +679,8 @@ spec:
                       token generated in case openid scope is enabled for the client.
                       If not specified, system default life time (3600 secs) will
                       be considered.
-                    type: number
+                    format: int64
+                    type: integer
                   name:
                     description: The name of the client Name of the client.
                     type: string
@@ -596,12 +690,14 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   refreshTokenLifetime:
                     description: Lifetime of the refresh token in seconds. If not
                       specified, system default life time (2592000 secs) will be considered.
                       Lifetime of the refresh token in seconds. If not specified,
                       system default life time (2592000 secs) will be considered.
-                    type: number
+                    format: int64
+                    type: integer
                   responseTypes:
                     description: Array. Examples of response types are "code id_token",
                       "token id_token", etc. Examples of response types are 'code
@@ -609,12 +705,14 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   scopes:
                     description: Array. List of supported scopes for this client List
                       of supported scopes for this client.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   type:
                     description: Either Public or Confidential The type of the client.
                       Either 'Public' or 'Confidential'.

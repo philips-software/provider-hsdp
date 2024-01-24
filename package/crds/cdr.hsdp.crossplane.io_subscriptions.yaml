@@ -88,6 +88,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   reason:
                     description: Reason for creating the subscription
                     type: string
@@ -129,6 +130,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   reason:
                     description: Reason for creating the subscription
                     type: string
@@ -340,6 +342,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   id:
                     description: The ID of the CDR subscription
                     type: string

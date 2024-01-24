@@ -7,6 +7,7 @@ package config
 import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
+	"github.com/philips-software/terraform-provider-hsdp/hsdp"
 
 	ujconfig "github.com/crossplane/upjet/pkg/config"
 	"github.com/philips-software/provider-hsdp/config/cdr"
@@ -31,8 +32,10 @@ func GetProvider() *ujconfig.Provider {
 	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
 		ujconfig.WithShortName("hsdp"),
 		ujconfig.WithRootGroup("hsdp.crossplane.io"),
-		ujconfig.WithIncludeList(ExternalNameConfigured()),
+		ujconfig.WithNoForkIncludeList(ExternalNameConfigured()),
+		ujconfig.WithIncludeList([]string{}),
 		ujconfig.WithFeaturesPackage("internal/features"),
+		ujconfig.WithTerraformProvider(hsdp.Provider("v0.46.1")),
 		ujconfig.WithDefaultResourceOptions(
 			ExternalNameConfigurations(),
 		))

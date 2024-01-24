@@ -34,9 +34,23 @@ type EmailTemplateInitParameters struct {
 	// The locale of the template. When not specified the template will become the default. Only a single default template is allowed of course.
 	Locale *string `json:"locale,omitempty" tf:"locale,omitempty"`
 
+	// The UUID of the IAM Org to apply this email template to
+	// The Id of the IAM Org to apply this email template to.
+	// +crossplane:generate:reference:type=Organization
+	// +crossplane:generate:reference:refFieldName=OrganizationRef
+	ManagingOrganization *string `json:"managingOrganization,omitempty" tf:"managing_organization,omitempty"`
+
+	// Selector for a Organization to populate managingOrganization.
+	// +kubebuilder:validation:Optional
+	ManagingOrganizationSelector *v1.Selector `json:"managingOrganizationSelector,omitempty" tf:"-"`
+
 	// A boolean value indicating if challenges are enabled at organization level. If the value is set to true, challenge_policy attribute is mandatory.
 	// The message body.
 	Message *string `json:"message,omitempty" tf:"message,omitempty"`
+
+	// Reference to a Organization to populate managingOrganization.
+	// +kubebuilder:validation:Optional
+	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
 
 	// The Subject line of the email. Default value is default
 	// The Subject line of the email.

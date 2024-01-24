@@ -27,6 +27,19 @@ type PropositionInitParameters struct {
 
 	// The name of the application
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// the organization ID (GUID) to attach this a proposition to
+	// +crossplane:generate:reference:type=Organization
+	// +crossplane:generate:reference:refFieldName=OrganizationRef
+	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
+
+	// Selector for a Organization to populate organizationId.
+	// +kubebuilder:validation:Optional
+	OrganizationIDSelector *v1.Selector `json:"organizationIdSelector,omitempty" tf:"-"`
+
+	// Reference to a Organization to populate organizationId.
+	// +kubebuilder:validation:Optional
+	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
 }
 
 type PropositionObservation struct {

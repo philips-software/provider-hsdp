@@ -188,6 +188,16 @@ func (in *NotificationInitParameters) DeepCopyInto(out *NotificationInitParamete
 		*out = new(string)
 		**out = **in
 	}
+	if in.DefaultOrganizationID != nil {
+		in, out := &in.DefaultOrganizationID, &out.DefaultOrganizationID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DefaultOrganizationIDSelector != nil {
+		in, out := &in.DefaultOrganizationIDSelector, &out.DefaultOrganizationIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Enabled != nil {
 		in, out := &in.Enabled, &out.Enabled
 		*out = new(bool)
@@ -202,6 +212,11 @@ func (in *NotificationInitParameters) DeepCopyInto(out *NotificationInitParamete
 		in, out := &in.OrganizationID, &out.OrganizationID
 		*out = new(string)
 		**out = **in
+	}
+	if in.OrganizationRef != nil {
+		in, out := &in.OrganizationRef, &out.OrganizationRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -421,6 +436,21 @@ func (in *ObjectStoreInitParameters) DeepCopyInto(out *ObjectStoreInitParameters
 		in, out := &in.ForceDelete, &out.ForceDelete
 		*out = new(bool)
 		**out = **in
+	}
+	if in.OrganizationID != nil {
+		in, out := &in.OrganizationID, &out.OrganizationID
+		*out = new(string)
+		**out = **in
+	}
+	if in.OrganizationIDSelector != nil {
+		in, out := &in.OrganizationIDSelector, &out.OrganizationIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.OrganizationRef != nil {
+		in, out := &in.OrganizationRef, &out.OrganizationRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.S3CredsAccess != nil {
 		in, out := &in.S3CredsAccess, &out.S3CredsAccess
@@ -679,6 +709,21 @@ func (in *RepositoryInitParameters) DeepCopyInto(out *RepositoryInitParameters) 
 		in, out := &in.ObjectStoreID, &out.ObjectStoreID
 		*out = new(string)
 		**out = **in
+	}
+	if in.OrganizationID != nil {
+		in, out := &in.OrganizationID, &out.OrganizationID
+		*out = new(string)
+		**out = **in
+	}
+	if in.OrganizationIDSelector != nil {
+		in, out := &in.OrganizationIDSelector, &out.OrganizationIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.OrganizationRef != nil {
+		in, out := &in.OrganizationRef, &out.OrganizationRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.RepositoryOrganizationID != nil {
 		in, out := &in.RepositoryOrganizationID, &out.RepositoryOrganizationID
@@ -1296,6 +1341,21 @@ func (in *StoreConfigInitParameters) DeepCopyInto(out *StoreConfigInitParameters
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.OrganizationID != nil {
+		in, out := &in.OrganizationID, &out.OrganizationID
+		*out = new(string)
+		**out = **in
+	}
+	if in.OrganizationIDSelector != nil {
+		in, out := &in.OrganizationIDSelector, &out.OrganizationIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.OrganizationRef != nil {
+		in, out := &in.OrganizationRef, &out.OrganizationRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
