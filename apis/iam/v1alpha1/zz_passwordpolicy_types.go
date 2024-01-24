@@ -20,6 +20,7 @@ import (
 type ChallengePolicyInitParameters struct {
 
 	// (Mandatory) A Multi-valued String attribute that contains one or more default question a user may use when setting their challenge questions.
+	// +listType=set
 	DefaultQuestions []*string `json:"defaultQuestions,omitempty" tf:"default_questions,omitempty"`
 
 	// (Mandatory) An Integer indicates the maximum number of failed reset password attempts using challenges.
@@ -35,6 +36,7 @@ type ChallengePolicyInitParameters struct {
 type ChallengePolicyObservation struct {
 
 	// (Mandatory) A Multi-valued String attribute that contains one or more default question a user may use when setting their challenge questions.
+	// +listType=set
 	DefaultQuestions []*string `json:"defaultQuestions,omitempty" tf:"default_questions,omitempty"`
 
 	// (Mandatory) An Integer indicates the maximum number of failed reset password attempts using challenges.
@@ -51,6 +53,7 @@ type ChallengePolicyParameters struct {
 
 	// (Mandatory) A Multi-valued String attribute that contains one or more default question a user may use when setting their challenge questions.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	DefaultQuestions []*string `json:"defaultQuestions,omitempty" tf:"default_questions,omitempty"`
 
 	// (Mandatory) An Integer indicates the maximum number of failed reset password attempts using challenges.
@@ -148,6 +151,19 @@ type PasswordPolicyInitParameters struct {
 
 	// The number of previous passwords that cannot be used as new password.
 	HistoryCount *float64 `json:"historyCount,omitempty" tf:"history_count,omitempty"`
+
+	// The UUID of the IAM Org to apply this policy to
+	// +crossplane:generate:reference:type=Organization
+	// +crossplane:generate:reference:refFieldName=OrganizationRef
+	ManagingOrganization *string `json:"managingOrganization,omitempty" tf:"managing_organization,omitempty"`
+
+	// Selector for a Organization to populate managingOrganization.
+	// +kubebuilder:validation:Optional
+	ManagingOrganizationSelector *v1.Selector `json:"managingOrganizationSelector,omitempty" tf:"-"`
+
+	// Reference to a Organization to populate managingOrganization.
+	// +kubebuilder:validation:Optional
+	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
 }
 
 type PasswordPolicyObservation struct {

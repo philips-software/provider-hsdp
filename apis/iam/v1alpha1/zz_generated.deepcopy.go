@@ -58,6 +58,21 @@ func (in *ApplicationInitParameters) DeepCopyInto(out *ApplicationInitParameters
 		*out = new(string)
 		**out = **in
 	}
+	if in.PropositionID != nil {
+		in, out := &in.PropositionID, &out.PropositionID
+		*out = new(string)
+		**out = **in
+	}
+	if in.PropositionIDSelector != nil {
+		in, out := &in.PropositionIDSelector, &out.PropositionIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.PropositionRef != nil {
+		in, out := &in.PropositionRef, &out.PropositionRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.WaitForDelete != nil {
 		in, out := &in.WaitForDelete, &out.WaitForDelete
 		*out = new(bool)
@@ -394,6 +409,21 @@ func (in *ClientInitParameters) DeepCopyInto(out *ClientInitParameters) {
 		in, out := &in.AccessTokenLifetime, &out.AccessTokenLifetime
 		*out = new(float64)
 		**out = **in
+	}
+	if in.ApplicationID != nil {
+		in, out := &in.ApplicationID, &out.ApplicationID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ApplicationIDSelector != nil {
+		in, out := &in.ApplicationIDSelector, &out.ApplicationIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ApplicationRef != nil {
+		in, out := &in.ApplicationRef, &out.ApplicationRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.ClientID != nil {
 		in, out := &in.ClientID, &out.ClientID
@@ -982,10 +1012,25 @@ func (in *EmailTemplateInitParameters) DeepCopyInto(out *EmailTemplateInitParame
 		*out = new(string)
 		**out = **in
 	}
+	if in.ManagingOrganization != nil {
+		in, out := &in.ManagingOrganization, &out.ManagingOrganization
+		*out = new(string)
+		**out = **in
+	}
+	if in.ManagingOrganizationSelector != nil {
+		in, out := &in.ManagingOrganizationSelector, &out.ManagingOrganizationSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Message != nil {
 		in, out := &in.Message, &out.Message
 		*out = new(string)
 		**out = **in
+	}
+	if in.OrganizationRef != nil {
+		in, out := &in.OrganizationRef, &out.OrganizationRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Subject != nil {
 		in, out := &in.Subject, &out.Subject
@@ -1257,10 +1302,94 @@ func (in *GroupInitParameters) DeepCopyInto(out *GroupInitParameters) {
 		*out = new(bool)
 		**out = **in
 	}
+	if in.ManagingOrganization != nil {
+		in, out := &in.ManagingOrganization, &out.ManagingOrganization
+		*out = new(string)
+		**out = **in
+	}
+	if in.ManagingOrganizationSelector != nil {
+		in, out := &in.ManagingOrganizationSelector, &out.ManagingOrganizationSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
 		**out = **in
+	}
+	if in.OrganizationRef != nil {
+		in, out := &in.OrganizationRef, &out.OrganizationRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.RoleRef != nil {
+		in, out := &in.RoleRef, &out.RoleRef
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.Roles != nil {
+		in, out := &in.Roles, &out.Roles
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.RolesSelector != nil {
+		in, out := &in.RolesSelector, &out.RolesSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ServiceRef != nil {
+		in, out := &in.ServiceRef, &out.ServiceRef
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.Services != nil {
+		in, out := &in.Services, &out.Services
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.ServicesSelector != nil {
+		in, out := &in.ServicesSelector, &out.ServicesSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.UserRef != nil {
+		in, out := &in.UserRef, &out.UserRef
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.Users != nil {
+		in, out := &in.Users, &out.Users
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.UsersSelector != nil {
+		in, out := &in.UsersSelector, &out.UsersSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -1878,6 +2007,21 @@ func (in *PasswordPolicyInitParameters) DeepCopyInto(out *PasswordPolicyInitPara
 		*out = new(float64)
 		**out = **in
 	}
+	if in.ManagingOrganization != nil {
+		in, out := &in.ManagingOrganization, &out.ManagingOrganization
+		*out = new(string)
+		**out = **in
+	}
+	if in.ManagingOrganizationSelector != nil {
+		in, out := &in.ManagingOrganizationSelector, &out.ManagingOrganizationSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.OrganizationRef != nil {
+		in, out := &in.OrganizationRef, &out.OrganizationRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
 }
 
 // DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new PasswordPolicyInitParameters.
@@ -2120,6 +2264,21 @@ func (in *PropositionInitParameters) DeepCopyInto(out *PropositionInitParameters
 		*out = new(string)
 		**out = **in
 	}
+	if in.OrganizationID != nil {
+		in, out := &in.OrganizationID, &out.OrganizationID
+		*out = new(string)
+		**out = **in
+	}
+	if in.OrganizationIDSelector != nil {
+		in, out := &in.OrganizationIDSelector, &out.OrganizationIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.OrganizationRef != nil {
+		in, out := &in.OrganizationRef, &out.OrganizationRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
 }
 
 // DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new PropositionInitParameters.
@@ -2319,10 +2478,25 @@ func (in *RoleInitParameters) DeepCopyInto(out *RoleInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ManagingOrganization != nil {
+		in, out := &in.ManagingOrganization, &out.ManagingOrganization
+		*out = new(string)
+		**out = **in
+	}
+	if in.ManagingOrganizationSelector != nil {
+		in, out := &in.ManagingOrganizationSelector, &out.ManagingOrganizationSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
 		**out = **in
+	}
+	if in.OrganizationRef != nil {
+		in, out := &in.OrganizationRef, &out.OrganizationRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Permissions != nil {
 		in, out := &in.Permissions, &out.Permissions
@@ -2521,15 +2695,45 @@ func (in *RoleSharingPolicy) DeepCopyObject() runtime.Object {
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *RoleSharingPolicyInitParameters) DeepCopyInto(out *RoleSharingPolicyInitParameters) {
 	*out = *in
+	if in.OrganizationRef != nil {
+		in, out := &in.OrganizationRef, &out.OrganizationRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Purpose != nil {
 		in, out := &in.Purpose, &out.Purpose
 		*out = new(string)
 		**out = **in
 	}
+	if in.RoleID != nil {
+		in, out := &in.RoleID, &out.RoleID
+		*out = new(string)
+		**out = **in
+	}
+	if in.RoleIDSelector != nil {
+		in, out := &in.RoleIDSelector, &out.RoleIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.RoleRef != nil {
+		in, out := &in.RoleRef, &out.RoleRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.SharingPolicy != nil {
 		in, out := &in.SharingPolicy, &out.SharingPolicy
 		*out = new(string)
 		**out = **in
+	}
+	if in.TargetOrganizationID != nil {
+		in, out := &in.TargetOrganizationID, &out.TargetOrganizationID
+		*out = new(string)
+		**out = **in
+	}
+	if in.TargetOrganizationIDSelector != nil {
+		in, out := &in.TargetOrganizationIDSelector, &out.TargetOrganizationIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -2780,6 +2984,21 @@ func (in *Service) DeepCopyObject() runtime.Object {
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *ServiceInitParameters) DeepCopyInto(out *ServiceInitParameters) {
 	*out = *in
+	if in.ApplicationID != nil {
+		in, out := &in.ApplicationID, &out.ApplicationID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ApplicationIDSelector != nil {
+		in, out := &in.ApplicationIDSelector, &out.ApplicationIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ApplicationRef != nil {
+		in, out := &in.ApplicationRef, &out.ApplicationRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.DefaultScopes != nil {
 		in, out := &in.DefaultScopes, &out.DefaultScopes
 		*out = make([]*string, len(*in))
@@ -3129,6 +3348,21 @@ func (in *UserInitParameters) DeepCopyInto(out *UserInitParameters) {
 		in, out := &in.Mobile, &out.Mobile
 		*out = new(string)
 		**out = **in
+	}
+	if in.OrganizationID != nil {
+		in, out := &in.OrganizationID, &out.OrganizationID
+		*out = new(string)
+		**out = **in
+	}
+	if in.OrganizationIDSelector != nil {
+		in, out := &in.OrganizationIDSelector, &out.OrganizationIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.OrganizationRef != nil {
+		in, out := &in.OrganizationRef, &out.OrganizationRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.PreferredCommunicationChannel != nil {
 		in, out := &in.PreferredCommunicationChannel, &out.PreferredCommunicationChannel

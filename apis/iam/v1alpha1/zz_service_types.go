@@ -19,8 +19,23 @@ import (
 
 type ServiceInitParameters struct {
 
+	// the application ID (GUID) to attach this service to
+	// The application ID this service falls under.
+	// +crossplane:generate:reference:type=Application
+	// +crossplane:generate:reference:refFieldName=ApplicationRef
+	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
+
+	// Selector for a Application to populate applicationId.
+	// +kubebuilder:validation:Optional
+	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
+
+	// Reference to a Application to populate applicationId.
+	// +kubebuilder:validation:Optional
+	ApplicationRef *v1.Reference `json:"applicationRef,omitempty" tf:"-"`
+
 	// Array. Default scopes. You do not have to specify these explicitly when requesting a token. Minimum: ["openid"]
 	// Default scopes. You do not have to specify these explicitly when requesting a token.
+	// +listType=set
 	DefaultScopes []*string `json:"defaultScopes,omitempty" tf:"default_scopes,omitempty"`
 
 	// The description of the service
@@ -33,6 +48,7 @@ type ServiceInitParameters struct {
 
 	// Array. List of supported scopes for this service. Minimum: ["openid"]
 	// List of supported scopes for this service.
+	// +listType=set
 	Scopes []*string `json:"scopes,omitempty" tf:"scopes,omitempty"`
 
 	// Sets the certificate validity. When not specified, the certificate will have a validity of 5 years.
@@ -56,6 +72,7 @@ type ServiceObservation struct {
 
 	// Array. Default scopes. You do not have to specify these explicitly when requesting a token. Minimum: ["openid"]
 	// Default scopes. You do not have to specify these explicitly when requesting a token.
+	// +listType=set
 	DefaultScopes []*string `json:"defaultScopes,omitempty" tf:"default_scopes,omitempty"`
 
 	// The description of the service
@@ -79,6 +96,7 @@ type ServiceObservation struct {
 
 	// Array. List of supported scopes for this service. Minimum: ["openid"]
 	// List of supported scopes for this service.
+	// +listType=set
 	Scopes []*string `json:"scopes,omitempty" tf:"scopes,omitempty"`
 
 	// Sets the certificate validity. When not specified, the certificate will have a validity of 5 years.
@@ -118,6 +136,7 @@ type ServiceParameters struct {
 	// Array. Default scopes. You do not have to specify these explicitly when requesting a token. Minimum: ["openid"]
 	// Default scopes. You do not have to specify these explicitly when requesting a token.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	DefaultScopes []*string `json:"defaultScopes,omitempty" tf:"default_scopes,omitempty"`
 
 	// The description of the service
@@ -133,6 +152,7 @@ type ServiceParameters struct {
 	// Array. List of supported scopes for this service. Minimum: ["openid"]
 	// List of supported scopes for this service.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Scopes []*string `json:"scopes,omitempty" tf:"scopes,omitempty"`
 
 	// Sets the certificate validity. When not specified, the certificate will have a validity of 5 years.

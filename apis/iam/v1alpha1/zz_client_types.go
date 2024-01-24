@@ -23,6 +23,20 @@ type ClientInitParameters struct {
 	// Lifetime of the access token in seconds. If not specified, system default life time (1800 secs) will be considered.
 	AccessTokenLifetime *float64 `json:"accessTokenLifetime,omitempty" tf:"access_token_lifetime,omitempty"`
 
+	// the application ID (GUID) to attach this client to
+	// The application ID to attach this client to.
+	// +crossplane:generate:reference:type=Application
+	// +crossplane:generate:reference:refFieldName=ApplicationRef
+	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
+
+	// Selector for a Application to populate applicationId.
+	// +kubebuilder:validation:Optional
+	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
+
+	// Reference to a Application to populate applicationId.
+	// +kubebuilder:validation:Optional
+	ApplicationRef *v1.Reference `json:"applicationRef,omitempty" tf:"-"`
+
 	// The client id
 	// The client id
 	ClientID *string `json:"clientId,omitempty" tf:"client_id,omitempty"`
@@ -33,6 +47,7 @@ type ClientInitParameters struct {
 
 	// Array. Default scopes. You do not have to specify these explicitly when requesting a token
 	// Default scopes. You do not have to specify these explicitly when requesting a token.
+	// +listType=set
 	DefaultScopes []*string `json:"defaultScopes,omitempty" tf:"default_scopes,omitempty"`
 
 	// The description of the client
@@ -53,6 +68,7 @@ type ClientInitParameters struct {
 
 	// Array of valid RedirectionURIs for this client
 	// List of valid RedirectionURIs for this client.
+	// +listType=set
 	RedirectionUris []*string `json:"redirectionUris,omitempty" tf:"redirection_uris,omitempty"`
 
 	// Lifetime of the refresh token in seconds. If not specified, system default life time (2592000 secs) will be considered.
@@ -61,10 +77,12 @@ type ClientInitParameters struct {
 
 	// Array. Examples of response types are "code id_token", "token id_token", etc.
 	// Examples of response types are 'code id_token', 'token id_token', etc.
+	// +listType=set
 	ResponseTypes []*string `json:"responseTypes,omitempty" tf:"response_types,omitempty"`
 
 	// Array. List of supported scopes for this client
 	// List of supported scopes for this client.
+	// +listType=set
 	Scopes []*string `json:"scopes,omitempty" tf:"scopes,omitempty"`
 
 	// Either Public or Confidential
@@ -92,6 +110,7 @@ type ClientObservation struct {
 
 	// Array. Default scopes. You do not have to specify these explicitly when requesting a token
 	// Default scopes. You do not have to specify these explicitly when requesting a token.
+	// +listType=set
 	DefaultScopes []*string `json:"defaultScopes,omitempty" tf:"default_scopes,omitempty"`
 
 	// The description of the client
@@ -119,6 +138,7 @@ type ClientObservation struct {
 
 	// Array of valid RedirectionURIs for this client
 	// List of valid RedirectionURIs for this client.
+	// +listType=set
 	RedirectionUris []*string `json:"redirectionUris,omitempty" tf:"redirection_uris,omitempty"`
 
 	// Lifetime of the refresh token in seconds. If not specified, system default life time (2592000 secs) will be considered.
@@ -127,10 +147,12 @@ type ClientObservation struct {
 
 	// Array. Examples of response types are "code id_token", "token id_token", etc.
 	// Examples of response types are 'code id_token', 'token id_token', etc.
+	// +listType=set
 	ResponseTypes []*string `json:"responseTypes,omitempty" tf:"response_types,omitempty"`
 
 	// Array. List of supported scopes for this client
 	// List of supported scopes for this client.
+	// +listType=set
 	Scopes []*string `json:"scopes,omitempty" tf:"scopes,omitempty"`
 
 	// Either Public or Confidential
@@ -173,6 +195,7 @@ type ClientParameters struct {
 	// Array. Default scopes. You do not have to specify these explicitly when requesting a token
 	// Default scopes. You do not have to specify these explicitly when requesting a token.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	DefaultScopes []*string `json:"defaultScopes,omitempty" tf:"default_scopes,omitempty"`
 
 	// The description of the client
@@ -203,6 +226,7 @@ type ClientParameters struct {
 	// Array of valid RedirectionURIs for this client
 	// List of valid RedirectionURIs for this client.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	RedirectionUris []*string `json:"redirectionUris,omitempty" tf:"redirection_uris,omitempty"`
 
 	// Lifetime of the refresh token in seconds. If not specified, system default life time (2592000 secs) will be considered.
@@ -213,11 +237,13 @@ type ClientParameters struct {
 	// Array. Examples of response types are "code id_token", "token id_token", etc.
 	// Examples of response types are 'code id_token', 'token id_token', etc.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	ResponseTypes []*string `json:"responseTypes,omitempty" tf:"response_types,omitempty"`
 
 	// Array. List of supported scopes for this client
 	// List of supported scopes for this client.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Scopes []*string `json:"scopes,omitempty" tf:"scopes,omitempty"`
 
 	// Either Public or Confidential

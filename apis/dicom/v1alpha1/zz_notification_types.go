@@ -22,6 +22,15 @@ type NotificationInitParameters struct {
 	// The base config URL of the DICOM Store instance
 	ConfigURL *string `json:"configUrl,omitempty" tf:"config_url,omitempty"`
 
+	// The default organization ID
+	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Organization
+	// +crossplane:generate:reference:refFieldName=OrganizationRef
+	DefaultOrganizationID *string `json:"defaultOrganizationId,omitempty" tf:"default_organization_id,omitempty"`
+
+	// Selector for a Organization in iam to populate defaultOrganizationId.
+	// +kubebuilder:validation:Optional
+	DefaultOrganizationIDSelector *v1.Selector `json:"defaultOrganizationIdSelector,omitempty" tf:"-"`
+
 	// Enable the notification or not. Default: true
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
@@ -29,6 +38,10 @@ type NotificationInitParameters struct {
 	EndpointURL *string `json:"endpointUrl,omitempty" tf:"endpoint_url,omitempty"`
 
 	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
+
+	// Reference to a Organization in iam to populate defaultOrganizationId.
+	// +kubebuilder:validation:Optional
+	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
 }
 
 type NotificationObservation struct {

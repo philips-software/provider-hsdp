@@ -53,6 +53,21 @@ func (in *OrganizationInitParameters) DeepCopyInto(out *OrganizationInitParamete
 		*out = new(string)
 		**out = **in
 	}
+	if in.OrgID != nil {
+		in, out := &in.OrgID, &out.OrgID
+		*out = new(string)
+		**out = **in
+	}
+	if in.OrgIDSelector != nil {
+		in, out := &in.OrgIDSelector, &out.OrgIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.OrganizationRef != nil {
+		in, out := &in.OrganizationRef, &out.OrganizationRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.PartOf != nil {
 		in, out := &in.PartOf, &out.PartOf
 		*out = new(string)

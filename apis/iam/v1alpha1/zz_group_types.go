@@ -25,6 +25,7 @@ type GroupInitParameters struct {
 
 	// The list of IAM device identity IDs to include in this group. See hsdp_iam_device
 	// The list of IAM device identity IDs to include in this group.
+	// +listType=set
 	Devices []*string `json:"devices,omitempty" tf:"devices,omitempty"`
 
 	// While most resources do automatic drift detection, we are opting to make this
@@ -32,9 +33,68 @@ type GroupInitParameters struct {
 	// A future version might change this to be always-on.
 	DriftDetection *bool `json:"driftDetection,omitempty" tf:"drift_detection,omitempty"`
 
+	// The managing organization ID
+	// The managing organization ID.
+	// +crossplane:generate:reference:type=Organization
+	// +crossplane:generate:reference:refFieldName=OrganizationRef
+	ManagingOrganization *string `json:"managingOrganization,omitempty" tf:"managing_organization,omitempty"`
+
+	// Selector for a Organization to populate managingOrganization.
+	// +kubebuilder:validation:Optional
+	ManagingOrganizationSelector *v1.Selector `json:"managingOrganizationSelector,omitempty" tf:"-"`
+
 	// The name of the group
 	// The group name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Reference to a Organization to populate managingOrganization.
+	// +kubebuilder:validation:Optional
+	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
+
+	// References to Role to populate roles.
+	// +kubebuilder:validation:Optional
+	RoleRef []v1.Reference `json:"roleRef,omitempty" tf:"-"`
+
+	// The list of role IDS to assign to this group
+	// The list of role IDS to assign to this group.
+	// +crossplane:generate:reference:type=Role
+	// +crossplane:generate:reference:refFieldName=RoleRef
+	// +listType=set
+	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
+
+	// Selector for a list of Role to populate roles.
+	// +kubebuilder:validation:Optional
+	RolesSelector *v1.Selector `json:"rolesSelector,omitempty" tf:"-"`
+
+	// References to Service to populate services.
+	// +kubebuilder:validation:Optional
+	ServiceRef []v1.Reference `json:"serviceRef,omitempty" tf:"-"`
+
+	// The list of service identity IDs to include in this group. See hsdp_iam_service
+	// The list of service identity IDs to include in this group.
+	// +crossplane:generate:reference:type=Service
+	// +crossplane:generate:reference:refFieldName=ServiceRef
+	// +listType=set
+	Services []*string `json:"services,omitempty" tf:"services,omitempty"`
+
+	// Selector for a list of Service to populate services.
+	// +kubebuilder:validation:Optional
+	ServicesSelector *v1.Selector `json:"servicesSelector,omitempty" tf:"-"`
+
+	// References to User to populate users.
+	// +kubebuilder:validation:Optional
+	UserRef []v1.Reference `json:"userRef,omitempty" tf:"-"`
+
+	// The list of user IDs to include in this group. The provider only manages this list of users. Existing users added by others means to the group by the provider. It is not practical to manage hundreds or thousands of users this way of course.
+	// The list of user IDs to include in this group. The provider only manages this list of users. Existing users added by others means to the group by the provider. It is not practical to manage hundreds or thousands of users this way of course.
+	// +crossplane:generate:reference:type=User
+	// +crossplane:generate:reference:refFieldName=UserRef
+	// +listType=set
+	Users []*string `json:"users,omitempty" tf:"users,omitempty"`
+
+	// Selector for a list of User to populate users.
+	// +kubebuilder:validation:Optional
+	UsersSelector *v1.Selector `json:"usersSelector,omitempty" tf:"-"`
 }
 
 type GroupObservation struct {
@@ -45,6 +105,7 @@ type GroupObservation struct {
 
 	// The list of IAM device identity IDs to include in this group. See hsdp_iam_device
 	// The list of IAM device identity IDs to include in this group.
+	// +listType=set
 	Devices []*string `json:"devices,omitempty" tf:"devices,omitempty"`
 
 	// While most resources do automatic drift detection, we are opting to make this
@@ -65,14 +126,17 @@ type GroupObservation struct {
 
 	// The list of role IDS to assign to this group
 	// The list of role IDS to assign to this group.
+	// +listType=set
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 
 	// The list of service identity IDs to include in this group. See hsdp_iam_service
 	// The list of service identity IDs to include in this group.
+	// +listType=set
 	Services []*string `json:"services,omitempty" tf:"services,omitempty"`
 
 	// The list of user IDs to include in this group. The provider only manages this list of users. Existing users added by others means to the group by the provider. It is not practical to manage hundreds or thousands of users this way of course.
 	// The list of user IDs to include in this group. The provider only manages this list of users. Existing users added by others means to the group by the provider. It is not practical to manage hundreds or thousands of users this way of course.
+	// +listType=set
 	Users []*string `json:"users,omitempty" tf:"users,omitempty"`
 }
 
@@ -86,6 +150,7 @@ type GroupParameters struct {
 	// The list of IAM device identity IDs to include in this group. See hsdp_iam_device
 	// The list of IAM device identity IDs to include in this group.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Devices []*string `json:"devices,omitempty" tf:"devices,omitempty"`
 
 	// While most resources do automatic drift detection, we are opting to make this
@@ -123,6 +188,7 @@ type GroupParameters struct {
 	// +crossplane:generate:reference:type=Role
 	// +crossplane:generate:reference:refFieldName=RoleRef
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 
 	// Selector for a list of Role to populate roles.
@@ -138,6 +204,7 @@ type GroupParameters struct {
 	// +crossplane:generate:reference:type=Service
 	// +crossplane:generate:reference:refFieldName=ServiceRef
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Services []*string `json:"services,omitempty" tf:"services,omitempty"`
 
 	// Selector for a list of Service to populate services.
@@ -153,6 +220,7 @@ type GroupParameters struct {
 	// +crossplane:generate:reference:type=User
 	// +crossplane:generate:reference:refFieldName=UserRef
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Users []*string `json:"users,omitempty" tf:"users,omitempty"`
 
 	// Selector for a list of User to populate users.

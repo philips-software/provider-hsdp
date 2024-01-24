@@ -31,6 +31,20 @@ type ApplicationInitParameters struct {
 	// The name of the application.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// the proposition ID (GUID) to attach this a application to
+	// The proposition ID (GUID) to attach this a application to.
+	// +crossplane:generate:reference:type=Proposition
+	// +crossplane:generate:reference:refFieldName=PropositionRef
+	PropositionID *string `json:"propositionId,omitempty" tf:"proposition_id,omitempty"`
+
+	// Selector for a Proposition to populate propositionId.
+	// +kubebuilder:validation:Optional
+	PropositionIDSelector *v1.Selector `json:"propositionIdSelector,omitempty" tf:"-"`
+
+	// Reference to a Proposition to populate propositionId.
+	// +kubebuilder:validation:Optional
+	PropositionRef *v1.Reference `json:"propositionRef,omitempty" tf:"-"`
+
 	// Blocks until the application delete has completed. Default: false.
 	// The application delete process can take some time as all its associated resources like
 	// services and clients are removed recursively. This option is useful for ephemeral environments
