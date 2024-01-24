@@ -201,12 +201,14 @@ spec:
                       1800 (30 minutes), Maximum: 2592000 (30 days) Access Token Lifetime
                       (in seconds). Default: 1800 (30 minutes), Maximum: 2592000 (30
                       days).'
-                    type: number
+                    format: int64
+                    type: integer
                   validity:
                     description: 'Integer. Validity of service (in months). Minimum:
                       1, Maximum: 600 (5 years), Default: 12 The validity of the service
                       credentials in months.'
-                    type: number
+                    format: int64
+                    type: integer
                 type: object
               initProvider:
                 description: THIS IS A BETA FIELD. It will be honored unless the Management
@@ -330,12 +332,14 @@ spec:
                       1800 (30 minutes), Maximum: 2592000 (30 days) Access Token Lifetime
                       (in seconds). Default: 1800 (30 minutes), Maximum: 2592000 (30
                       days).'
-                    type: number
+                    format: int64
+                    type: integer
                   validity:
                     description: 'Integer. Validity of service (in months). Minimum:
                       1, Maximum: 600 (5 years), Default: 12 The validity of the service
                       credentials in months.'
-                    type: number
+                    format: int64
+                    type: integer
                 type: object
               managementPolicies:
                 default:
@@ -572,12 +576,14 @@ spec:
                       1800 (30 minutes), Maximum: 2592000 (30 days) Access Token Lifetime
                       (in seconds). Default: 1800 (30 minutes), Maximum: 2592000 (30
                       days).'
-                    type: number
+                    format: int64
+                    type: integer
                   validity:
                     description: 'Integer. Validity of service (in months). Minimum:
                       1, Maximum: 600 (5 years), Default: 12 The validity of the service
                       credentials in months.'
-                    type: number
+                    format: int64
+                    type: integer
                 type: object
               conditions:
                 description: Conditions of the resource.

@@ -72,7 +72,8 @@ spec:
                       system default life time (1800 secs) will be considered. Lifetime
                       of the access token in seconds. If not specified, system default
                       life time (1800 secs) will be considered.
-                    type: number
+                    format: int64
+                    type: integer
                   applicationId:
                     description: the application ID (GUID) to attach this client to
                       The application ID to attach this client to.
@@ -187,7 +188,8 @@ spec:
                       token generated in case openid scope is enabled for the client.
                       If not specified, system default life time (3600 secs) will
                       be considered.
-                    type: number
+                    format: int64
+                    type: integer
                   name:
                     description: The name of the client Name of the client.
                     type: string
@@ -222,7 +224,8 @@ spec:
                       specified, system default life time (2592000 secs) will be considered.
                       Lifetime of the refresh token in seconds. If not specified,
                       system default life time (2592000 secs) will be considered.
-                    type: number
+                    format: int64
+                    type: integer
                   responseTypes:
                     description: Array. Examples of response types are "code id_token",
                       "token id_token", etc. Examples of response types are 'code
@@ -260,7 +263,8 @@ spec:
                       system default life time (1800 secs) will be considered. Lifetime
                       of the access token in seconds. If not specified, system default
                       life time (1800 secs) will be considered.
-                    type: number
+                    format: int64
+                    type: integer
                   applicationId:
                     description: the application ID (GUID) to attach this client to
                       The application ID to attach this client to.
@@ -375,7 +379,8 @@ spec:
                       token generated in case openid scope is enabled for the client.
                       If not specified, system default life time (3600 secs) will
                       be considered.
-                    type: number
+                    format: int64
+                    type: integer
                   name:
                     description: The name of the client Name of the client.
                     type: string
@@ -391,7 +396,8 @@ spec:
                       specified, system default life time (2592000 secs) will be considered.
                       Lifetime of the refresh token in seconds. If not specified,
                       system default life time (2592000 secs) will be considered.
-                    type: number
+                    format: int64
+                    type: integer
                   responseTypes:
                     description: Array. Examples of response types are "code id_token",
                       "token id_token", etc. Examples of response types are 'code
@@ -622,7 +628,8 @@ spec:
                       system default life time (1800 secs) will be considered. Lifetime
                       of the access token in seconds. If not specified, system default
                       life time (1800 secs) will be considered.
-                    type: number
+                    format: int64
+                    type: integer
                   applicationId:
                     description: the application ID (GUID) to attach this client to
                       The application ID to attach this client to.
@@ -672,7 +679,8 @@ spec:
                       token generated in case openid scope is enabled for the client.
                       If not specified, system default life time (3600 secs) will
                       be considered.
-                    type: number
+                    format: int64
+                    type: integer
                   name:
                     description: The name of the client Name of the client.
                     type: string
@@ -688,7 +696,8 @@ spec:
                       specified, system default life time (2592000 secs) will be considered.
                       Lifetime of the refresh token in seconds. If not specified,
                       system default life time (2592000 secs) will be considered.
-                    type: number
+                    format: int64
+                    type: integer
                   responseTypes:
                     description: Array. Examples of response types are "code id_token",
                       "token id_token", etc. Examples of response types are 'code

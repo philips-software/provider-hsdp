@@ -57,11 +57,11 @@ type ServiceInitParameters struct {
 
 	// Integer. Access Token Lifetime (in seconds). Default: 1800 (30 minutes), Maximum: 2592000 (30 days)
 	// Access Token Lifetime (in seconds). Default: 1800 (30 minutes), Maximum: 2592000 (30 days).
-	TokenValidity *float64 `json:"tokenValidity,omitempty" tf:"token_validity,omitempty"`
+	TokenValidity *int64 `json:"tokenValidity,omitempty" tf:"token_validity,omitempty"`
 
 	// Integer. Validity of service (in months). Minimum: 1, Maximum: 600 (5 years), Default: 12
 	// The validity of the service credentials in months.
-	Validity *float64 `json:"validity,omitempty" tf:"validity,omitempty"`
+	Validity *int64 `json:"validity,omitempty" tf:"validity,omitempty"`
 }
 
 type ServiceObservation struct {
@@ -109,11 +109,11 @@ type ServiceObservation struct {
 
 	// Integer. Access Token Lifetime (in seconds). Default: 1800 (30 minutes), Maximum: 2592000 (30 days)
 	// Access Token Lifetime (in seconds). Default: 1800 (30 minutes), Maximum: 2592000 (30 days).
-	TokenValidity *float64 `json:"tokenValidity,omitempty" tf:"token_validity,omitempty"`
+	TokenValidity *int64 `json:"tokenValidity,omitempty" tf:"token_validity,omitempty"`
 
 	// Integer. Validity of service (in months). Minimum: 1, Maximum: 600 (5 years), Default: 12
 	// The validity of the service credentials in months.
-	Validity *float64 `json:"validity,omitempty" tf:"validity,omitempty"`
+	Validity *int64 `json:"validity,omitempty" tf:"validity,omitempty"`
 }
 
 type ServiceParameters struct {
@@ -169,12 +169,12 @@ type ServiceParameters struct {
 	// Integer. Access Token Lifetime (in seconds). Default: 1800 (30 minutes), Maximum: 2592000 (30 days)
 	// Access Token Lifetime (in seconds). Default: 1800 (30 minutes), Maximum: 2592000 (30 days).
 	// +kubebuilder:validation:Optional
-	TokenValidity *float64 `json:"tokenValidity,omitempty" tf:"token_validity,omitempty"`
+	TokenValidity *int64 `json:"tokenValidity,omitempty" tf:"token_validity,omitempty"`
 
 	// Integer. Validity of service (in months). Minimum: 1, Maximum: 600 (5 years), Default: 12
 	// The validity of the service credentials in months.
 	// +kubebuilder:validation:Optional
-	Validity *float64 `json:"validity,omitempty" tf:"validity,omitempty"`
+	Validity *int64 `json:"validity,omitempty" tf:"validity,omitempty"`
 }
 
 // ServiceSpec defines the desired state of Service

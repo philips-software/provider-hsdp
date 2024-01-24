@@ -268,17 +268,17 @@ func (in *ChallengePolicyInitParameters) DeepCopyInto(out *ChallengePolicyInitPa
 	}
 	if in.MaxIncorrectAttempts != nil {
 		in, out := &in.MaxIncorrectAttempts, &out.MaxIncorrectAttempts
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinAnswerCount != nil {
 		in, out := &in.MinAnswerCount, &out.MinAnswerCount
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinQuestionCount != nil {
 		in, out := &in.MinQuestionCount, &out.MinQuestionCount
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -309,17 +309,17 @@ func (in *ChallengePolicyObservation) DeepCopyInto(out *ChallengePolicyObservati
 	}
 	if in.MaxIncorrectAttempts != nil {
 		in, out := &in.MaxIncorrectAttempts, &out.MaxIncorrectAttempts
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinAnswerCount != nil {
 		in, out := &in.MinAnswerCount, &out.MinAnswerCount
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinQuestionCount != nil {
 		in, out := &in.MinQuestionCount, &out.MinQuestionCount
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -350,17 +350,17 @@ func (in *ChallengePolicyParameters) DeepCopyInto(out *ChallengePolicyParameters
 	}
 	if in.MaxIncorrectAttempts != nil {
 		in, out := &in.MaxIncorrectAttempts, &out.MaxIncorrectAttempts
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinAnswerCount != nil {
 		in, out := &in.MinAnswerCount, &out.MinAnswerCount
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinQuestionCount != nil {
 		in, out := &in.MinQuestionCount, &out.MinQuestionCount
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -407,7 +407,7 @@ func (in *ClientInitParameters) DeepCopyInto(out *ClientInitParameters) {
 	*out = *in
 	if in.AccessTokenLifetime != nil {
 		in, out := &in.AccessTokenLifetime, &out.AccessTokenLifetime
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ApplicationID != nil {
@@ -458,7 +458,7 @@ func (in *ClientInitParameters) DeepCopyInto(out *ClientInitParameters) {
 	}
 	if in.IDTokenLifetime != nil {
 		in, out := &in.IDTokenLifetime, &out.IDTokenLifetime
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Name != nil {
@@ -479,7 +479,7 @@ func (in *ClientInitParameters) DeepCopyInto(out *ClientInitParameters) {
 	}
 	if in.RefreshTokenLifetime != nil {
 		in, out := &in.RefreshTokenLifetime, &out.RefreshTokenLifetime
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ResponseTypes != nil {
@@ -558,7 +558,7 @@ func (in *ClientObservation) DeepCopyInto(out *ClientObservation) {
 	*out = *in
 	if in.AccessTokenLifetime != nil {
 		in, out := &in.AccessTokenLifetime, &out.AccessTokenLifetime
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ApplicationID != nil {
@@ -609,7 +609,7 @@ func (in *ClientObservation) DeepCopyInto(out *ClientObservation) {
 	}
 	if in.IDTokenLifetime != nil {
 		in, out := &in.IDTokenLifetime, &out.IDTokenLifetime
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Name != nil {
@@ -630,7 +630,7 @@ func (in *ClientObservation) DeepCopyInto(out *ClientObservation) {
 	}
 	if in.RefreshTokenLifetime != nil {
 		in, out := &in.RefreshTokenLifetime, &out.RefreshTokenLifetime
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ResponseTypes != nil {
@@ -677,7 +677,7 @@ func (in *ClientParameters) DeepCopyInto(out *ClientParameters) {
 	*out = *in
 	if in.AccessTokenLifetime != nil {
 		in, out := &in.AccessTokenLifetime, &out.AccessTokenLifetime
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ApplicationID != nil {
@@ -728,7 +728,7 @@ func (in *ClientParameters) DeepCopyInto(out *ClientParameters) {
 	}
 	if in.IDTokenLifetime != nil {
 		in, out := &in.IDTokenLifetime, &out.IDTokenLifetime
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Name != nil {
@@ -750,7 +750,7 @@ func (in *ClientParameters) DeepCopyInto(out *ClientParameters) {
 	}
 	if in.RefreshTokenLifetime != nil {
 		in, out := &in.RefreshTokenLifetime, &out.RefreshTokenLifetime
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ResponseTypes != nil {
@@ -832,32 +832,32 @@ func (in *ComplexityInitParameters) DeepCopyInto(out *ComplexityInitParameters) 
 	*out = *in
 	if in.MaxLength != nil {
 		in, out := &in.MaxLength, &out.MaxLength
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinLength != nil {
 		in, out := &in.MinLength, &out.MinLength
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinLowercase != nil {
 		in, out := &in.MinLowercase, &out.MinLowercase
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinNumerics != nil {
 		in, out := &in.MinNumerics, &out.MinNumerics
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinSpecialChars != nil {
 		in, out := &in.MinSpecialChars, &out.MinSpecialChars
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinUppercase != nil {
 		in, out := &in.MinUppercase, &out.MinUppercase
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -877,32 +877,32 @@ func (in *ComplexityObservation) DeepCopyInto(out *ComplexityObservation) {
 	*out = *in
 	if in.MaxLength != nil {
 		in, out := &in.MaxLength, &out.MaxLength
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinLength != nil {
 		in, out := &in.MinLength, &out.MinLength
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinLowercase != nil {
 		in, out := &in.MinLowercase, &out.MinLowercase
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinNumerics != nil {
 		in, out := &in.MinNumerics, &out.MinNumerics
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinSpecialChars != nil {
 		in, out := &in.MinSpecialChars, &out.MinSpecialChars
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinUppercase != nil {
 		in, out := &in.MinUppercase, &out.MinUppercase
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -922,32 +922,32 @@ func (in *ComplexityParameters) DeepCopyInto(out *ComplexityParameters) {
 	*out = *in
 	if in.MaxLength != nil {
 		in, out := &in.MaxLength, &out.MaxLength
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinLength != nil {
 		in, out := &in.MinLength, &out.MinLength
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinLowercase != nil {
 		in, out := &in.MinLowercase, &out.MinLowercase
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinNumerics != nil {
 		in, out := &in.MinNumerics, &out.MinNumerics
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinSpecialChars != nil {
 		in, out := &in.MinSpecialChars, &out.MinSpecialChars
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MinUppercase != nil {
 		in, out := &in.MinUppercase, &out.MinUppercase
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -1999,12 +1999,12 @@ func (in *PasswordPolicyInitParameters) DeepCopyInto(out *PasswordPolicyInitPara
 	}
 	if in.ExpiryPeriodInDays != nil {
 		in, out := &in.ExpiryPeriodInDays, &out.ExpiryPeriodInDays
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.HistoryCount != nil {
 		in, out := &in.HistoryCount, &out.HistoryCount
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ManagingOrganization != nil {
@@ -2090,12 +2090,12 @@ func (in *PasswordPolicyObservation) DeepCopyInto(out *PasswordPolicyObservation
 	}
 	if in.ExpiryPeriodInDays != nil {
 		in, out := &in.ExpiryPeriodInDays, &out.ExpiryPeriodInDays
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.HistoryCount != nil {
 		in, out := &in.HistoryCount, &out.HistoryCount
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ID != nil {
@@ -2149,12 +2149,12 @@ func (in *PasswordPolicyParameters) DeepCopyInto(out *PasswordPolicyParameters) 
 	}
 	if in.ExpiryPeriodInDays != nil {
 		in, out := &in.ExpiryPeriodInDays, &out.ExpiryPeriodInDays
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.HistoryCount != nil {
 		in, out := &in.HistoryCount, &out.HistoryCount
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ManagingOrganization != nil {
@@ -3038,12 +3038,12 @@ func (in *ServiceInitParameters) DeepCopyInto(out *ServiceInitParameters) {
 	}
 	if in.TokenValidity != nil {
 		in, out := &in.TokenValidity, &out.TokenValidity
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Validity != nil {
 		in, out := &in.Validity, &out.Validity
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -3157,12 +3157,12 @@ func (in *ServiceObservation) DeepCopyInto(out *ServiceObservation) {
 	}
 	if in.TokenValidity != nil {
 		in, out := &in.TokenValidity, &out.TokenValidity
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Validity != nil {
 		in, out := &in.Validity, &out.Validity
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -3239,12 +3239,12 @@ func (in *ServiceParameters) DeepCopyInto(out *ServiceParameters) {
 	}
 	if in.TokenValidity != nil {
 		in, out := &in.TokenValidity, &out.TokenValidity
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Validity != nil {
 		in, out := &in.Validity, &out.Validity
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }

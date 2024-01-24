@@ -21,7 +21,7 @@ type ClientInitParameters struct {
 
 	// Lifetime of the access token in seconds. If not specified, system default life time (1800 secs) will be considered.
 	// Lifetime of the access token in seconds. If not specified, system default life time (1800 secs) will be considered.
-	AccessTokenLifetime *float64 `json:"accessTokenLifetime,omitempty" tf:"access_token_lifetime,omitempty"`
+	AccessTokenLifetime *int64 `json:"accessTokenLifetime,omitempty" tf:"access_token_lifetime,omitempty"`
 
 	// the application ID (GUID) to attach this client to
 	// The application ID to attach this client to.
@@ -60,7 +60,7 @@ type ClientInitParameters struct {
 
 	// Lifetime of the jwt token generated in case openid scope is enabled for the client. If not specified, system default life time (3600 secs) will be considered.
 	// Lifetime of the jwt token generated in case openid scope is enabled for the client. If not specified, system default life time (3600 secs) will be considered.
-	IDTokenLifetime *float64 `json:"idTokenLifetime,omitempty" tf:"id_token_lifetime,omitempty"`
+	IDTokenLifetime *int64 `json:"idTokenLifetime,omitempty" tf:"id_token_lifetime,omitempty"`
 
 	// The name of the client
 	// Name of the client.
@@ -73,7 +73,7 @@ type ClientInitParameters struct {
 
 	// Lifetime of the refresh token in seconds. If not specified, system default life time (2592000 secs) will be considered.
 	// Lifetime of the refresh token in seconds. If not specified, system default life time (2592000 secs) will be considered.
-	RefreshTokenLifetime *float64 `json:"refreshTokenLifetime,omitempty" tf:"refresh_token_lifetime,omitempty"`
+	RefreshTokenLifetime *int64 `json:"refreshTokenLifetime,omitempty" tf:"refresh_token_lifetime,omitempty"`
 
 	// Array. Examples of response types are "code id_token", "token id_token", etc.
 	// Examples of response types are 'code id_token', 'token id_token', etc.
@@ -94,7 +94,7 @@ type ClientObservation struct {
 
 	// Lifetime of the access token in seconds. If not specified, system default life time (1800 secs) will be considered.
 	// Lifetime of the access token in seconds. If not specified, system default life time (1800 secs) will be considered.
-	AccessTokenLifetime *float64 `json:"accessTokenLifetime,omitempty" tf:"access_token_lifetime,omitempty"`
+	AccessTokenLifetime *int64 `json:"accessTokenLifetime,omitempty" tf:"access_token_lifetime,omitempty"`
 
 	// the application ID (GUID) to attach this client to
 	// The application ID to attach this client to.
@@ -130,7 +130,7 @@ type ClientObservation struct {
 
 	// Lifetime of the jwt token generated in case openid scope is enabled for the client. If not specified, system default life time (3600 secs) will be considered.
 	// Lifetime of the jwt token generated in case openid scope is enabled for the client. If not specified, system default life time (3600 secs) will be considered.
-	IDTokenLifetime *float64 `json:"idTokenLifetime,omitempty" tf:"id_token_lifetime,omitempty"`
+	IDTokenLifetime *int64 `json:"idTokenLifetime,omitempty" tf:"id_token_lifetime,omitempty"`
 
 	// The name of the client
 	// Name of the client.
@@ -143,7 +143,7 @@ type ClientObservation struct {
 
 	// Lifetime of the refresh token in seconds. If not specified, system default life time (2592000 secs) will be considered.
 	// Lifetime of the refresh token in seconds. If not specified, system default life time (2592000 secs) will be considered.
-	RefreshTokenLifetime *float64 `json:"refreshTokenLifetime,omitempty" tf:"refresh_token_lifetime,omitempty"`
+	RefreshTokenLifetime *int64 `json:"refreshTokenLifetime,omitempty" tf:"refresh_token_lifetime,omitempty"`
 
 	// Array. Examples of response types are "code id_token", "token id_token", etc.
 	// Examples of response types are 'code id_token', 'token id_token', etc.
@@ -165,7 +165,7 @@ type ClientParameters struct {
 	// Lifetime of the access token in seconds. If not specified, system default life time (1800 secs) will be considered.
 	// Lifetime of the access token in seconds. If not specified, system default life time (1800 secs) will be considered.
 	// +kubebuilder:validation:Optional
-	AccessTokenLifetime *float64 `json:"accessTokenLifetime,omitempty" tf:"access_token_lifetime,omitempty"`
+	AccessTokenLifetime *int64 `json:"accessTokenLifetime,omitempty" tf:"access_token_lifetime,omitempty"`
 
 	// the application ID (GUID) to attach this client to
 	// The application ID to attach this client to.
@@ -211,7 +211,7 @@ type ClientParameters struct {
 	// Lifetime of the jwt token generated in case openid scope is enabled for the client. If not specified, system default life time (3600 secs) will be considered.
 	// Lifetime of the jwt token generated in case openid scope is enabled for the client. If not specified, system default life time (3600 secs) will be considered.
 	// +kubebuilder:validation:Optional
-	IDTokenLifetime *float64 `json:"idTokenLifetime,omitempty" tf:"id_token_lifetime,omitempty"`
+	IDTokenLifetime *int64 `json:"idTokenLifetime,omitempty" tf:"id_token_lifetime,omitempty"`
 
 	// The name of the client
 	// Name of the client.
@@ -232,7 +232,7 @@ type ClientParameters struct {
 	// Lifetime of the refresh token in seconds. If not specified, system default life time (2592000 secs) will be considered.
 	// Lifetime of the refresh token in seconds. If not specified, system default life time (2592000 secs) will be considered.
 	// +kubebuilder:validation:Optional
-	RefreshTokenLifetime *float64 `json:"refreshTokenLifetime,omitempty" tf:"refresh_token_lifetime,omitempty"`
+	RefreshTokenLifetime *int64 `json:"refreshTokenLifetime,omitempty" tf:"refresh_token_lifetime,omitempty"`
 
 	// Array. Examples of response types are "code id_token", "token id_token", etc.
 	// Examples of response types are 'code id_token', 'token id_token', etc.
