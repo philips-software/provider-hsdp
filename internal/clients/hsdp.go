@@ -7,7 +7,6 @@ package clients
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
 	"github.com/crossplane/crossplane-runtime/pkg/resource"
@@ -41,7 +40,6 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string, tfPr
 				Version: providerVersion,
 			},
 		}
-		fmt.Println("running terraform setup builder")
 
 		configRef := mg.GetProviderConfigReference()
 		if configRef == nil {

@@ -5,7 +5,6 @@ Copyright 2022 Koninklijke Philips N.V., https://www.philips.com
 package config
 
 import (
-	"fmt"
 	"github.com/crossplane/upjet/pkg/config"
 )
 
@@ -39,7 +38,6 @@ func ExternalNameConfigurations() config.ResourceOption {
 	return func(r *config.Resource) {
 		if e, ok := ExternalNameConfigs[r.Name]; ok {
 			r.ExternalName = e
-			fmt.Println(r.Name, r.ShouldUseNoForkClient())
 		}
 	}
 }
