@@ -7,8 +7,11 @@ package clients
 import (
 	"context"
 	"encoding/json"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
 	"github.com/crossplane/crossplane-runtime/pkg/resource"
+	tfsdk "github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/pkg/errors"
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -29,7 +32,7 @@ const (
 
 // TerraformSetupBuilder builds Terraform a terraform.SetupFn function which
 // returns Terraform provider setup configuration
-func TerraformSetupBuilder(version, providerSource, providerVersion string) terraform.SetupFn {
+func TerraformSetupBuilder(version, providerSource, providerVersion string, tfProvider *schema.Provider) terraform.SetupFn {
 	return func(ctx context.Context, client client.Client, mg resource.Managed) (terraform.Setup, error) {
 		ps := terraform.Setup{
 			Version: version,
@@ -38,6 +41,7 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 				Version: providerVersion,
 			},
 		}
+		fmt.Println("running terraform setup builder")
 
 		configRef := mg.GetProviderConfigReference()
 		if configRef == nil {
@@ -62,11 +66,6 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 			return ps, errors.Wrap(err, errUnmarshalCredentials)
 		}
 
-		// Set credentials in Terraform provider configuration.
-		/*ps.Configuration = map[string]any{
-			"username": creds["username"],
-			"password": creds["password"],
-		}*/
 		ps.Configuration = map[string]interface{}{
 			"region":              creds["region"],
 			"environment":         creds["environment"],
@@ -82,6 +81,23 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 			"debug_log":           creds["debug_log"],
 			"debug_stderr":        creds["debug_stderr"],
 		}
+
+		err = configureNoForkClient(ctx, &ps, *tfProvider)
+		if err != nil {
+			return ps, errors.Wrap(err, "Unable to set terraform provider setup.Meta")
+		}
+
 		return ps, nil
 	}
+}
+
+func configureNoForkClient(ctx context.Context, ps *terraform.Setup, p schema.Provider) error {
+	diag := p.Configure(context.WithoutCancel(ctx), &tfsdk.ResourceConfig{
+		Config: ps.Configuration,
+	})
+	if diag != nil && diag.HasError() {
+		return errors.Errorf("failed to configure the provider: %v", diag)
+	}
+	ps.Meta = p.Meta()
+	return nil
 }

@@ -89,6 +89,7 @@ func main() {
 	kingpin.FatalIfError(apis.AddToScheme(mgr.GetScheme()), "Cannot add HSDP APIs to scheme")
 
 	featureFlags := &feature.Flags{}
+	provider := config.GetProvider()
 	o := tjcontroller.Options{
 		Options: xpcontroller.Options{
 			Logger:                  log,
@@ -97,11 +98,11 @@ func main() {
 			MaxConcurrentReconciles: 1,
 			Features:                featureFlags,
 		},
-		Provider: config.GetProvider(),
+		Provider: provider,
 		// use the following WorkspaceStoreOption to enable the shared gRPC mode
 		// terraform.WithProviderRunner(terraform.NewSharedProvider(log, os.Getenv("TERRAFORM_NATIVE_PROVIDER_PATH"), terraform.WithNativeProviderArgs("-debuggable")))
 		WorkspaceStore: terraform.NewWorkspaceStore(log, terraform.WithFeatures(featureFlags)),
-		SetupFn:        clients.TerraformSetupBuilder(*terraformVersion, *providerSource, *providerVersion),
+		SetupFn:        clients.TerraformSetupBuilder(*terraformVersion, *providerSource, *providerVersion, provider.TerraformProvider),
 		// This seems to be required to make the no-fork architecture work.
 		OperationTrackerStore: tjcontroller.NewOperationStore(log),
 	}
