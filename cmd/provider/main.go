@@ -102,6 +102,8 @@ func main() {
 		// terraform.WithProviderRunner(terraform.NewSharedProvider(log, os.Getenv("TERRAFORM_NATIVE_PROVIDER_PATH"), terraform.WithNativeProviderArgs("-debuggable")))
 		WorkspaceStore: terraform.NewWorkspaceStore(log, terraform.WithFeatures(featureFlags)),
 		SetupFn:        clients.TerraformSetupBuilder(*terraformVersion, *providerSource, *providerVersion),
+		// This seems to be required to make the no-fork architecture work.
+		OperationTrackerStore: tjcontroller.NewOperationStore(log),
 	}
 
 	if *enableExternalSecretStores {

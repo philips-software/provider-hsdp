@@ -56,11 +56,3 @@ func ExternalNameConfigured() []string {
 	}
 	return l
 }
-
-// NoAsync disables the async-by-default behavior of upjet. Unlike many resources in cloud providers, Kafka resources
-// are fast to create. None of them need to be done asynchronously.
-func NoAsync() config.ResourceOption {
-	return func(r *config.Resource) {
-		r.UseAsync = false
-	}
-}
