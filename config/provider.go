@@ -12,7 +12,8 @@ import (
 
 	ujconfig "github.com/crossplane/upjet/pkg/config"
 	"github.com/philips-software/provider-hsdp/config/cdr"
-	"github.com/philips-software/provider-hsdp/config/dbs"
+	"github.com/philips-software/provider-hsdp/config/connect/dbs"
+	"github.com/philips-software/provider-hsdp/config/connect/mdm"
 	"github.com/philips-software/provider-hsdp/config/dicom"
 	"github.com/philips-software/provider-hsdp/config/iam"
 )
@@ -46,6 +47,7 @@ func GetProvider() *ujconfig.Provider {
 		iam.Configure,
 		cdr.Configure,
 		dbs.Configure,
+		mdm.Configure,
 		dicom.Configure,
 	} {
 		configure(pc)

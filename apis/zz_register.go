@@ -18,6 +18,7 @@ import (
 	v1alpha1dbs "github.com/philips-software/provider-hsdp/apis/dbs/v1alpha1"
 	v1alpha1dicom "github.com/philips-software/provider-hsdp/apis/dicom/v1alpha1"
 	v1alpha1iam "github.com/philips-software/provider-hsdp/apis/iam/v1alpha1"
+	v1alpha1mdm "github.com/philips-software/provider-hsdp/apis/mdm/v1alpha1"
 	v1alpha1apis "github.com/philips-software/provider-hsdp/apis/v1alpha1"
 	v1beta1 "github.com/philips-software/provider-hsdp/apis/v1beta1"
 )
@@ -29,6 +30,7 @@ func init() {
 		v1alpha1dbs.SchemeBuilder.AddToScheme,
 		v1alpha1dicom.SchemeBuilder.AddToScheme,
 		v1alpha1iam.SchemeBuilder.AddToScheme,
+		v1alpha1mdm.SchemeBuilder.AddToScheme,
 		v1alpha1apis.SchemeBuilder.AddToScheme,
 		v1beta1.SchemeBuilder.AddToScheme,
 	)
