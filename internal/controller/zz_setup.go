@@ -11,6 +11,8 @@ import (
 
 	organization "github.com/philips-software/provider-hsdp/internal/controller/cdr/organization"
 	subscription "github.com/philips-software/provider-hsdp/internal/controller/cdr/subscription"
+	sqssubscriber "github.com/philips-software/provider-hsdp/internal/controller/dbs/sqssubscriber"
+	topicsubscription "github.com/philips-software/provider-hsdp/internal/controller/dbs/topicsubscription"
 	notification "github.com/philips-software/provider-hsdp/internal/controller/dicom/notification"
 	objectstore "github.com/philips-software/provider-hsdp/internal/controller/dicom/objectstore"
 	repository "github.com/philips-software/provider-hsdp/internal/controller/dicom/repository"
@@ -35,6 +37,8 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		organization.Setup,
 		subscription.Setup,
+		sqssubscriber.Setup,
+		topicsubscription.Setup,
 		notification.Setup,
 		objectstore.Setup,
 		repository.Setup,

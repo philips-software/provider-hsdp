@@ -29,6 +29,8 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"hsdp_dicom_store_config":      config.IdentifierFromProvider,
 	"hsdp_dicom_notification":      config.IdentifierFromProvider,
 	"hsdp_dicom_object_store":      config.IdentifierFromProvider,
+	"hsdp_dbs_sqs_subscriber":      config.IdentifierFromProvider,
+	"hsdp_dbs_topic_subscription":  config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the
