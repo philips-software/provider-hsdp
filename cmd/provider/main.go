@@ -6,12 +6,13 @@ package main
 
 import (
 	"context"
-	"github.com/crossplane/crossplane-runtime/pkg/feature"
-	"gopkg.in/alecthomas/kingpin.v2"
 	"io"
 	"os"
 	"path/filepath"
 	"time"
+
+	"github.com/crossplane/crossplane-runtime/pkg/feature"
+	"gopkg.in/alecthomas/kingpin.v2"
 
 	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 	xpcontroller "github.com/crossplane/crossplane-runtime/pkg/controller"

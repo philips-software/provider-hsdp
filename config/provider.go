@@ -7,12 +7,14 @@ package config
 import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
+
 	"github.com/philips-software/terraform-provider-hsdp/hsdp"
 
 	ujconfig "github.com/crossplane/upjet/pkg/config"
 	"github.com/philips-software/provider-hsdp/config/cdr"
+	"github.com/philips-software/provider-hsdp/config/connect/dbs"
+	"github.com/philips-software/provider-hsdp/config/connect/mdm"
 	"github.com/philips-software/provider-hsdp/config/dicom"
-
 	"github.com/philips-software/provider-hsdp/config/iam"
 )
 
@@ -35,7 +37,7 @@ func GetProvider() *ujconfig.Provider {
 		ujconfig.WithNoForkIncludeList(ExternalNameConfigured()),
 		ujconfig.WithIncludeList([]string{}),
 		ujconfig.WithFeaturesPackage("internal/features"),
-		ujconfig.WithTerraformProvider(hsdp.Provider("v0.46.3")),
+		ujconfig.WithTerraformProvider(hsdp.Provider("v0.47.0")),
 		ujconfig.WithDefaultResourceOptions(
 			ExternalNameConfigurations(),
 		))
@@ -44,6 +46,8 @@ func GetProvider() *ujconfig.Provider {
 		// add custom config functions
 		iam.Configure,
 		cdr.Configure,
+		dbs.Configure,
+		mdm.Configure,
 		dicom.Configure,
 	} {
 		configure(pc)
