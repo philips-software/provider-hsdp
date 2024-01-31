@@ -24,10 +24,10 @@ func (mg *DataType) ResolveReferences(ctx context.Context, c client.Reader) erro
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.PropositionID),
 		Extract:      reference.ExternalName(),
 		Reference:    mg.Spec.ForProvider.PropositionRef,
-		Selector:     mg.Spec.ForProvider.PropositionIDSelector,
+		Selector:     mg.Spec.ForProvider.PropositionSelector,
 		To: reference.To{
-			List:    &v1alpha1.PropositionList{},
-			Managed: &v1alpha1.Proposition{},
+			List:    &PropositionList{},
+			Managed: &Proposition{},
 		},
 	})
 	if err != nil {
@@ -40,10 +40,10 @@ func (mg *DataType) ResolveReferences(ctx context.Context, c client.Reader) erro
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.PropositionID),
 		Extract:      reference.ExternalName(),
 		Reference:    mg.Spec.InitProvider.PropositionRef,
-		Selector:     mg.Spec.InitProvider.PropositionIDSelector,
+		Selector:     mg.Spec.InitProvider.PropositionSelector,
 		To: reference.To{
-			List:    &v1alpha1.PropositionList{},
-			Managed: &v1alpha1.Proposition{},
+			List:    &PropositionList{},
+			Managed: &Proposition{},
 		},
 	})
 	if err != nil {
@@ -51,6 +51,48 @@ func (mg *DataType) ResolveReferences(ctx context.Context, c client.Reader) erro
 	}
 	mg.Spec.InitProvider.PropositionID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.PropositionRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this Proposition.
+func (mg *Proposition) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.OrganizationID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.OrganizationRef,
+		Selector:     mg.Spec.ForProvider.OrganizationSelector,
+		To: reference.To{
+			List:    &v1alpha1.OrganizationList{},
+			Managed: &v1alpha1.Organization{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.OrganizationID")
+	}
+	mg.Spec.ForProvider.OrganizationID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.OrganizationRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.OrganizationID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.OrganizationRef,
+		Selector:     mg.Spec.InitProvider.OrganizationSelector,
+		To: reference.To{
+			List:    &v1alpha1.OrganizationList{},
+			Managed: &v1alpha1.Organization{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.OrganizationID")
+	}
+	mg.Spec.InitProvider.OrganizationID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.OrganizationRef = rsp.ResolvedReference
 
 	return nil
 }

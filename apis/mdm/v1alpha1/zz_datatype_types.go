@@ -26,17 +26,18 @@ type DataTypeInitParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The ID reference of the service action (format: DataType/${GUID})
-	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Proposition
+	// +crossplane:generate:reference:type=Proposition
 	// +crossplane:generate:reference:refFieldName=PropositionRef
+	// +crossplane:generate:reference:selectorFieldName=PropositionSelector
 	PropositionID *string `json:"propositionId,omitempty" tf:"proposition_id,omitempty"`
 
-	// Selector for a Proposition in iam to populate propositionId.
-	// +kubebuilder:validation:Optional
-	PropositionIDSelector *v1.Selector `json:"propositionIdSelector,omitempty" tf:"-"`
-
-	// Reference to a Proposition in iam to populate propositionId.
+	// Reference to a Proposition to populate propositionId.
 	// +kubebuilder:validation:Optional
 	PropositionRef *v1.Reference `json:"propositionRef,omitempty" tf:"-"`
+
+	// Selector for a Proposition to populate propositionId.
+	// +kubebuilder:validation:Optional
+	PropositionSelector *v1.Selector `json:"propositionSelector,omitempty" tf:"-"`
 
 	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
@@ -77,18 +78,19 @@ type DataTypeParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The ID reference of the service action (format: DataType/${GUID})
-	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Proposition
+	// +crossplane:generate:reference:type=Proposition
 	// +crossplane:generate:reference:refFieldName=PropositionRef
+	// +crossplane:generate:reference:selectorFieldName=PropositionSelector
 	// +kubebuilder:validation:Optional
 	PropositionID *string `json:"propositionId,omitempty" tf:"proposition_id,omitempty"`
 
-	// Selector for a Proposition in iam to populate propositionId.
-	// +kubebuilder:validation:Optional
-	PropositionIDSelector *v1.Selector `json:"propositionIdSelector,omitempty" tf:"-"`
-
-	// Reference to a Proposition in iam to populate propositionId.
+	// Reference to a Proposition to populate propositionId.
 	// +kubebuilder:validation:Optional
 	PropositionRef *v1.Reference `json:"propositionRef,omitempty" tf:"-"`
+
+	// Selector for a Proposition to populate propositionId.
+	// +kubebuilder:validation:Optional
+	PropositionSelector *v1.Selector `json:"propositionSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	// +listType=set

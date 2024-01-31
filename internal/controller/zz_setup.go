@@ -29,6 +29,7 @@ import (
 	service "github.com/philips-software/provider-hsdp/internal/controller/iam/service"
 	user "github.com/philips-software/provider-hsdp/internal/controller/iam/user"
 	datatype "github.com/philips-software/provider-hsdp/internal/controller/mdm/datatype"
+	propositionmdm "github.com/philips-software/provider-hsdp/internal/controller/mdm/proposition"
 	providerconfig "github.com/philips-software/provider-hsdp/internal/controller/providerconfig"
 )
 
@@ -56,6 +57,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		service.Setup,
 		user.Setup,
 		datatype.Setup,
+		propositionmdm.Setup,
 		providerconfig.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {

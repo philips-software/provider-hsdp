@@ -10,7 +10,7 @@ spec:
   forProvider:
     description: A Terraform provisioned DataType
     name: tf-some-data-type
-    propositionIdSelector:
+    propositionSelector:
       matchLabels:
         testing.upbound.io/example-name: hsdp_connect_mdm_proposition
     tags:

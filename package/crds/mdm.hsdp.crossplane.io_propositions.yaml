@@ -4,7 +4,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.14.0
-  name: datatypes.mdm.hsdp.crossplane.io
+  name: propositions.mdm.hsdp.crossplane.io
 spec:
   group: mdm.hsdp.crossplane.io
   names:
@@ -12,10 +12,10 @@ spec:
     - crossplane
     - managed
     - hsdp
-    kind: DataType
-    listKind: DataTypeList
-    plural: datatypes
-    singular: datatype
+    kind: Proposition
+    listKind: PropositionList
+    plural: propositions
+    singular: proposition
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -34,8 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: DataType is the Schema for the DataTypes API. Manages HSDP Connect
-          MDM Data types
+        description: Proposition is the Schema for the Propositions API. Manages HSDP
+          Connect MDM Propositions
         properties:
           apiVersion:
             description: |-
@@ -55,7 +55,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: DataTypeSpec defines the desired state of DataType
+            description: PropositionSpec defines the desired state of Proposition
             properties:
               deletionPolicy:
                 default: Delete
@@ -74,17 +74,20 @@ spec:
               forProvider:
                 properties:
                   description:
-                    description: A short description of the device group
+                    description: A short description of the Proposition
+                    type: string
+                  globalReferenceId:
+                    description: 'The ID reference (format: Proposition/${GUID})'
                     type: string
                   name:
-                    description: The name of the device group
+                    description: The name of the Proposition
                     type: string
-                  propositionId:
-                    description: 'The ID reference of the service action (format:
-                      DataType/${GUID})'
+                  organizationId:
+                    description: The ID of the IAM organization this Proposition should
+                      fall under
                     type: string
-                  propositionRef:
-                    description: Reference to a Proposition to populate propositionId.
+                  organizationRef:
+                    description: Reference to a Organization in iam to populate organizationId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -117,8 +120,8 @@ spec:
                     required:
                     - name
                     type: object
-                  propositionSelector:
-                    description: Selector for a Proposition to populate propositionId.
+                  organizationSelector:
+                    description: Selector for a Organization in iam to populate organizationId.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -157,11 +160,9 @@ spec:
                             type: string
                         type: object
                     type: object
-                  tags:
-                    items:
-                      type: string
-                    type: array
-                    x-kubernetes-list-type: set
+                  status:
+                    description: The status of the Proposition [DRAFT, ACTIVE]
+                    type: string
                 type: object
               initProvider:
                 description: |-
@@ -177,17 +178,20 @@ spec:
                   autoscaler.
                 properties:
                   description:
-                    description: A short description of the device group
+                    description: A short description of the Proposition
+                    type: string
+                  globalReferenceId:
+                    description: 'The ID reference (format: Proposition/${GUID})'
                     type: string
                   name:
-                    description: The name of the device group
+                    description: The name of the Proposition
                     type: string
-                  propositionId:
-                    description: 'The ID reference of the service action (format:
-                      DataType/${GUID})'
+                  organizationId:
+                    description: The ID of the IAM organization this Proposition should
+                      fall under
                     type: string
-                  propositionRef:
-                    description: Reference to a Proposition to populate propositionId.
+                  organizationRef:
+                    description: Reference to a Organization in iam to populate organizationId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -220,8 +224,8 @@ spec:
                     required:
                     - name
                     type: object
-                  propositionSelector:
-                    description: Selector for a Proposition to populate propositionId.
+                  organizationSelector:
+                    description: Selector for a Organization in iam to populate organizationId.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -260,11 +264,9 @@ spec:
                             type: string
                         type: object
                     type: object
-                  tags:
-                    items:
-                      type: string
-                    type: array
-                    x-kubernetes-list-type: set
+                  status:
+                    description: The status of the Proposition [DRAFT, ACTIVE]
+                    type: string
                 type: object
               managementPolicies:
                 default:
@@ -434,40 +436,51 @@ spec:
             - forProvider
             type: object
             x-kubernetes-validations:
+            - message: spec.forProvider.description is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.description)
+                || (has(self.initProvider) && has(self.initProvider.description))'
             - message: spec.forProvider.name is a required parameter
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
                 || (has(self.initProvider) && has(self.initProvider.name))'
+            - message: spec.forProvider.status is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.status)
+                || (has(self.initProvider) && has(self.initProvider.status))'
           status:
-            description: DataTypeStatus defines the observed state of DataType.
+            description: PropositionStatus defines the observed state of Proposition.
             properties:
               atProvider:
                 properties:
                   description:
-                    description: A short description of the device group
+                    description: A short description of the Proposition
+                    type: string
+                  globalReferenceId:
+                    description: 'The ID reference (format: Proposition/${GUID})'
                     type: string
                   guid:
-                    description: The GUID of the service action
+                    description: The GUID of the underlying IAM resource
                     type: string
                   id:
-                    description: 'The ID reference of the service action (format:
-                      DataType/${GUID})'
+                    description: 'The ID reference (format: Proposition/${GUID})'
                     type: string
                   name:
-                    description: The name of the device group
+                    description: The name of the Proposition
+                    type: string
+                  organizationId:
+                    description: The ID of the IAM organization this Proposition should
+                      fall under
+                    type: string
+                  propositionGuid:
+                    description: The GUID of the MDM proposition resource
                     type: string
                   propositionId:
-                    description: 'The ID reference of the service action (format:
-                      DataType/${GUID})'
+                    description: The ID of the IAM proposition this proposition falls
+                      under
                     type: string
-                  tags:
-                    items:
-                      type: string
-                    type: array
-                    x-kubernetes-list-type: set
-                  versionId:
-                    description: 'The ID reference of the service action (format:
-                      DataType/${GUID})'
+                  status:
+                    description: The status of the Proposition [DRAFT, ACTIVE]
                     type: string
                 type: object
               conditions:
