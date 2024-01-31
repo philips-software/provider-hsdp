@@ -7,6 +7,7 @@ package config
 import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
+
 	"github.com/philips-software/terraform-provider-hsdp/hsdp"
 
 	ujconfig "github.com/crossplane/upjet/pkg/config"
