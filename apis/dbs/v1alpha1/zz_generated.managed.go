@@ -67,62 +67,62 @@ func (mg *SqsSubscriber) SetWriteConnectionSecretToReference(r *xpv1.SecretRefer
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
-// GetCondition of this TopicSubscription.
-func (mg *TopicSubscription) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+// GetCondition of this Subscription.
+func (mg *Subscription) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
-// GetDeletionPolicy of this TopicSubscription.
-func (mg *TopicSubscription) GetDeletionPolicy() xpv1.DeletionPolicy {
+// GetDeletionPolicy of this Subscription.
+func (mg *Subscription) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
-// GetManagementPolicies of this TopicSubscription.
-func (mg *TopicSubscription) GetManagementPolicies() xpv1.ManagementPolicies {
+// GetManagementPolicies of this Subscription.
+func (mg *Subscription) GetManagementPolicies() xpv1.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
-// GetProviderConfigReference of this TopicSubscription.
-func (mg *TopicSubscription) GetProviderConfigReference() *xpv1.Reference {
+// GetProviderConfigReference of this Subscription.
+func (mg *Subscription) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
-// GetPublishConnectionDetailsTo of this TopicSubscription.
-func (mg *TopicSubscription) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+// GetPublishConnectionDetailsTo of this Subscription.
+func (mg *Subscription) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
 	return mg.Spec.PublishConnectionDetailsTo
 }
 
-// GetWriteConnectionSecretToReference of this TopicSubscription.
-func (mg *TopicSubscription) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+// GetWriteConnectionSecretToReference of this Subscription.
+func (mg *Subscription) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
-// SetConditions of this TopicSubscription.
-func (mg *TopicSubscription) SetConditions(c ...xpv1.Condition) {
+// SetConditions of this Subscription.
+func (mg *Subscription) SetConditions(c ...xpv1.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
-// SetDeletionPolicy of this TopicSubscription.
-func (mg *TopicSubscription) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+// SetDeletionPolicy of this Subscription.
+func (mg *Subscription) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
-// SetManagementPolicies of this TopicSubscription.
-func (mg *TopicSubscription) SetManagementPolicies(r xpv1.ManagementPolicies) {
+// SetManagementPolicies of this Subscription.
+func (mg *Subscription) SetManagementPolicies(r xpv1.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
-// SetProviderConfigReference of this TopicSubscription.
-func (mg *TopicSubscription) SetProviderConfigReference(r *xpv1.Reference) {
+// SetProviderConfigReference of this Subscription.
+func (mg *Subscription) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
-// SetPublishConnectionDetailsTo of this TopicSubscription.
-func (mg *TopicSubscription) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+// SetPublishConnectionDetailsTo of this Subscription.
+func (mg *Subscription) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
 	mg.Spec.PublishConnectionDetailsTo = r
 }
 
-// SetWriteConnectionSecretToReference of this TopicSubscription.
-func (mg *TopicSubscription) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+// SetWriteConnectionSecretToReference of this Subscription.
+func (mg *Subscription) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

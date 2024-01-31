@@ -8,22 +8,40 @@ package v1alpha1
 import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	v1alpha1 "github.com/philips-software/provider-hsdp/apis/mdm/v1alpha1"
+	common "github.com/philips-software/provider-hsdp/config/common"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
-// ResolveReferences of this TopicSubscription.
-func (mg *TopicSubscription) ResolveReferences(ctx context.Context, c client.Reader) error {
+// ResolveReferences of this Subscription.
+func (mg *Subscription) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPIResolver(c, mg)
 
 	var rsp reference.ResolutionResponse
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.DataType),
+		Extract:      common.ExtractResourceName(),
+		Reference:    mg.Spec.ForProvider.DataTypeRefRef,
+		Selector:     mg.Spec.ForProvider.DataTypeSelector,
+		To: reference.To{
+			List:    &v1alpha1.DataTypeList{},
+			Managed: &v1alpha1.DataType{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.DataType")
+	}
+	mg.Spec.ForProvider.DataType = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.DataTypeRefRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SubscriberID),
 		Extract:      reference.ExternalName(),
 		Reference:    mg.Spec.ForProvider.SubscriberRef,
-		Selector:     mg.Spec.ForProvider.SubscriberIDSelector,
+		Selector:     mg.Spec.ForProvider.SubscriberSelector,
 		To: reference.To{
 			List:    &SqsSubscriberList{},
 			Managed: &SqsSubscriber{},
@@ -36,10 +54,26 @@ func (mg *TopicSubscription) ResolveReferences(ctx context.Context, c client.Rea
 	mg.Spec.ForProvider.SubscriberRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.DataType),
+		Extract:      common.ExtractResourceName(),
+		Reference:    mg.Spec.InitProvider.DataTypeRefRef,
+		Selector:     mg.Spec.InitProvider.DataTypeSelector,
+		To: reference.To{
+			List:    &v1alpha1.DataTypeList{},
+			Managed: &v1alpha1.DataType{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.DataType")
+	}
+	mg.Spec.InitProvider.DataType = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.DataTypeRefRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SubscriberID),
 		Extract:      reference.ExternalName(),
 		Reference:    mg.Spec.InitProvider.SubscriberRef,
-		Selector:     mg.Spec.InitProvider.SubscriberIDSelector,
+		Selector:     mg.Spec.InitProvider.SubscriberSelector,
 		To: reference.To{
 			List:    &SqsSubscriberList{},
 			Managed: &SqsSubscriber{},

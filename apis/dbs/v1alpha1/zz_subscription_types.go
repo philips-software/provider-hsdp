@@ -17,8 +17,21 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type TopicSubscriptionInitParameters struct {
+type SubscriptionInitParameters struct {
+
+	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/mdm/v1alpha1.DataType
+	// +crossplane:generate:reference:extractor=github.com/philips-software/provider-hsdp/config/common.ExtractResourceName()
+	// +crossplane:generate:reference:refFieldName=DataTypeRefRef
+	// +crossplane:generate:reference:selectorFieldName=DataTypeSelector
 	DataType *string `json:"dataType,omitempty" tf:"data_type,omitempty"`
+
+	// Reference to a DataType in mdm to populate dataType.
+	// +kubebuilder:validation:Optional
+	DataTypeRefRef *v1.Reference `json:"dataTypeRefRef,omitempty" tf:"-"`
+
+	// Selector for a DataType in mdm to populate dataType.
+	// +kubebuilder:validation:Optional
+	DataTypeSelector *v1.Selector `json:"dataTypeSelector,omitempty" tf:"-"`
 
 	DeliverDataOnly *bool `json:"deliverDataOnly,omitempty" tf:"deliver_data_only,omitempty"`
 
@@ -30,18 +43,19 @@ type TopicSubscriptionInitParameters struct {
 
 	// +crossplane:generate:reference:type=SqsSubscriber
 	// +crossplane:generate:reference:refFieldName=SubscriberRef
+	// +crossplane:generate:reference:selectorFieldName=SubscriberSelector
 	SubscriberID *string `json:"subscriberId,omitempty" tf:"subscriber_id,omitempty"`
-
-	// Selector for a SqsSubscriber to populate subscriberId.
-	// +kubebuilder:validation:Optional
-	SubscriberIDSelector *v1.Selector `json:"subscriberIdSelector,omitempty" tf:"-"`
 
 	// Reference to a SqsSubscriber to populate subscriberId.
 	// +kubebuilder:validation:Optional
 	SubscriberRef *v1.Reference `json:"subscriberRef,omitempty" tf:"-"`
+
+	// Selector for a SqsSubscriber to populate subscriberId.
+	// +kubebuilder:validation:Optional
+	SubscriberSelector *v1.Selector `json:"subscriberSelector,omitempty" tf:"-"`
 }
 
-type TopicSubscriptionObservation struct {
+type SubscriptionObservation struct {
 	DataType *string `json:"dataType,omitempty" tf:"data_type,omitempty"`
 
 	DeliverDataOnly *bool `json:"deliverDataOnly,omitempty" tf:"deliver_data_only,omitempty"`
@@ -63,10 +77,22 @@ type TopicSubscriptionObservation struct {
 	SubscriberID *string `json:"subscriberId,omitempty" tf:"subscriber_id,omitempty"`
 }
 
-type TopicSubscriptionParameters struct {
+type SubscriptionParameters struct {
 
+	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/mdm/v1alpha1.DataType
+	// +crossplane:generate:reference:extractor=github.com/philips-software/provider-hsdp/config/common.ExtractResourceName()
+	// +crossplane:generate:reference:refFieldName=DataTypeRefRef
+	// +crossplane:generate:reference:selectorFieldName=DataTypeSelector
 	// +kubebuilder:validation:Optional
 	DataType *string `json:"dataType,omitempty" tf:"data_type,omitempty"`
+
+	// Reference to a DataType in mdm to populate dataType.
+	// +kubebuilder:validation:Optional
+	DataTypeRefRef *v1.Reference `json:"dataTypeRefRef,omitempty" tf:"-"`
+
+	// Selector for a DataType in mdm to populate dataType.
+	// +kubebuilder:validation:Optional
+	DataTypeSelector *v1.Selector `json:"dataTypeSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	DeliverDataOnly *bool `json:"deliverDataOnly,omitempty" tf:"deliver_data_only,omitempty"`
@@ -82,22 +108,23 @@ type TopicSubscriptionParameters struct {
 
 	// +crossplane:generate:reference:type=SqsSubscriber
 	// +crossplane:generate:reference:refFieldName=SubscriberRef
+	// +crossplane:generate:reference:selectorFieldName=SubscriberSelector
 	// +kubebuilder:validation:Optional
 	SubscriberID *string `json:"subscriberId,omitempty" tf:"subscriber_id,omitempty"`
-
-	// Selector for a SqsSubscriber to populate subscriberId.
-	// +kubebuilder:validation:Optional
-	SubscriberIDSelector *v1.Selector `json:"subscriberIdSelector,omitempty" tf:"-"`
 
 	// Reference to a SqsSubscriber to populate subscriberId.
 	// +kubebuilder:validation:Optional
 	SubscriberRef *v1.Reference `json:"subscriberRef,omitempty" tf:"-"`
+
+	// Selector for a SqsSubscriber to populate subscriberId.
+	// +kubebuilder:validation:Optional
+	SubscriberSelector *v1.Selector `json:"subscriberSelector,omitempty" tf:"-"`
 }
 
-// TopicSubscriptionSpec defines the desired state of TopicSubscription
-type TopicSubscriptionSpec struct {
+// SubscriptionSpec defines the desired state of Subscription
+type SubscriptionSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     TopicSubscriptionParameters `json:"forProvider"`
+	ForProvider     SubscriptionParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -108,51 +135,50 @@ type TopicSubscriptionSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider TopicSubscriptionInitParameters `json:"initProvider,omitempty"`
+	InitProvider SubscriptionInitParameters `json:"initProvider,omitempty"`
 }
 
-// TopicSubscriptionStatus defines the observed state of TopicSubscription.
-type TopicSubscriptionStatus struct {
+// SubscriptionStatus defines the observed state of Subscription.
+type SubscriptionStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        TopicSubscriptionObservation `json:"atProvider,omitempty"`
+	AtProvider        SubscriptionObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// TopicSubscription is the Schema for the TopicSubscriptions API. <no value>
+// Subscription is the Schema for the Subscriptions API. <no value>
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,hsdp}
-type TopicSubscription struct {
+type Subscription struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.dataType) || (has(self.initProvider) && has(self.initProvider.dataType))",message="spec.forProvider.dataType is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.description) || (has(self.initProvider) && has(self.initProvider.description))",message="spec.forProvider.description is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.nameInfix) || (has(self.initProvider) && has(self.initProvider.nameInfix))",message="spec.forProvider.nameInfix is a required parameter"
-	Spec   TopicSubscriptionSpec   `json:"spec"`
-	Status TopicSubscriptionStatus `json:"status,omitempty"`
+	Spec   SubscriptionSpec   `json:"spec"`
+	Status SubscriptionStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// TopicSubscriptionList contains a list of TopicSubscriptions
-type TopicSubscriptionList struct {
+// SubscriptionList contains a list of Subscriptions
+type SubscriptionList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []TopicSubscription `json:"items"`
+	Items           []Subscription `json:"items"`
 }
 
 // Repository type metadata.
 var (
-	TopicSubscription_Kind             = "TopicSubscription"
-	TopicSubscription_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: TopicSubscription_Kind}.String()
-	TopicSubscription_KindAPIVersion   = TopicSubscription_Kind + "." + CRDGroupVersion.String()
-	TopicSubscription_GroupVersionKind = CRDGroupVersion.WithKind(TopicSubscription_Kind)
+	Subscription_Kind             = "Subscription"
+	Subscription_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: Subscription_Kind}.String()
+	Subscription_KindAPIVersion   = Subscription_Kind + "." + CRDGroupVersion.String()
+	Subscription_GroupVersionKind = CRDGroupVersion.WithKind(Subscription_Kind)
 )
 
 func init() {
-	SchemeBuilder.Register(&TopicSubscription{}, &TopicSubscriptionList{})
+	SchemeBuilder.Register(&Subscription{}, &SubscriptionList{})
 }
