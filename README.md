@@ -76,7 +76,7 @@ stringData:
 
 ## API Reference
 
-You can see the API reference [here](https://doc.crds.dev/github.com/philips-software/provider-hsdp)
+You can see the API reference on the [Upbound marketplace](https://marketplace.upbound.io/providers/philips-software/provider-hsdp)
 
 ## Known limitations
 
