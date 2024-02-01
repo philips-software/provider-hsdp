@@ -552,8 +552,8 @@ github.com/labstack/echo/v4 v4.11.4 h1:vDZmA+qNeh1pd/cCkEicDMrjtrnMGQ1QFI9gWN1zG
 github.com/labstack/echo/v4 v4.11.4/go.mod h1:noh7EvLwqDsmh/X/HWKPUl1AjzJrhyptRyEbQJfxen8=
 github.com/labstack/gommon v0.4.2 h1:F8qTUNXgG1+6WQmqoUWnz8WiEU60mXVVw0P4ht1WRA0=
 github.com/labstack/gommon v0.4.2/go.mod h1:QlUFxVM+SNXhDL/Z7YhocGIBYOiwB0mXm1+1bAPHPyU=
-github.com/leodido/go-urn v1.2.4 h1:XlAE/cm/ms7TE/VMVoduSpNBoyc2dOxHs5MZSwAN63Q=
-github.com/leodido/go-urn v1.2.4/go.mod h1:7ZrI8mTSeBSHl/UaRyKQW1qZeMgak41ANeCNaVckg+4=
+github.com/leodido/go-urn v1.3.0 h1:jX8FDLfW4ThVXctBNZ+3cIWnCSnrACDV73r76dy0aQQ=
+github.com/leodido/go-urn v1.3.0/go.mod h1:bvxc+MVxLKB4z00jd1z+Dvzr47oO32F/QSNjSBOlFxI=
 github.com/loafoe/easyssh-proxy/v2 v2.0.4 h1:EzD0FWq2Ro44sDIbk95cs5oUlWFi2GKc6u/A8sxAxBM=
 github.com/loafoe/easyssh-proxy/v2 v2.0.4/go.mod h1:PzKetBuhTzg74M1AapAmDQAwBILp/MIiUkeUQ9bx42k=
 github.com/loafoe/ferrite v0.2.0 h1:4sIUGPCUpN116Nu7tZksAovFKVYBnqN4PFalk9/6r+A=
@@ -670,8 +670,8 @@ github.com/philips-software/go-hsdp-api v0.84.0 h1:dZptKvoGsQNAlY9yNAFtTCN5MY5PR
 github.com/philips-software/go-hsdp-api v0.84.0/go.mod h1:5C3R3NB7EdXl/bs7VAxZNt+sjdn3AGPEryZBbRdE3MI=
 github.com/philips-software/go-hsdp-signer v1.4.0 h1:yg7UILhmI4xJhr/tQiAiQwJL0EZFvLuMqpH2GZ9ygY4=
 github.com/philips-software/go-hsdp-signer v1.4.0/go.mod h1:/QehZ/+Aks2t1TFpjhF/7ZSB8PJIIJHzLc03rOqwLw0=
-github.com/philips-software/terraform-provider-hsdp v0.47.0 h1:oFTka0NjkY1vYU7KAhLbMxMWtl4xibDWG1nfZGgIdyY=
-github.com/philips-software/terraform-provider-hsdp v0.47.0/go.mod h1:rVA5wzWZiV/Fi5LjI1+JgPfAQdnD4i/RBYZDzDKoF4E=
+github.com/philips-software/terraform-provider-hsdp v0.47.1 h1:wZIUhwRxS2/28BwaOmBf2YlwkH6QgrxEa3hBTWAdOik=
+github.com/philips-software/terraform-provider-hsdp v0.47.1/go.mod h1:rVA5wzWZiV/Fi5LjI1+JgPfAQdnD4i/RBYZDzDKoF4E=
 github.com/pires/go-proxyproto v0.0.0-20191211124218-517ecdf5bb2b/go.mod h1:Odh9VFOZJCf9G8cLW5o435Xf1J95Jw9Gw5rnCjcwzAY=
 github.com/pkg/errors v0.8.0/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
@@ -764,7 +764,6 @@ github.com/stretchr/testify v1.7.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/
 github.com/stretchr/testify v1.7.2/go.mod h1:R6va5+xMeoiuVRoj+gSkQ7d3FALtqAAGI1FQKckRals=
 github.com/stretchr/testify v1.8.0/go.mod h1:yNjHg4UonilssWZ8iaSj1OCr/vHnekPRkoO+kdMU+MU=
 github.com/stretchr/testify v1.8.1/go.mod h1:w2LPCIKwWwSfY2zedu0+kehJoqGctiVI29o6fzry7u4=
-github.com/stretchr/testify v1.8.2/go.mod h1:w2LPCIKwWwSfY2zedu0+kehJoqGctiVI29o6fzry7u4=
 github.com/stretchr/testify v1.8.4 h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcUk=
 github.com/stretchr/testify v1.8.4/go.mod h1:sz/lmYIOXD/1dqDmKjjqLyZ2RngseejIcXlSw2iwfAo=
 github.com/tchap/go-patricia v0.0.0-20160729071656-dd168db6051b/go.mod h1:bmLyhP68RS6kStMGxByiQ23RP/odRBOTVjwp2cDyi6I=
@@ -1215,8 +1214,8 @@ google.golang.org/genproto v0.0.0-20201210142538-e3217bee35cc/go.mod h1:FWY/as6D
 google.golang.org/genproto v0.0.0-20201214200347-8c77b98c765d/go.mod h1:FWY/as6DDZQgahTzZj3fqbO1CbirC29ZNUFHwi0/+no=
 google.golang.org/genproto v0.0.0-20210108203827-ffc7fda8c3d7/go.mod h1:FWY/as6DDZQgahTzZj3fqbO1CbirC29ZNUFHwi0/+no=
 google.golang.org/genproto v0.0.0-20210226172003-ab064af71705/go.mod h1:FWY/as6DDZQgahTzZj3fqbO1CbirC29ZNUFHwi0/+no=
-google.golang.org/genproto/googleapis/rpc v0.0.0-20240123012728-ef4313101c80 h1:AjyfHzEPEFp/NpvfN5g+KDla3EMojjhRVZc1i7cj+oM=
-google.golang.org/genproto/googleapis/rpc v0.0.0-20240123012728-ef4313101c80/go.mod h1:PAREbraiVEVGVdTZsVWjSbbTtSyGbAgIIvni8a8CD5s=
+google.golang.org/genproto/googleapis/rpc v0.0.0-20240125205218-1f4bbc51befe h1:bQnxqljG/wqi4NTXu2+DJ3n7APcEA882QZ1JvhQAq9o=
+google.golang.org/genproto/googleapis/rpc v0.0.0-20240125205218-1f4bbc51befe/go.mod h1:PAREbraiVEVGVdTZsVWjSbbTtSyGbAgIIvni8a8CD5s=
 google.golang.org/grpc v1.19.0/go.mod h1:mqu4LbDTu4XGKhr4mRzUsmM4RtVoemTSY81AxZiDr8c=
 google.golang.org/grpc v1.20.1/go.mod h1:10oTOabMzJvdu6/UiuZezV6QK5dSlG84ov/aaiqXj38=
 google.golang.org/grpc v1.21.1/go.mod h1:oYelfM1adQP15Ek0mdvEgi9Df8B9CZIaU1084ijfRaM=
