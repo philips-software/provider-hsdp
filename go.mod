@@ -8,7 +8,7 @@ require (
 	dario.cat/mergo v1.0.0
 	github.com/crossplane/crossplane-runtime v1.14.4
 	github.com/crossplane/crossplane-tools v0.0.0-20230925130601-628280f8bf79
-	github.com/crossplane/upjet v1.1.0-rc.0.0.20240123141626-87fae5ea613c
+	github.com/crossplane/upjet v1.2.0-rc.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.32.0
 	github.com/philips-software/terraform-provider-hsdp v0.47.1
 	github.com/pkg/errors v0.9.1
@@ -64,14 +64,19 @@ require (
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
 	github.com/hashicorp/go-cty v1.4.1-0.20200414143053-d3edf31b6320 // indirect
 	github.com/hashicorp/go-hclog v1.6.2 // indirect
+	github.com/hashicorp/go-plugin v1.6.0 // indirect
 	github.com/hashicorp/go-retryablehttp v0.7.5 // indirect
 	github.com/hashicorp/go-uuid v1.0.3 // indirect
 	github.com/hashicorp/go-version v1.6.0 // indirect
 	github.com/hashicorp/hcl/v2 v2.19.1 // indirect
 	github.com/hashicorp/logutils v1.0.0 // indirect
 	github.com/hashicorp/terraform-json v0.21.0 // indirect
+	github.com/hashicorp/terraform-plugin-framework v1.4.1 // indirect
 	github.com/hashicorp/terraform-plugin-go v0.21.0 // indirect
 	github.com/hashicorp/terraform-plugin-log v0.9.0 // indirect
+	github.com/hashicorp/terraform-registry-address v0.2.3 // indirect
+	github.com/hashicorp/terraform-svchost v0.1.1 // indirect
+	github.com/hashicorp/yamux v0.1.1 // indirect
 	github.com/hasura/go-graphql-client v0.10.2 // indirect
 	github.com/herkyl/patchwerk v0.0.0-20190629103337-f0ea77068152 // indirect
 	github.com/iancoleman/strcase v0.2.0 // indirect
@@ -98,6 +103,7 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/muvaf/typewriter v0.0.0-20220131201631-921e94e8e8d7 // indirect
+	github.com/oklog/run v1.1.0 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/philips-labs/siderite v0.16.6 // indirect
 	github.com/philips-software/go-hsdp-api v0.84.0 // indirect
