@@ -312,8 +312,8 @@ func (in *SubscriptionInitParameters) DeepCopyInto(out *SubscriptionInitParamete
 		*out = new(string)
 		**out = **in
 	}
-	if in.DataTypeRefRef != nil {
-		in, out := &in.DataTypeRefRef, &out.DataTypeRefRef
+	if in.DataTypeRef != nil {
+		in, out := &in.DataTypeRef, &out.DataTypeRef
 		*out = new(v1.Reference)
 		(*in).DeepCopyInto(*out)
 	}
@@ -474,8 +474,8 @@ func (in *SubscriptionParameters) DeepCopyInto(out *SubscriptionParameters) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.DataTypeRefRef != nil {
-		in, out := &in.DataTypeRefRef, &out.DataTypeRefRef
+	if in.DataTypeRef != nil {
+		in, out := &in.DataTypeRef, &out.DataTypeRef
 		*out = new(v1.Reference)
 		(*in).DeepCopyInto(*out)
 	}

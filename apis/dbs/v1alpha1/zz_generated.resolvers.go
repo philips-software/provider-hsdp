@@ -24,7 +24,7 @@ func (mg *Subscription) ResolveReferences(ctx context.Context, c client.Reader) 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.DataType),
 		Extract:      common.ExtractResourceName(),
-		Reference:    mg.Spec.ForProvider.DataTypeRefRef,
+		Reference:    mg.Spec.ForProvider.DataTypeRef,
 		Selector:     mg.Spec.ForProvider.DataTypeSelector,
 		To: reference.To{
 			List:    &v1alpha1.DataTypeList{},
@@ -35,7 +35,7 @@ func (mg *Subscription) ResolveReferences(ctx context.Context, c client.Reader) 
 		return errors.Wrap(err, "mg.Spec.ForProvider.DataType")
 	}
 	mg.Spec.ForProvider.DataType = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.DataTypeRefRef = rsp.ResolvedReference
+	mg.Spec.ForProvider.DataTypeRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SubscriberID),
@@ -56,7 +56,7 @@ func (mg *Subscription) ResolveReferences(ctx context.Context, c client.Reader) 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.DataType),
 		Extract:      common.ExtractResourceName(),
-		Reference:    mg.Spec.InitProvider.DataTypeRefRef,
+		Reference:    mg.Spec.InitProvider.DataTypeRef,
 		Selector:     mg.Spec.InitProvider.DataTypeSelector,
 		To: reference.To{
 			List:    &v1alpha1.DataTypeList{},
@@ -67,7 +67,7 @@ func (mg *Subscription) ResolveReferences(ctx context.Context, c client.Reader) 
 		return errors.Wrap(err, "mg.Spec.InitProvider.DataType")
 	}
 	mg.Spec.InitProvider.DataType = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.DataTypeRefRef = rsp.ResolvedReference
+	mg.Spec.InitProvider.DataTypeRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SubscriberID),
