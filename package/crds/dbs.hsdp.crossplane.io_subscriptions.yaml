@@ -74,7 +74,7 @@ spec:
                 properties:
                   dataType:
                     type: string
-                  dataTypeRefRef:
+                  dataTypeRef:
                     description: Reference to a DataType in mdm to populate dataType.
                     properties:
                       name:
@@ -248,7 +248,7 @@ spec:
                 properties:
                   dataType:
                     type: string
-                  dataTypeRefRef:
+                  dataTypeRef:
                     description: Reference to a DataType in mdm to populate dataType.
                     properties:
                       name:

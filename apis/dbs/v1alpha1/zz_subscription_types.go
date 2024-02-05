@@ -21,13 +21,13 @@ type SubscriptionInitParameters struct {
 
 	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/mdm/v1alpha1.DataType
 	// +crossplane:generate:reference:extractor=github.com/philips-software/provider-hsdp/config/common.ExtractResourceName()
-	// +crossplane:generate:reference:refFieldName=DataTypeRefRef
+	// +crossplane:generate:reference:refFieldName=DataTypeRef
 	// +crossplane:generate:reference:selectorFieldName=DataTypeSelector
 	DataType *string `json:"dataType,omitempty" tf:"data_type,omitempty"`
 
 	// Reference to a DataType in mdm to populate dataType.
 	// +kubebuilder:validation:Optional
-	DataTypeRefRef *v1.Reference `json:"dataTypeRefRef,omitempty" tf:"-"`
+	DataTypeRef *v1.Reference `json:"dataTypeRef,omitempty" tf:"-"`
 
 	// Selector for a DataType in mdm to populate dataType.
 	// +kubebuilder:validation:Optional
@@ -81,14 +81,14 @@ type SubscriptionParameters struct {
 
 	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/mdm/v1alpha1.DataType
 	// +crossplane:generate:reference:extractor=github.com/philips-software/provider-hsdp/config/common.ExtractResourceName()
-	// +crossplane:generate:reference:refFieldName=DataTypeRefRef
+	// +crossplane:generate:reference:refFieldName=DataTypeRef
 	// +crossplane:generate:reference:selectorFieldName=DataTypeSelector
 	// +kubebuilder:validation:Optional
 	DataType *string `json:"dataType,omitempty" tf:"data_type,omitempty"`
 
 	// Reference to a DataType in mdm to populate dataType.
 	// +kubebuilder:validation:Optional
-	DataTypeRefRef *v1.Reference `json:"dataTypeRefRef,omitempty" tf:"-"`
+	DataTypeRef *v1.Reference `json:"dataTypeRef,omitempty" tf:"-"`
 
 	// Selector for a DataType in mdm to populate dataType.
 	// +kubebuilder:validation:Optional

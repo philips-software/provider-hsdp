@@ -31,7 +31,7 @@ func Configure(p *config.Provider) {
 		}
 		r.References["data_type"] = config.Reference{
 			Type:              "github.com/philips-software/provider-hsdp/apis/mdm/v1alpha1.DataType",
-			RefFieldName:      "DataTypeRefRef",
+			RefFieldName:      "DataTypeRef",
 			SelectorFieldName: "DataTypeSelector",
 			Extractor:         common.ExtractResourceNameFuncPath,
 		}
