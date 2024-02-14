@@ -5,6 +5,10 @@ is built using [Upjet](https://github.com/upbound/upjet) code
 generation tools and exposes XRM-conformant managed resources for the
 HSDP API.
 
+## Disclaimer
+
+This provider is not endorsed, supported or approved by HSDP. Use at your own risk.
+
 ## Getting Started
 
 Install the provider by using the following command after changing the image tag
