@@ -10,7 +10,7 @@ spec:
     organizationRef:
       name: crossplane-org
     description: "Managed by Crossplane"
-    roleRefs:
+    roleRef:
     - name: crossplane-role
-    serviceRefs:
+    serviceRef:
     - name: crossplane-service
