@@ -69,6 +69,10 @@ type UserInitParameters struct {
 
 type UserObservation struct {
 
+	// Reflects the access we have to the (existing) user. Possible values are none, id_only, full
+	// The access status of the provider instance to the user. Depending on access level the provider might not have full access to the user. For Crossplane support we might allow just partial access to the user.
+	AccessStatus *string `json:"accessStatus,omitempty" tf:"access_status,omitempty"`
+
 	// (Semi-Required) The email address of the user
 	// The email address of the user.
 	Email *string `json:"email,omitempty" tf:"email,omitempty"`
