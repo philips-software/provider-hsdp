@@ -2554,6 +2554,7 @@ resources:
               references:
                 organization_id: hsdp_iam_org.testdev.id
         argumentDocs:
+            access_status: '- Reflects the access we have to the (existing) user. Possible values are none, id_only, full'
             email: '- (Semi-Required) The email address of the user'
             first_name: '- (Required) First name of the user'
             id: '- The GUID of the user'
