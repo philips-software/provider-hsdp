@@ -5,9 +5,9 @@ is built using [Upjet](https://github.com/upbound/upjet) code
 generation tools and exposes XRM-conformant managed resources for the
 HSDP API.
 
-## Disclaimer
-
-This provider is not endorsed, supported or approved by HSDP. Use at your own risk.
+> [!Important]
+> This provider is not endorsed, supported or approved by HSDP. It is a Philips Open Source community managed project. Please do not raise
+> SNOW tickets, instead open a issue on the [Github project](https://github.com/philips-software/terraform-provider-hsdp/issues).
 
 ## Getting Started
 
