@@ -34,7 +34,7 @@ func GetProvider() *ujconfig.Provider {
 	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
 		ujconfig.WithShortName("hsdp"),
 		ujconfig.WithRootGroup("hsdp.crossplane.io"),
-		ujconfig.WithNoForkIncludeList(ExternalNameConfigured()),
+		ujconfig.WithTerraformPluginSDKIncludeList(ExternalNameConfigured()),
 		ujconfig.WithIncludeList([]string{}),
 		ujconfig.WithFeaturesPackage("internal/features"),
 		ujconfig.WithTerraformProvider(hsdp.Provider("v0.47.0")),

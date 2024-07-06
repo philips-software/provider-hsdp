@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -51,6 +47,15 @@ type UserInitParameters struct {
 	// Reference to a Organization to populate organizationId.
 	// +kubebuilder:validation:Optional
 	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
+
+	// When specified this will skip the email activation
+	// flow and immediately activate the IAM account. Very Important: you are responsible
+	// for sharing this password with the new IAM user through some channel of communication.
+	// No email will be triggered by the system. If unsure, do not set a password so the normal
+	// email activation flow is followed. Finally, any password value changes after user creation
+	// will have no effect on the users' actual password.
+	// When specified this will skip the email activation flow and immediately activate the IAM account. Very Important: you are responsible for sharing this password with the new IAM user through some channel of communication. No email will be triggered by the system. If unsure, do not set a password so the normal email activation flow is followed. Finally, any password value changes after user creation will have no effect on the users' actual password.
+	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
 	// Preferred communication channel.
 	// Email and SMS are supported channels. Email is the default channel if e-mail address is provided.
@@ -207,13 +212,14 @@ type UserStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // User is the Schema for the Users API. Manages HSDP IAM Users
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,hsdp}
 type User struct {
 	metav1.TypeMeta   `json:",inline"`

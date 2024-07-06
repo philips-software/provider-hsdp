@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -125,6 +121,9 @@ type S3CredsAccessInitParameters struct {
 	// The S3Creds folder path to use
 	FolderPath *string `json:"folderPath,omitempty" tf:"folder_path,omitempty"`
 
+	// The S3Creds product key
+	ProductKeySecretRef v1.SecretKeySelector `json:"productKeySecretRef" tf:"-"`
+
 	// The IAM service account to use
 	ServiceAccount []ServiceAccountInitParameters `json:"serviceAccount,omitempty" tf:"service_account,omitempty"`
 }
@@ -159,7 +158,7 @@ type S3CredsAccessParameters struct {
 	FolderPath *string `json:"folderPath" tf:"folder_path,omitempty"`
 
 	// The S3Creds product key
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	ProductKeySecretRef v1.SecretKeySelector `json:"productKeySecretRef" tf:"-"`
 
 	// The IAM service account to use
@@ -174,6 +173,9 @@ type ServiceAccountInitParameters struct {
 
 	// Name of the service
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The IAM service private key
+	PrivateKeySecretRef v1.SecretKeySelector `json:"privateKeySecretRef" tf:"-"`
 
 	// The IAM service id
 	ServiceID *string `json:"serviceId,omitempty" tf:"service_id,omitempty"`
@@ -208,7 +210,7 @@ type ServiceAccountParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The IAM service private key
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	PrivateKeySecretRef v1.SecretKeySelector `json:"privateKeySecretRef" tf:"-"`
 
 	// The IAM service id
@@ -222,11 +224,17 @@ type ServiceAccountParameters struct {
 
 type StaticAccessInitParameters struct {
 
+	// The S3 access key
+	AccessKeySecretRef v1.SecretKeySelector `json:"accessKeySecretRef" tf:"-"`
+
 	// The S3 bucket name
 	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
 
 	// The S3 bucket endpoint
 	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
+
+	// The S3 secret key
+	SecretKeySecretRef v1.SecretKeySelector `json:"secretKeySecretRef" tf:"-"`
 }
 
 type StaticAccessObservation struct {
@@ -241,7 +249,7 @@ type StaticAccessObservation struct {
 type StaticAccessParameters struct {
 
 	// The S3 access key
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	AccessKeySecretRef v1.SecretKeySelector `json:"accessKeySecretRef" tf:"-"`
 
 	// The S3 bucket name
@@ -253,7 +261,7 @@ type StaticAccessParameters struct {
 	Endpoint *string `json:"endpoint" tf:"endpoint,omitempty"`
 
 	// The S3 secret key
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	SecretKeySecretRef v1.SecretKeySelector `json:"secretKeySecretRef" tf:"-"`
 }
 
@@ -281,13 +289,14 @@ type ObjectStoreStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ObjectStore is the Schema for the ObjectStores API. Manages HSDP DICOM Object Stores
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,hsdp}
 type ObjectStore struct {
 	metav1.TypeMeta   `json:",inline"`

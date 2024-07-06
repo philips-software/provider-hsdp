@@ -466,6 +466,7 @@ func (in *ClientInitParameters) DeepCopyInto(out *ClientInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	out.PasswordSecretRef = in.PasswordSecretRef
 	if in.RedirectionUris != nil {
 		in, out := &in.RedirectionUris, &out.RedirectionUris
 		*out = make([]*string, len(*in))
@@ -3036,6 +3037,11 @@ func (in *ServiceInitParameters) DeepCopyInto(out *ServiceInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.SelfManagedPrivateKeySecretRef != nil {
+		in, out := &in.SelfManagedPrivateKeySecretRef, &out.SelfManagedPrivateKeySecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
 	if in.TokenValidity != nil {
 		in, out := &in.TokenValidity, &out.TokenValidity
 		*out = new(int64)
@@ -3363,6 +3369,11 @@ func (in *UserInitParameters) DeepCopyInto(out *UserInitParameters) {
 		in, out := &in.OrganizationRef, &out.OrganizationRef
 		*out = new(v1.Reference)
 		(*in).DeepCopyInto(*out)
+	}
+	if in.PasswordSecretRef != nil {
+		in, out := &in.PasswordSecretRef, &out.PasswordSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
 	}
 	if in.PreferredCommunicationChannel != nil {
 		in, out := &in.PreferredCommunicationChannel, &out.PreferredCommunicationChannel

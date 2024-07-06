@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -25,7 +21,7 @@ func (mg *ObjectStore) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this ObjectStore
 func (tr *ObjectStore) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"s3creds_access[*].product_key": "spec.forProvider.s3credsAccess[*].productKeySecretRef", "s3creds_access[*].service_account[*].private_key": "spec.forProvider.s3credsAccess[*].serviceAccount[*].privateKeySecretRef", "static_access[*].access_key": "spec.forProvider.staticAccess[*].accessKeySecretRef", "static_access[*].secret_key": "spec.forProvider.staticAccess[*].secretKeySecretRef"}
+	return map[string]string{"s3creds_access[*].product_key": "s3credsAccess[*].productKeySecretRef", "s3creds_access[*].service_account[*].private_key": "s3credsAccess[*].serviceAccount[*].privateKeySecretRef", "static_access[*].access_key": "staticAccess[*].accessKeySecretRef", "static_access[*].secret_key": "staticAccess[*].secretKeySecretRef"}
 }
 
 // GetObservation of this ObjectStore

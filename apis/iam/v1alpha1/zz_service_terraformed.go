@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -25,7 +21,7 @@ func (mg *Service) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this Service
 func (tr *Service) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"private_key": "status.atProvider.privateKey", "self_managed_private_key": "spec.forProvider.selfManagedPrivateKeySecretRef"}
+	return map[string]string{"private_key": "status.atProvider.privateKey", "self_managed_private_key": "selfManagedPrivateKeySecretRef"}
 }
 
 // GetObservation of this Service

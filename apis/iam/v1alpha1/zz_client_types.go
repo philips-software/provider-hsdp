@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -65,6 +61,10 @@ type ClientInitParameters struct {
 	// The name of the client
 	// Name of the client.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The password to use (8-16 chars, at least one capital, number, special char)
+	// The password to use (8-16 chars, at least one capital, number, special char).
+	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// Array of valid RedirectionURIs for this client
 	// List of valid RedirectionURIs for this client.
@@ -276,13 +276,14 @@ type ClientStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Client is the Schema for the Clients API. Manages HSDP IAM Client resources
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,hsdp}
 type Client struct {
 	metav1.TypeMeta   `json:",inline"`
