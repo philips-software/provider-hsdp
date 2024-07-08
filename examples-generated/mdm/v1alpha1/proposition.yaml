@@ -1,0 +1,15 @@
+apiVersion: mdm.hsdp.crossplane.io/v1alpha1
+kind: Proposition
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mdm/v1alpha1/proposition
+  labels:
+    testing.upbound.io/example-name: app
+  name: app
+spec:
+  forProvider:
+    description: Terraform managed proposition
+    name: moonshot
+    organizationSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

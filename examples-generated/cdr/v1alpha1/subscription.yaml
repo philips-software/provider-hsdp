@@ -1,0 +1,38 @@
+apiVersion: cdr.hsdp.crossplane.io/v1alpha1
+kind: Subscription
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cdr/v1alpha1/subscription
+  labels:
+    testing.upbound.io/example-name: patient_changes
+  name: patient-changes
+spec:
+  forProvider:
+    criteria: Patient
+    deleteEndpoint: https://webhook.myapp.io/patient_deleted
+    end: "2030-12-31T23:59:59Z"
+    endpoint: https://webhook.myapp.io/patient
+    fhirStore: ${hsdp_cdr_org.test.fhir_store}
+    headers:
+    - 'Authorization: Basic cm9uOnN3YW5zb24='
+    reason: Notification for patient changes
+    version: r4
+
+---
+
+apiVersion: cdr.hsdp.crossplane.io/v1alpha1
+kind: Organization
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cdr/v1alpha1/subscription
+  labels:
+    testing.upbound.io/example-name: test
+  name: test
+spec:
+  forProvider:
+    fhirStore: ${data.hsdp_cdr_fhir_store.sandbox.endpoint}
+    name: Hospital
+    orgIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test
+    version: r4

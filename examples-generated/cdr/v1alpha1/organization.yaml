@@ -1,0 +1,16 @@
+apiVersion: cdr.hsdp.crossplane.io/v1alpha1
+kind: Organization
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cdr/v1alpha1/organization
+  labels:
+    testing.upbound.io/example-name: root_org
+  name: root-org
+spec:
+  forProvider:
+    fhirStore: ${data.hsdp_cdr_fhir_store.sandbox.endpoint}
+    name: Root ORG
+    orgIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    version: r4

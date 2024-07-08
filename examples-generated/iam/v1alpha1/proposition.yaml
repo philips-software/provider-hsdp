@@ -1,0 +1,15 @@
+apiVersion: iam.hsdp.crossplane.io/v1alpha1
+kind: Proposition
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iam/v1alpha1/proposition
+  labels:
+    testing.upbound.io/example-name: testprop
+  name: testprop
+spec:
+  forProvider:
+    description: Test Proposition
+    name: TestProposition
+    organizationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: devorg

@@ -1,0 +1,19 @@
+apiVersion: dicom.hsdp.crossplane.io/v1alpha1
+kind: StoreConfig
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dicom/v1alpha1/storeconfig
+  labels:
+    testing.upbound.io/example-name: dicom
+  name: dicom
+spec:
+  forProvider:
+    cdrServiceAccount:
+    - privateKey: ${hsdp_iam_service.cdr.private_key}
+      serviceId: ${hsdp_iam_service.cdr.service_id}
+    configUrl: ${var.dicom_base_url}
+    fhirStore:
+    - mpiEndpoint: https://foo.bar/xxx
+    organizationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

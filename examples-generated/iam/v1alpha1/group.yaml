@@ -1,0 +1,23 @@
+apiVersion: iam.hsdp.crossplane.io/v1alpha1
+kind: Group
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iam/v1alpha1/group
+  labels:
+    testing.upbound.io/example-name: tdr_users
+  name: tdr-users
+spec:
+  forProvider:
+    description: Group for TDR Users with Contract and Dataitem roles
+    devices: []
+    managingOrganizationSelector:
+      matchLabels:
+        testing.upbound.io/example-name: devorg
+    name: TDR Users
+    roleRef:
+    - name: TDRALL
+    serviceRef:
+    - name: test
+    userRef:
+    - name: admin
+    - name: developer

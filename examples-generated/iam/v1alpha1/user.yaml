@@ -1,0 +1,17 @@
+apiVersion: iam.hsdp.crossplane.io/v1alpha1
+kind: User
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iam/v1alpha1/user
+  labels:
+    testing.upbound.io/example-name: developer
+  name: developer
+spec:
+  forProvider:
+    email: developer@1e100.io
+    firstName: Devel
+    lastName: Oper
+    login: developer
+    organizationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: testdev
