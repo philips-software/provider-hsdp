@@ -1,0 +1,12 @@
+apiVersion: iam.hsdp.crossplane.io/v1alpha1
+kind: Organization
+metadata:
+  name: clientteamorg
+  namespace: crossplane-system
+  annotations:
+    crossplane.io/external-name: dae89cf0-888d-4a26-8c1d-578e97365efc
+spec:
+  managementPolicies: ["Observe"]
+  forProvider: {}
+  providerConfigRef:
+    name: default
