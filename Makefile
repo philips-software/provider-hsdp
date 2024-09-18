@@ -8,7 +8,7 @@ export TERRAFORM_VERSION := 1.5.5
 
 export TERRAFORM_PROVIDER_SOURCE := philips-software/hsdp
 export TERRAFORM_PROVIDER_REPO := https://github.com/philips-software/terraform-provider-hsdp
-export TERRAFORM_PROVIDER_VERSION := 0.48.1
+export TERRAFORM_PROVIDER_VERSION := 0.50.0
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME := terraform-provider-hsdp
 export TERRAFORM_NATIVE_PROVIDER_BINARY := terraform-provider-hsdp_v${TERRAFORM_PROVIDER_VERSION}
 export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX := https://github.com/philips-software/terraform-provider-hsdp/releases/download/v${TERRAFORM_PROVIDER_VERSION}
@@ -39,8 +39,8 @@ NPROCS ?= 1
 # to half the number of CPU cores.
 GO_TEST_PARALLEL := $(shell echo $$(( $(NPROCS) / 2 )))
 
-GO_REQUIRED_VERSION ?= 1.21
-GOLANGCILINT_VERSION ?= 1.51.1
+GO_REQUIRED_VERSION ?= 1.23
+GOLANGCILINT_VERSION ?= 1.55.2
 GO_STATIC_PACKAGES = $(GO_PROJECT)/cmd/provider $(GO_PROJECT)/cmd/generator
 GO_LDFLAGS += -X $(GO_PROJECT)/internal/version.Version=$(VERSION)
 GO_SUBDIRS += cmd internal apis
@@ -50,7 +50,7 @@ GO_SUBDIRS += cmd internal apis
 # Setup Kubernetes tools
 
 KIND_VERSION = v0.15.0
-UP_VERSION = v0.14.0
+UP_VERSION = v0.31.0
 UP_CHANNEL = stable
 -include build/makelib/k8s_tools.mk
 
