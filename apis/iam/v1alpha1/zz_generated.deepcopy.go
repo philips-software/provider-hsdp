@@ -3032,6 +3032,11 @@ func (in *ServiceInitParameters) DeepCopyInto(out *ServiceInitParameters) {
 			}
 		}
 	}
+	if in.SelfManagedCertificateSecretRef != nil {
+		in, out := &in.SelfManagedCertificateSecretRef, &out.SelfManagedCertificateSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
 	if in.SelfManagedExpiresOn != nil {
 		in, out := &in.SelfManagedExpiresOn, &out.SelfManagedExpiresOn
 		*out = new(string)
@@ -3232,6 +3237,11 @@ func (in *ServiceParameters) DeepCopyInto(out *ServiceParameters) {
 				**out = **in
 			}
 		}
+	}
+	if in.SelfManagedCertificateSecretRef != nil {
+		in, out := &in.SelfManagedCertificateSecretRef, &out.SelfManagedCertificateSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
 	}
 	if in.SelfManagedExpiresOn != nil {
 		in, out := &in.SelfManagedExpiresOn, &out.SelfManagedExpiresOn

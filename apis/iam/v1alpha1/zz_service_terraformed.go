@@ -21,7 +21,7 @@ func (mg *Service) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this Service
 func (tr *Service) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"private_key": "status.atProvider.privateKey", "self_managed_private_key": "selfManagedPrivateKeySecretRef"}
+	return map[string]string{"private_key": "status.atProvider.privateKey", "self_managed_certificate": "selfManagedCertificateSecretRef", "self_managed_private_key": "selfManagedPrivateKeySecretRef"}
 }
 
 // GetObservation of this Service
