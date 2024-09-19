@@ -603,8 +603,8 @@ github.com/philips-software/go-hsdp-api v0.85.0 h1:+sJQcYPlknBH2X5mJwPaYhvOyBcm7
 github.com/philips-software/go-hsdp-api v0.85.0/go.mod h1:UMwbi/28tlAPjL2JDT0YzNOnY+ESj8GUzKO7HQwoKr8=
 github.com/philips-software/go-nih-signer v1.5.0 h1:qMQ2uArwgnSCbZV7GvuiN4cyHLFXqpVFojQKIiF24tE=
 github.com/philips-software/go-nih-signer v1.5.0/go.mod h1:lJQZASlfNi8XiJjEIz/xjdumb7wWU8RuSETQjlaU1f4=
-github.com/philips-software/terraform-provider-hsdp v0.50.0 h1:073vXMRmGaV3nH/NhsjzYuXtNdzHE/dFnLDtEbsh+/I=
-github.com/philips-software/terraform-provider-hsdp v0.50.0/go.mod h1:P3ybAsb7Q0em8CM8/8nKskFbIIU8+9G+OLskgYcwW4A=
+github.com/philips-software/terraform-provider-hsdp v0.50.1 h1:yG/UbO1pYYO6AKtWeUE6unT6Q50+fsZN9Zm1bdM7RxA=
+github.com/philips-software/terraform-provider-hsdp v0.50.1/go.mod h1:P3ybAsb7Q0em8CM8/8nKskFbIIU8+9G+OLskgYcwW4A=
 github.com/pires/go-proxyproto v0.0.0-20191211124218-517ecdf5bb2b/go.mod h1:Odh9VFOZJCf9G8cLW5o435Xf1J95Jw9Gw5rnCjcwzAY=
 github.com/pkg/errors v0.8.0/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=

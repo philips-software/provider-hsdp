@@ -10,7 +10,7 @@ require (
 	github.com/crossplane/crossplane-tools v0.0.0-20230925130601-628280f8bf79
 	github.com/crossplane/upjet v1.4.1
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.34.0
-	github.com/philips-software/terraform-provider-hsdp v0.50.0
+	github.com/philips-software/terraform-provider-hsdp v0.50.1
 	github.com/pkg/errors v0.9.1
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 	k8s.io/apimachinery v0.30.2
