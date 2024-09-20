@@ -22,3 +22,18 @@ Build binary:
 ```console
 make build
 ```
+
+## Update provider version
+
+Edit `Makefile` and bump the `TERRAFORM_PROVIDER_VERSION` value accordingly, then:
+
+Update the provider package:
+
+```shell
+go get -u  github.com/philips-software/terraform-provider-hsdp@vX.Y.Z
+```
+
+```shell
+rm -fr .work
+make generate build
+```
