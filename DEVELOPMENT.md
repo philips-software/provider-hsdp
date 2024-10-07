@@ -37,3 +37,11 @@ go get -u  github.com/philips-software/terraform-provider-hsdp@vX.Y.Z
 rm -fr .work
 make generate build
 ```
+
+## Publish to marketplace
+
+```shell
+up login
+
+make build.all publish.artifacts XPKG_REG_ORGS=xpkg.upbound.io/philips-software
+```

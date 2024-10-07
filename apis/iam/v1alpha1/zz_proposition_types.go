@@ -36,6 +36,10 @@ type PropositionInitParameters struct {
 	// Reference to a Organization to populate organizationId.
 	// +kubebuilder:validation:Optional
 	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
+
+	// If set to true, the resource will wait for the proposition to be deleted before continuing. Default is true.
+	// Blocks until the proposition delete has completed. Default: false. The proposition delete process can take some time as all its associated resources like applications and services are removed recursively. This option is useful for ephemeral environments where the same proposition might be recreated shortly after a destroy operation.
+	WaitForDelete *bool `json:"waitForDelete,omitempty" tf:"wait_for_delete,omitempty"`
 }
 
 type PropositionObservation struct {
@@ -54,6 +58,10 @@ type PropositionObservation struct {
 
 	// the organization ID (GUID) to attach this a proposition to
 	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
+
+	// If set to true, the resource will wait for the proposition to be deleted before continuing. Default is true.
+	// Blocks until the proposition delete has completed. Default: false. The proposition delete process can take some time as all its associated resources like applications and services are removed recursively. This option is useful for ephemeral environments where the same proposition might be recreated shortly after a destroy operation.
+	WaitForDelete *bool `json:"waitForDelete,omitempty" tf:"wait_for_delete,omitempty"`
 }
 
 type PropositionParameters struct {
@@ -83,6 +91,11 @@ type PropositionParameters struct {
 	// Reference to a Organization to populate organizationId.
 	// +kubebuilder:validation:Optional
 	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
+
+	// If set to true, the resource will wait for the proposition to be deleted before continuing. Default is true.
+	// Blocks until the proposition delete has completed. Default: false. The proposition delete process can take some time as all its associated resources like applications and services are removed recursively. This option is useful for ephemeral environments where the same proposition might be recreated shortly after a destroy operation.
+	// +kubebuilder:validation:Optional
+	WaitForDelete *bool `json:"waitForDelete,omitempty" tf:"wait_for_delete,omitempty"`
 }
 
 // PropositionSpec defines the desired state of Proposition

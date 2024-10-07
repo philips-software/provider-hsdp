@@ -13,3 +13,4 @@ spec:
     organizationIdSelector:
       matchLabels:
         testing.upbound.io/example-name: devorg
+    waitForDelete: true

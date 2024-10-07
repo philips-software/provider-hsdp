@@ -2325,7 +2325,8 @@ resources:
                 {
                   "description": "Test Proposition",
                   "name": "TestProposition",
-                  "organization_id": "${hsdp_iam_org.devorg.id}"
+                  "organization_id": "${hsdp_iam_org.devorg.id}",
+                  "wait_for_delete": true
                 }
               references:
                 organization_id: hsdp_iam_org.devorg.id
@@ -2335,6 +2336,7 @@ resources:
             id: '- The GUID of the proposition'
             name: '- (Required) The name of the application'
             organization_id: '- (Required) the organization ID (GUID) to attach this a proposition to'
+            wait_for_delete: '- (Optional, boolean) If set to true, the resource will wait for the proposition to be deleted before continuing. Default is true.'
         importStatements:
             - terraform import hsdp_iam_proposition.myprop a-guid
     hsdp_iam_role:
