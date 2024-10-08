@@ -74,7 +74,7 @@ spec:
               forProvider:
                 properties:
                   organizationRef:
-                    description: Reference to a Organization to populate targetOrganizationId.
+                    description: Reference to a Organization in iam to populate targetOrganizationId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -114,7 +114,7 @@ spec:
                     description: The ID of the role to share
                     type: string
                   roleIdSelector:
-                    description: Selector for a Role to populate roleId.
+                    description: Selector for a Role in iam to populate roleId.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -154,7 +154,7 @@ spec:
                         type: object
                     type: object
                   roleRef:
-                    description: Reference to a Role to populate roleId.
+                    description: Reference to a Role in iam to populate roleId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -198,7 +198,7 @@ spec:
                       hierarchy
                     type: string
                   targetOrganizationIdSelector:
-                    description: Selector for a Organization to populate targetOrganizationId.
+                    description: Selector for a Organization in iam to populate targetOrganizationId.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -252,7 +252,7 @@ spec:
                   autoscaler.
                 properties:
                   organizationRef:
-                    description: Reference to a Organization to populate targetOrganizationId.
+                    description: Reference to a Organization in iam to populate targetOrganizationId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -292,7 +292,7 @@ spec:
                     description: The ID of the role to share
                     type: string
                   roleIdSelector:
-                    description: Selector for a Role to populate roleId.
+                    description: Selector for a Role in iam to populate roleId.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -332,7 +332,7 @@ spec:
                         type: object
                     type: object
                   roleRef:
-                    description: Reference to a Role to populate roleId.
+                    description: Reference to a Role in iam to populate roleId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -376,7 +376,7 @@ spec:
                       hierarchy
                     type: string
                   targetOrganizationIdSelector:
-                    description: Selector for a Organization to populate targetOrganizationId.
+                    description: Selector for a Organization in iam to populate targetOrganizationId.
                     properties:
                       matchControllerRef:
                         description: |-

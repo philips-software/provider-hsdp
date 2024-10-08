@@ -21,15 +21,15 @@ type ClientInitParameters struct {
 
 	// the application ID (GUID) to attach this client to
 	// The application ID to attach this client to.
-	// +crossplane:generate:reference:type=Application
+	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Application
 	// +crossplane:generate:reference:refFieldName=ApplicationRef
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
 
-	// Selector for a Application to populate applicationId.
+	// Selector for a Application in iam to populate applicationId.
 	// +kubebuilder:validation:Optional
 	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
 
-	// Reference to a Application to populate applicationId.
+	// Reference to a Application in iam to populate applicationId.
 	// +kubebuilder:validation:Optional
 	ApplicationRef *v1.Reference `json:"applicationRef,omitempty" tf:"-"`
 
@@ -169,16 +169,16 @@ type ClientParameters struct {
 
 	// the application ID (GUID) to attach this client to
 	// The application ID to attach this client to.
-	// +crossplane:generate:reference:type=Application
+	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Application
 	// +crossplane:generate:reference:refFieldName=ApplicationRef
 	// +kubebuilder:validation:Optional
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
 
-	// Selector for a Application to populate applicationId.
+	// Selector for a Application in iam to populate applicationId.
 	// +kubebuilder:validation:Optional
 	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
 
-	// Reference to a Application to populate applicationId.
+	// Reference to a Application in iam to populate applicationId.
 	// +kubebuilder:validation:Optional
 	ApplicationRef *v1.Reference `json:"applicationRef,omitempty" tf:"-"`
 

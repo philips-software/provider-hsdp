@@ -36,15 +36,15 @@ type UserInitParameters struct {
 
 	// The managing organization of the user
 	// The managing organization of the user.
-	// +crossplane:generate:reference:type=Organization
+	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Organization
 	// +crossplane:generate:reference:refFieldName=OrganizationRef
 	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
 
-	// Selector for a Organization to populate organizationId.
+	// Selector for a Organization in iam to populate organizationId.
 	// +kubebuilder:validation:Optional
 	OrganizationIDSelector *v1.Selector `json:"organizationIdSelector,omitempty" tf:"-"`
 
-	// Reference to a Organization to populate organizationId.
+	// Reference to a Organization in iam to populate organizationId.
 	// +kubebuilder:validation:Optional
 	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
 
@@ -147,16 +147,16 @@ type UserParameters struct {
 
 	// The managing organization of the user
 	// The managing organization of the user.
-	// +crossplane:generate:reference:type=Organization
+	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Organization
 	// +crossplane:generate:reference:refFieldName=OrganizationRef
 	// +kubebuilder:validation:Optional
 	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
 
-	// Selector for a Organization to populate organizationId.
+	// Selector for a Organization in iam to populate organizationId.
 	// +kubebuilder:validation:Optional
 	OrganizationIDSelector *v1.Selector `json:"organizationIdSelector,omitempty" tf:"-"`
 
-	// Reference to a Organization to populate organizationId.
+	// Reference to a Organization in iam to populate organizationId.
 	// +kubebuilder:validation:Optional
 	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
 

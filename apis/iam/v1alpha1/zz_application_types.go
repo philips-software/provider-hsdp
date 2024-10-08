@@ -29,15 +29,15 @@ type ApplicationInitParameters struct {
 
 	// the proposition ID (GUID) to attach this a application to
 	// The proposition ID (GUID) to attach this a application to.
-	// +crossplane:generate:reference:type=Proposition
+	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Proposition
 	// +crossplane:generate:reference:refFieldName=PropositionRef
 	PropositionID *string `json:"propositionId,omitempty" tf:"proposition_id,omitempty"`
 
-	// Selector for a Proposition to populate propositionId.
+	// Selector for a Proposition in iam to populate propositionId.
 	// +kubebuilder:validation:Optional
 	PropositionIDSelector *v1.Selector `json:"propositionIdSelector,omitempty" tf:"-"`
 
-	// Reference to a Proposition to populate propositionId.
+	// Reference to a Proposition in iam to populate propositionId.
 	// +kubebuilder:validation:Optional
 	PropositionRef *v1.Reference `json:"propositionRef,omitempty" tf:"-"`
 
@@ -97,16 +97,16 @@ type ApplicationParameters struct {
 
 	// the proposition ID (GUID) to attach this a application to
 	// The proposition ID (GUID) to attach this a application to.
-	// +crossplane:generate:reference:type=Proposition
+	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Proposition
 	// +crossplane:generate:reference:refFieldName=PropositionRef
 	// +kubebuilder:validation:Optional
 	PropositionID *string `json:"propositionId,omitempty" tf:"proposition_id,omitempty"`
 
-	// Selector for a Proposition to populate propositionId.
+	// Selector for a Proposition in iam to populate propositionId.
 	// +kubebuilder:validation:Optional
 	PropositionIDSelector *v1.Selector `json:"propositionIdSelector,omitempty" tf:"-"`
 
-	// Reference to a Proposition to populate propositionId.
+	// Reference to a Proposition in iam to populate propositionId.
 	// +kubebuilder:validation:Optional
 	PropositionRef *v1.Reference `json:"propositionRef,omitempty" tf:"-"`
 

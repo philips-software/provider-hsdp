@@ -94,7 +94,7 @@ spec:
                       The proposition ID (GUID) to attach this a application to.
                     type: string
                   propositionIdSelector:
-                    description: Selector for a Proposition to populate propositionId.
+                    description: Selector for a Proposition in iam to populate propositionId.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -134,7 +134,7 @@ spec:
                         type: object
                     type: object
                   propositionRef:
-                    description: Reference to a Proposition to populate propositionId.
+                    description: Reference to a Proposition in iam to populate propositionId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -210,7 +210,7 @@ spec:
                       The proposition ID (GUID) to attach this a application to.
                     type: string
                   propositionIdSelector:
-                    description: Selector for a Proposition to populate propositionId.
+                    description: Selector for a Proposition in iam to populate propositionId.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -250,7 +250,7 @@ spec:
                         type: object
                     type: object
                   propositionRef:
-                    description: Reference to a Proposition to populate propositionId.
+                    description: Reference to a Proposition in iam to populate propositionId.
                     properties:
                       name:
                         description: Name of the referenced object.

@@ -101,7 +101,7 @@ spec:
                       The managing organization of the user.
                     type: string
                   organizationIdSelector:
-                    description: Selector for a Organization to populate organizationId.
+                    description: Selector for a Organization in iam to populate organizationId.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -141,7 +141,7 @@ spec:
                         type: object
                     type: object
                   organizationRef:
-                    description: Reference to a Organization to populate organizationId.
+                    description: Reference to a Organization in iam to populate organizationId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -257,7 +257,7 @@ spec:
                       The managing organization of the user.
                     type: string
                   organizationIdSelector:
-                    description: Selector for a Organization to populate organizationId.
+                    description: Selector for a Organization in iam to populate organizationId.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -297,7 +297,7 @@ spec:
                         type: object
                     type: object
                   organizationRef:
-                    description: Reference to a Organization to populate organizationId.
+                    description: Reference to a Organization in iam to populate organizationId.
                     properties:
                       name:
                         description: Name of the referenced object.

@@ -15,7 +15,7 @@ import (
 
 type RoleSharingPolicyInitParameters struct {
 
-	// Reference to a Organization to populate targetOrganizationId.
+	// Reference to a Organization in iam to populate targetOrganizationId.
 	// +kubebuilder:validation:Optional
 	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
 
@@ -23,15 +23,15 @@ type RoleSharingPolicyInitParameters struct {
 	Purpose *string `json:"purpose,omitempty" tf:"purpose,omitempty"`
 
 	// The ID of the role to share
-	// +crossplane:generate:reference:type=Role
+	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Role
 	// +crossplane:generate:reference:refFieldName=RoleRef
 	RoleID *string `json:"roleId,omitempty" tf:"role_id,omitempty"`
 
-	// Selector for a Role to populate roleId.
+	// Selector for a Role in iam to populate roleId.
 	// +kubebuilder:validation:Optional
 	RoleIDSelector *v1.Selector `json:"roleIdSelector,omitempty" tf:"-"`
 
-	// Reference to a Role to populate roleId.
+	// Reference to a Role in iam to populate roleId.
 	// +kubebuilder:validation:Optional
 	RoleRef *v1.Reference `json:"roleRef,omitempty" tf:"-"`
 
@@ -40,11 +40,11 @@ type RoleSharingPolicyInitParameters struct {
 	SharingPolicy *string `json:"sharingPolicy,omitempty" tf:"sharing_policy,omitempty"`
 
 	// The target organization UUID to apply this policy for. This can either be a root IAM Org or a subOrg in an existing hierarchy
-	// +crossplane:generate:reference:type=Organization
+	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Organization
 	// +crossplane:generate:reference:refFieldName=OrganizationRef
 	TargetOrganizationID *string `json:"targetOrganizationId,omitempty" tf:"target_organization_id,omitempty"`
 
-	// Selector for a Organization to populate targetOrganizationId.
+	// Selector for a Organization in iam to populate targetOrganizationId.
 	// +kubebuilder:validation:Optional
 	TargetOrganizationIDSelector *v1.Selector `json:"targetOrganizationIdSelector,omitempty" tf:"-"`
 }
@@ -76,7 +76,7 @@ type RoleSharingPolicyObservation struct {
 
 type RoleSharingPolicyParameters struct {
 
-	// Reference to a Organization to populate targetOrganizationId.
+	// Reference to a Organization in iam to populate targetOrganizationId.
 	// +kubebuilder:validation:Optional
 	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
 
@@ -85,16 +85,16 @@ type RoleSharingPolicyParameters struct {
 	Purpose *string `json:"purpose,omitempty" tf:"purpose,omitempty"`
 
 	// The ID of the role to share
-	// +crossplane:generate:reference:type=Role
+	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Role
 	// +crossplane:generate:reference:refFieldName=RoleRef
 	// +kubebuilder:validation:Optional
 	RoleID *string `json:"roleId,omitempty" tf:"role_id,omitempty"`
 
-	// Selector for a Role to populate roleId.
+	// Selector for a Role in iam to populate roleId.
 	// +kubebuilder:validation:Optional
 	RoleIDSelector *v1.Selector `json:"roleIdSelector,omitempty" tf:"-"`
 
-	// Reference to a Role to populate roleId.
+	// Reference to a Role in iam to populate roleId.
 	// +kubebuilder:validation:Optional
 	RoleRef *v1.Reference `json:"roleRef,omitempty" tf:"-"`
 
@@ -104,12 +104,12 @@ type RoleSharingPolicyParameters struct {
 	SharingPolicy *string `json:"sharingPolicy,omitempty" tf:"sharing_policy,omitempty"`
 
 	// The target organization UUID to apply this policy for. This can either be a root IAM Org or a subOrg in an existing hierarchy
-	// +crossplane:generate:reference:type=Organization
+	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Organization
 	// +crossplane:generate:reference:refFieldName=OrganizationRef
 	// +kubebuilder:validation:Optional
 	TargetOrganizationID *string `json:"targetOrganizationId,omitempty" tf:"target_organization_id,omitempty"`
 
-	// Selector for a Organization to populate targetOrganizationId.
+	// Selector for a Organization in iam to populate targetOrganizationId.
 	// +kubebuilder:validation:Optional
 	TargetOrganizationIDSelector *v1.Selector `json:"targetOrganizationIdSelector,omitempty" tf:"-"`
 }

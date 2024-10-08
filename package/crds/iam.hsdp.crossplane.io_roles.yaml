@@ -83,7 +83,7 @@ spec:
                       The managing organization of the role.
                     type: string
                   managingOrganizationSelector:
-                    description: Selector for a Organization to populate managingOrganization.
+                    description: Selector for a Organization in iam to populate managingOrganization.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -128,7 +128,7 @@ spec:
                       The role name.
                     type: string
                   organizationRef:
-                    description: Reference to a Organization to populate managingOrganization.
+                    description: Reference to a Organization in iam to populate managingOrganization.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -199,7 +199,7 @@ spec:
                       The managing organization of the role.
                     type: string
                   managingOrganizationSelector:
-                    description: Selector for a Organization to populate managingOrganization.
+                    description: Selector for a Organization in iam to populate managingOrganization.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -244,7 +244,7 @@ spec:
                       The role name.
                     type: string
                   organizationRef:
-                    description: Reference to a Organization to populate managingOrganization.
+                    description: Reference to a Organization in iam to populate managingOrganization.
                     properties:
                       name:
                         description: Name of the referenced object.

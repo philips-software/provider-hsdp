@@ -32,11 +32,11 @@ type EmailTemplateInitParameters struct {
 
 	// The UUID of the IAM Org to apply this email template to
 	// The Id of the IAM Org to apply this email template to.
-	// +crossplane:generate:reference:type=Organization
+	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Organization
 	// +crossplane:generate:reference:refFieldName=OrganizationRef
 	ManagingOrganization *string `json:"managingOrganization,omitempty" tf:"managing_organization,omitempty"`
 
-	// Selector for a Organization to populate managingOrganization.
+	// Selector for a Organization in iam to populate managingOrganization.
 	// +kubebuilder:validation:Optional
 	ManagingOrganizationSelector *v1.Selector `json:"managingOrganizationSelector,omitempty" tf:"-"`
 
@@ -44,7 +44,7 @@ type EmailTemplateInitParameters struct {
 	// The message body.
 	Message *string `json:"message,omitempty" tf:"message,omitempty"`
 
-	// Reference to a Organization to populate managingOrganization.
+	// Reference to a Organization in iam to populate managingOrganization.
 	// +kubebuilder:validation:Optional
 	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
 
@@ -119,12 +119,12 @@ type EmailTemplateParameters struct {
 
 	// The UUID of the IAM Org to apply this email template to
 	// The Id of the IAM Org to apply this email template to.
-	// +crossplane:generate:reference:type=Organization
+	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Organization
 	// +crossplane:generate:reference:refFieldName=OrganizationRef
 	// +kubebuilder:validation:Optional
 	ManagingOrganization *string `json:"managingOrganization,omitempty" tf:"managing_organization,omitempty"`
 
-	// Selector for a Organization to populate managingOrganization.
+	// Selector for a Organization in iam to populate managingOrganization.
 	// +kubebuilder:validation:Optional
 	ManagingOrganizationSelector *v1.Selector `json:"managingOrganizationSelector,omitempty" tf:"-"`
 
@@ -133,7 +133,7 @@ type EmailTemplateParameters struct {
 	// +kubebuilder:validation:Optional
 	Message *string `json:"message,omitempty" tf:"message,omitempty"`
 
-	// Reference to a Organization to populate managingOrganization.
+	// Reference to a Organization in iam to populate managingOrganization.
 	// +kubebuilder:validation:Optional
 	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
 

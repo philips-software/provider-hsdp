@@ -98,7 +98,7 @@ spec:
                       The managing organization ID.
                     type: string
                   managingOrganizationSelector:
-                    description: Selector for a Organization to populate managingOrganization.
+                    description: Selector for a Organization in iam to populate managingOrganization.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -143,7 +143,7 @@ spec:
                       The group name.
                     type: string
                   organizationRef:
-                    description: Reference to a Organization to populate managingOrganization.
+                    description: Reference to a Organization in iam to populate managingOrganization.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -177,7 +177,7 @@ spec:
                     - name
                     type: object
                   roleRef:
-                    description: References to Role to populate roles.
+                    description: References to Role in iam to populate roles.
                     items:
                       description: A Reference to a named object.
                       properties:
@@ -222,7 +222,7 @@ spec:
                     type: array
                     x-kubernetes-list-type: set
                   rolesSelector:
-                    description: Selector for a list of Role to populate roles.
+                    description: Selector for a list of Role in iam to populate roles.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -262,7 +262,7 @@ spec:
                         type: object
                     type: object
                   serviceRef:
-                    description: References to Service to populate services.
+                    description: References to Service in iam to populate services.
                     items:
                       description: A Reference to a named object.
                       properties:
@@ -307,7 +307,8 @@ spec:
                     type: array
                     x-kubernetes-list-type: set
                   servicesSelector:
-                    description: Selector for a list of Service to populate services.
+                    description: Selector for a list of Service in iam to populate
+                      services.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -347,7 +348,7 @@ spec:
                         type: object
                     type: object
                   userRef:
-                    description: References to User to populate users.
+                    description: References to User in iam to populate users.
                     items:
                       description: A Reference to a named object.
                       properties:
@@ -392,7 +393,7 @@ spec:
                     type: array
                     x-kubernetes-list-type: set
                   usersSelector:
-                    description: Selector for a list of User to populate users.
+                    description: Selector for a list of User in iam to populate users.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -470,7 +471,7 @@ spec:
                       The managing organization ID.
                     type: string
                   managingOrganizationSelector:
-                    description: Selector for a Organization to populate managingOrganization.
+                    description: Selector for a Organization in iam to populate managingOrganization.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -515,7 +516,7 @@ spec:
                       The group name.
                     type: string
                   organizationRef:
-                    description: Reference to a Organization to populate managingOrganization.
+                    description: Reference to a Organization in iam to populate managingOrganization.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -549,7 +550,7 @@ spec:
                     - name
                     type: object
                   roleRef:
-                    description: References to Role to populate roles.
+                    description: References to Role in iam to populate roles.
                     items:
                       description: A Reference to a named object.
                       properties:
@@ -594,7 +595,7 @@ spec:
                     type: array
                     x-kubernetes-list-type: set
                   rolesSelector:
-                    description: Selector for a list of Role to populate roles.
+                    description: Selector for a list of Role in iam to populate roles.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -634,7 +635,7 @@ spec:
                         type: object
                     type: object
                   serviceRef:
-                    description: References to Service to populate services.
+                    description: References to Service in iam to populate services.
                     items:
                       description: A Reference to a named object.
                       properties:
@@ -679,7 +680,8 @@ spec:
                     type: array
                     x-kubernetes-list-type: set
                   servicesSelector:
-                    description: Selector for a list of Service to populate services.
+                    description: Selector for a list of Service in iam to populate
+                      services.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -719,7 +721,7 @@ spec:
                         type: object
                     type: object
                   userRef:
-                    description: References to User to populate users.
+                    description: References to User in iam to populate users.
                     items:
                       description: A Reference to a named object.
                       properties:
@@ -764,7 +766,7 @@ spec:
                     type: array
                     x-kubernetes-list-type: set
                   usersSelector:
-                    description: Selector for a list of User to populate users.
+                    description: Selector for a list of User in iam to populate users.
                     properties:
                       matchControllerRef:
                         description: |-

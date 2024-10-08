@@ -21,11 +21,11 @@ type RoleInitParameters struct {
 
 	// The managing organization ID of this role
 	// The managing organization of the role.
-	// +crossplane:generate:reference:type=Organization
+	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Organization
 	// +crossplane:generate:reference:refFieldName=OrganizationRef
 	ManagingOrganization *string `json:"managingOrganization,omitempty" tf:"managing_organization,omitempty"`
 
-	// Selector for a Organization to populate managingOrganization.
+	// Selector for a Organization in iam to populate managingOrganization.
 	// +kubebuilder:validation:Optional
 	ManagingOrganizationSelector *v1.Selector `json:"managingOrganizationSelector,omitempty" tf:"-"`
 
@@ -33,7 +33,7 @@ type RoleInitParameters struct {
 	// The role name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Reference to a Organization to populate managingOrganization.
+	// Reference to a Organization in iam to populate managingOrganization.
 	// +kubebuilder:validation:Optional
 	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
 
@@ -83,12 +83,12 @@ type RoleParameters struct {
 
 	// The managing organization ID of this role
 	// The managing organization of the role.
-	// +crossplane:generate:reference:type=Organization
+	// +crossplane:generate:reference:type=github.com/philips-software/provider-hsdp/apis/iam/v1alpha1.Organization
 	// +crossplane:generate:reference:refFieldName=OrganizationRef
 	// +kubebuilder:validation:Optional
 	ManagingOrganization *string `json:"managingOrganization,omitempty" tf:"managing_organization,omitempty"`
 
-	// Selector for a Organization to populate managingOrganization.
+	// Selector for a Organization in iam to populate managingOrganization.
 	// +kubebuilder:validation:Optional
 	ManagingOrganizationSelector *v1.Selector `json:"managingOrganizationSelector,omitempty" tf:"-"`
 
@@ -97,7 +97,7 @@ type RoleParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Reference to a Organization to populate managingOrganization.
+	// Reference to a Organization in iam to populate managingOrganization.
 	// +kubebuilder:validation:Optional
 	OrganizationRef *v1.Reference `json:"organizationRef,omitempty" tf:"-"`
 

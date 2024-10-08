@@ -97,7 +97,7 @@ spec:
                       The Id of the IAM Org to apply this email template to.
                     type: string
                   managingOrganizationSelector:
-                    description: Selector for a Organization to populate managingOrganization.
+                    description: Selector for a Organization in iam to populate managingOrganization.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -142,7 +142,7 @@ spec:
                       The message body.
                     type: string
                   organizationRef:
-                    description: Reference to a Organization to populate managingOrganization.
+                    description: Reference to a Organization in iam to populate managingOrganization.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -223,7 +223,7 @@ spec:
                       The Id of the IAM Org to apply this email template to.
                     type: string
                   managingOrganizationSelector:
-                    description: Selector for a Organization to populate managingOrganization.
+                    description: Selector for a Organization in iam to populate managingOrganization.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -268,7 +268,7 @@ spec:
                       The message body.
                     type: string
                   organizationRef:
-                    description: Reference to a Organization to populate managingOrganization.
+                    description: Reference to a Organization in iam to populate managingOrganization.
                     properties:
                       name:
                         description: Name of the referenced object.
