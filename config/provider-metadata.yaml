@@ -651,7 +651,7 @@ resources:
                   "endpoint": "https://webhook.myapp.io/patient",
                   "fhir_store": "${hsdp_cdr_org.test.fhir_store}",
                   "headers": [
-                    "Authorization: Basic cm9uOnN3YW5zb24="
+                    "Authorization: Basic XXX"
                   ],
                   "reason": "Notification for patient changes",
                   "version": "r4"
