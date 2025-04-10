@@ -1,0 +1,26 @@
+
+apiVersion: iam.hsdp.crossplane.io/v1alpha1
+kind: Service
+metadata:
+  name: crossplane-service
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: CROSSPLANE-SERVICE
+    description: Crossplane managed service
+    applicationRef:
+      name: crossplane-app
+    scopes:
+    - openid
+    - email
+    - auth_iam_introspect
+    - auth_iam_organization
+    defaultScopes:
+    - openid
+    - email
+    - auth_iam_introspect
+    - auth_iam_organization
+#    selfManagedCertificateSecretRef:
+#      name: client-password
+#      namespace: crossplane-system
+#      key: password
