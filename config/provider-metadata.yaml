@@ -651,7 +651,7 @@ resources:
                   "endpoint": "https://webhook.myapp.io/patient",
                   "fhir_store": "${hsdp_cdr_org.test.fhir_store}",
                   "headers": [
-                    "Authorization: Basic XXX"
+                    "Authorization: Basic cm9uOnN3YW5zb24="
                   ],
                   "reason": "Notification for patient changes",
                   "version": "r4"
@@ -1004,6 +1004,9 @@ resources:
                   "status": "ACTIVE",
                   "user_consent_required": false
                 }
+              references:
+                distribution_target_device_groups_ids: hsdp_connect_mdm_device_group.first.id
+                firmware_component_version_ids: hsdp_connect_mdm_firmware_component_version.one_dot_oh.id
         argumentDocs:
             description: '- (Optional) A short description of the resource'
             distribution_target_device_groups_ids: '- (Required, list(string)) Reference to Firmware Component resource'
@@ -1116,6 +1119,7 @@ resources:
                 }
               references:
                 application_id: data.hsdp_connect_mdm_application.app.id
+                service_action_ids: hsdp_connect_mdm_service_action.some_action.id
                 standard_service_id: hsdp_connect_mdm_standard_service.service.id
         argumentDocs:
             application_id: '- (Required) The application associated with this service reference'
@@ -2158,6 +2162,9 @@ resources:
                 }
               references:
                 managing_organization: hsdp_iam_org.devorg.id
+                roles: hsdp_iam_role.TDRALL.id
+                services: hsdp_iam_service.test.id
+                users: hsdp_iam_user.admin.id
         argumentDocs:
             description: '- (Required) The description of the group'
             devices: '- (Optional) The list of IAM device identity IDs to include in this group. See hsdp_iam_device'
@@ -2191,6 +2198,7 @@ resources:
                 }
               references:
                 iam_group_id: data.hsdp_iam_group.developers.id
+                users: hsdp_iam_user.developer1.id
         argumentDocs:
             iam_group_id: '- (Required) The ID of the IAM Group to add users or services to'
             id: '- The GUID of the group membership resource'
@@ -2912,6 +2920,8 @@ resources:
                   ],
                   "space_name": "prod"
                 }
+              references:
+                iam_orgs: var.iam_org_id
         argumentDocs:
             allow_any_name: '- (Required, bool) Allow any name'
             allow_ip_sans: '- (Required, bool) Allow IP Subject Alternative Names (SAN)'

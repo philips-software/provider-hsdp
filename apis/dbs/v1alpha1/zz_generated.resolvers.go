@@ -7,7 +7,6 @@ package v1alpha1
 
 import (
 	"context"
-
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	v1alpha1 "github.com/philips-software/provider-hsdp/apis/mdm/v1alpha1"
 	common "github.com/philips-software/provider-hsdp/config/common"

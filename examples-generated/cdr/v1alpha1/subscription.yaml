@@ -14,7 +14,7 @@ spec:
     endpoint: https://webhook.myapp.io/patient
     fhirStore: ${hsdp_cdr_org.test.fhir_store}
     headers:
-    - 'Authorization: Basic XXX'
+    - 'Authorization: Basic cm9uOnN3YW5zb24='
     reason: Notification for patient changes
     version: r4
 
