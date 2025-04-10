@@ -1,6 +1,6 @@
-/*
-Copyright 2021 Upbound Inc.
-*/
+// SPDX-FileCopyrightText: 2024 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
 
 package main
 
@@ -15,13 +15,12 @@ import (
 	ujconfig "github.com/crossplane/upjet/pkg/config"
 	"github.com/crossplane/upjet/pkg/pipeline"
 	"gopkg.in/alecthomas/kingpin.v2"
-
 	"github.com/philips-software/provider-hsdp/config"
 )
 
 func main() {
 	var (
-		app                   = kingpin.New("generator", "Run Upjet code generation pipelines for provider-aws").DefaultEnvars()
+		app                   = kingpin.New("generator", "Run Upjet code generation pipelines for provider-hsdp").DefaultEnvars()
 		repoRoot              = app.Arg("repo-root", "Root directory for the provider repository").Required().String()
 		skippedResourcesCSV   = app.Flag("skipped-resources-csv", "File path where a list of skipped (not-generated) Terraform resource names will be stored as a CSV").Envar("SKIPPED_RESOURCES_CSV").String()
 		generatedResourceList = app.Flag("generated-resource-list", "File path where a list of the generated resources will be stored.").Envar("GENERATED_RESOURCE_LIST").Default("../config/generated.lst").String()
@@ -33,6 +32,7 @@ func main() {
 		panic(fmt.Sprintf("cannot calculate the absolute path with %s", *repoRoot))
 	}
 	p := config.GetProvider()
+	kingpin.FatalIfError(err, "Cannot initialize the provider configuration")
 	dumpGeneratedResourceList(p, generatedResourceList)
 	dumpSkippedResourcesCSV(p, skippedResourcesCSV)
 	pipeline.Run(p, absRootDir)
@@ -47,7 +47,9 @@ func dumpGeneratedResourceList(p *ujconfig.Provider, targetPath *string) {
 		generatedResources = append(generatedResources, name)
 	}
 	sort.Strings(generatedResources)
-	buff, err := json.Marshal(generatedResources)
+	// Indentation is not necessary, as it's a flat JSON array, but newlines prevent git conflicts from concurrent PRs
+	// adding new resources that are not alphabetically adjacent.
+	buff, err := json.MarshalIndent(generatedResources, "", "")
 	if err != nil {
 		panic(fmt.Sprintf("Cannot marshal native schema versions to JSON: %s", err.Error()))
 	}
