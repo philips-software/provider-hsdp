@@ -20,7 +20,6 @@ spec:
     - email
     - auth_iam_introspect
     - auth_iam_organization
-#    selfManagedCertificateSecretRef:
-#      name: client-password
-#      namespace: crossplane-system
-#      key: password
+  writeConnectionSecretToRef:
+    name: service-creds
+    namespace: crossplane-system
