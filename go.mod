@@ -5,7 +5,7 @@ go 1.24
 toolchain go1.24.2
 
 require (
-	dario.cat/mergo v1.0.0
+	dario.cat/mergo v1.0.1
 	github.com/crossplane/crossplane-runtime v1.17.0
 	github.com/crossplane/crossplane-tools v0.0.0-20230925130601-628280f8bf79
 	github.com/crossplane/upjet v1.4.1-0.20250108142216-db86f70a1651
