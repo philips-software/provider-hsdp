@@ -19,5 +19,6 @@
 "hsdp_iam_role",
 "hsdp_iam_role_sharing_policy",
 "hsdp_iam_service",
-"hsdp_iam_user"
+"hsdp_iam_user",
+"hsdp_tenant_key"
 ]

@@ -16,6 +16,7 @@ import (
 	"github.com/philips-software/provider-hsdp/config/connect/mdm"
 	"github.com/philips-software/provider-hsdp/config/dicom"
 	"github.com/philips-software/provider-hsdp/config/iam"
+	"github.com/philips-software/provider-hsdp/config/tenant"
 )
 
 const (
@@ -37,7 +38,7 @@ func GetProvider() *ujconfig.Provider {
 		ujconfig.WithTerraformPluginSDKIncludeList(ExternalNameConfigured()),
 		ujconfig.WithIncludeList([]string{}),
 		ujconfig.WithFeaturesPackage("internal/features"),
-		ujconfig.WithTerraformProvider(hsdp.Provider("v0.62.0")),
+		ujconfig.WithTerraformProvider(hsdp.Provider("v0.67.0")),
 		ujconfig.WithDefaultResourceOptions(
 			ExternalNameConfigurations(),
 		))
@@ -49,6 +50,7 @@ func GetProvider() *ujconfig.Provider {
 		dbs.Configure,
 		mdm.Configure,
 		dicom.Configure,
+		tenant.Configure,
 	} {
 		configure(pc)
 	}

@@ -31,6 +31,7 @@ import (
 	datatype "github.com/philips-software/provider-hsdp/internal/controller/mdm/datatype"
 	propositionmdm "github.com/philips-software/provider-hsdp/internal/controller/mdm/proposition"
 	providerconfig "github.com/philips-software/provider-hsdp/internal/controller/providerconfig"
+	key "github.com/philips-software/provider-hsdp/internal/controller/tenant/key"
 )
 
 // Setup creates all controllers with the supplied logger and adds them to
@@ -59,6 +60,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		datatype.Setup,
 		propositionmdm.Setup,
 		providerconfig.Setup,
+		key.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {
 			return err

@@ -2975,3 +2975,56 @@ resources:
                 - (Required) The product key (tenant) for which this
                 policy should apply to
         importStatements: []
+    hsdp_tenant_key:
+        subCategory: Tenant Management
+        description: Manages HSDP Tenant Keys
+        name: hsdp_tenant_key
+        title: hsdp_tenant_key
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "environment": "prod",
+                  "expiration": "2025-12-31T23:59:59Z",
+                  "organization": "my-organization",
+                  "project": "my-project",
+                  "region": "us-east",
+                  "salt": "static-salt-value",
+                  "scopes": [
+                    "scope1",
+                    "scope2"
+                  ],
+                  "signing_key": "your-secure-signing-key"
+                }
+            - name: short_lived
+              manifest: |-
+                {
+                  "expiration": "2023-06-30T12:00:00Z",
+                  "organization": "my-organization",
+                  "project": "my-project",
+                  "salt": "salt-1",
+                  "signing_key": "temporary-key"
+                }
+            - name: long_lived
+              manifest: |-
+                {
+                  "expiration": "2030-01-01T00:00:00Z",
+                  "organization": "my-organization",
+                  "project": "my-project",
+                  "salt": "salt-2",
+                  "signing_key": "permanent-key"
+                }
+        argumentDocs:
+            environment: '- (Optional) The environment for the key. Default is "prod".'
+            expiration: '- (Optional) The expiration time for the key in RFC3339 format (e.g., "2025-12-31T23:59:59Z"). Default is one year from the current date.'
+            id: '- The signature of the generated API key, used to identify this resource.'
+            organization: '- (Required) The organization identifier the key is associated with.'
+            project: '- (Required) The project identifier the key is associated with.'
+            region: '- (Optional) The region for the key. Default is "us-east".'
+            result: '- The generated API key (sensitive value).'
+            salt: '- (Optional) A salt value used to generate deterministic API keys. Using the same salt value with the same inputs will always generate the same key.'
+            scopes: '- (Optional) A list of scopes to associate with the key. These define the permissions granted to the key.'
+            signature: '- The signature of the generated API key (same as id, for consistency with other resources).'
+            signing_key: '- (Required) The signing key used to generate the API key. This is sensitive information.'
+        importStatements:
+            - terraform import hsdp_tenant_key.example [signature]

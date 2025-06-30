@@ -33,6 +33,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"hsdp_dbs_topic_subscription":  config.IdentifierFromProvider,
 	"hsdp_connect_mdm_proposition": config.IdentifierFromProvider,
 	"hsdp_connect_mdm_data_type":   config.IdentifierFromProvider,
+	"hsdp_tenant_key":              config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the
