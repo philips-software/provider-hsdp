@@ -388,8 +388,8 @@ github.com/hashicorp/go-multierror v1.1.1/go.mod h1:iw975J/qwKPdAO1clOe2L8331t/9
 github.com/hashicorp/go-plugin v1.6.3 h1:xgHB+ZUSYeuJi96WtxEjzi23uh7YQpznjGh0U0UUrwg=
 github.com/hashicorp/go-plugin v1.6.3/go.mod h1:MRobyh+Wc/nYy1V4KAXUiYfzxoYhs7V1mlH1Z7iY2h0=
 github.com/hashicorp/go-retryablehttp v0.5.3/go.mod h1:9B5zBasrRhHXnJnui7y6sL7es7NDiJgTc6Er0maI1Xs=
-github.com/hashicorp/go-retryablehttp v0.7.7 h1:C8hUCYzor8PIfXHa4UrZkU4VvK8o9ISHxT2Q8+VepXU=
-github.com/hashicorp/go-retryablehttp v0.7.7/go.mod h1:pkQpWZeYWskR+D1tR2O5OcBFOxfA7DoAO6xtkuQnHTk=
+github.com/hashicorp/go-retryablehttp v0.7.8 h1:ylXZWnqa7Lhqpk0L1P1LzDtGcCR0rPVUrx/c8Unxc48=
+github.com/hashicorp/go-retryablehttp v0.7.8/go.mod h1:rjiScheydd+CxvumBsIrFKlx3iS0jrZ7LvzFGFmuKbw=
 github.com/hashicorp/go-rootcerts v1.0.2/go.mod h1:pqUvnprVnM5bf7AOirdbb01K4ccR319Vf4pU3K5EGc8=
 github.com/hashicorp/go-sockaddr v1.0.0/go.mod h1:7Xibr9yA9JjQq1JpNB2Vw7kxv8xerXegt+ozgdvDeDU=
 github.com/hashicorp/go-sockaddr v1.0.2/go.mod h1:rB4wwRAUzs07qva3c5SdrY/NEtAUjGlgmH/UkBUC97A=
@@ -437,8 +437,8 @@ github.com/hashicorp/terraform-svchost v0.1.1 h1:EZZimZ1GxdqFRinZ1tpJwVxxt49xc/S
 github.com/hashicorp/terraform-svchost v0.1.1/go.mod h1:mNsjQfZyf/Jhz35v6/0LWcv26+X7JPS+buii2c9/ctc=
 github.com/hashicorp/yamux v0.1.2 h1:XtB8kyFOyHXYVFnwT5C3+Bdo8gArse7j2AQ0DA0Uey8=
 github.com/hashicorp/yamux v0.1.2/go.mod h1:C+zze2n6e/7wshOZep2A70/aQU6QBRWJO/G6FT1wIns=
-github.com/hasura/go-graphql-client v0.14.0 h1:YJqhFt6KmCaiakqJF6FvgvHvc34SdUi5zQ1imvp7fTI=
-github.com/hasura/go-graphql-client v0.14.0/go.mod h1:jfSZtBER3or+88Q9vFhWHiFMPppfYILRyl+0zsgPIIw=
+github.com/hasura/go-graphql-client v0.14.4 h1:bYU7/+V50T2YBGdNQXt6l4f2cMZPECPUd8cyCR+ixtw=
+github.com/hasura/go-graphql-client v0.14.4/go.mod h1:jfSZtBER3or+88Q9vFhWHiFMPppfYILRyl+0zsgPIIw=
 github.com/herkyl/patchwerk v0.0.0-20190629103337-f0ea77068152 h1:GITUy7r2Eijl7u/Xe5AOs3HBV3Gt/3+l0j2bTh2UO5Y=
 github.com/herkyl/patchwerk v0.0.0-20190629103337-f0ea77068152/go.mod h1:bRtCxY0f88xmUw+Y0Xfl/uGaCWMUy04wUGSKbnQdsJs=
 github.com/hpcloud/tail v1.0.0/go.mod h1:ab1qPbhIpdTxEkNHXyeSf5vhxWSCs/tWer42PpOxQnU=
@@ -502,8 +502,8 @@ github.com/labstack/gommon v0.4.2 h1:F8qTUNXgG1+6WQmqoUWnz8WiEU60mXVVw0P4ht1WRA0
 github.com/labstack/gommon v0.4.2/go.mod h1:QlUFxVM+SNXhDL/Z7YhocGIBYOiwB0mXm1+1bAPHPyU=
 github.com/leodido/go-urn v1.4.0 h1:WT9HwE9SGECu3lg4d/dIA+jxlljEa1/ffXKmRjqdmIQ=
 github.com/leodido/go-urn v1.4.0/go.mod h1:bvxc+MVxLKB4z00jd1z+Dvzr47oO32F/QSNjSBOlFxI=
-github.com/loafoe/caddy-token v0.60.0 h1:mW1CXfzJO82JrZ9EXqdW4aA1G8Zrgpqzvi2864pzk4o=
-github.com/loafoe/caddy-token v0.60.0/go.mod h1:xXj9Hj+225DEB7hQWfLiUzGZDdkw+YmaECPRVIRyzVU=
+github.com/loafoe/caddy-token v0.71.0 h1:c5LD2oNG1bXqoToaMNjgY6rynVxDHo0iYWFqU9hKCG4=
+github.com/loafoe/caddy-token v0.71.0/go.mod h1:xXj9Hj+225DEB7hQWfLiUzGZDdkw+YmaECPRVIRyzVU=
 github.com/loafoe/easyssh-proxy/v2 v2.0.4 h1:EzD0FWq2Ro44sDIbk95cs5oUlWFi2GKc6u/A8sxAxBM=
 github.com/loafoe/easyssh-proxy/v2 v2.0.4/go.mod h1:PzKetBuhTzg74M1AapAmDQAwBILp/MIiUkeUQ9bx42k=
 github.com/loafoe/ferrite v0.3.0 h1:MJrHMRLZjX8ZJb/hgV8KHzHRHqmEw12wFKXcD9s3m2k=
@@ -611,8 +611,8 @@ github.com/pborman/uuid v1.2.0/go.mod h1:X/NO0urCmaxf9VXbdlT7C2Yzkj2IKimNn4k+gtP
 github.com/pelletier/go-toml v1.2.0/go.mod h1:5z9KED0ma1S8pY6P1sdut58dfprrGBbd/94hg7ilaic=
 github.com/peterbourgon/diskv v2.0.1+incompatible/go.mod h1:uqqh8zWWbv1HBMNONnaR/tNboyR3/BZd58JJSHlUSCU=
 github.com/philhofer/fwd v1.0.0/go.mod h1:gk3iGcWd9+svBvR0sR+KPcfE+RNWozjowpeBVG3ZVNU=
-github.com/philips-software/terraform-provider-hsdp v0.67.0 h1:vg5ZIE9li5UAFK0IGgv9LbNzgAVeTGnjKj5oFPT/UpA=
-github.com/philips-software/terraform-provider-hsdp v0.67.0/go.mod h1:n4+6XUGVKdtt8o3snANnPKUTlUP1EQYy7SMgJxfrGwQ=
+github.com/philips-software/terraform-provider-hsdp v0.68.0 h1:PTufmiAN0jglbXjCokQPozLZXwbhBrheRKVy37QxcNw=
+github.com/philips-software/terraform-provider-hsdp v0.68.0/go.mod h1:5QZ+dOPZNwLWhYC5vxt3EPHIuLkqwrwX680BV0El7pg=
 github.com/pires/go-proxyproto v0.0.0-20191211124218-517ecdf5bb2b/go.mod h1:Odh9VFOZJCf9G8cLW5o435Xf1J95Jw9Gw5rnCjcwzAY=
 github.com/pkg/errors v0.8.0/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
