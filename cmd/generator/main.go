@@ -14,8 +14,8 @@ import (
 
 	ujconfig "github.com/crossplane/upjet/pkg/config"
 	"github.com/crossplane/upjet/pkg/pipeline"
-	"gopkg.in/alecthomas/kingpin.v2"
 	"github.com/philips-software/provider-hsdp/config"
+	"gopkg.in/alecthomas/kingpin.v2"
 )
 
 func main() {
