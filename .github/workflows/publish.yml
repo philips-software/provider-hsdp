@@ -5,6 +5,10 @@ on:
     tags:
     - '*'
 
+permissions:
+  contents: read
+  packages: write
+
 env:
   # Common versions
   GO_VERSION: '1.21.6'
