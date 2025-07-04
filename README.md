@@ -14,7 +14,7 @@ HSDP API.
 Install the provider by using the following command after changing the image tag
 to the [latest release](https://marketplace.upbound.io/providers/philips-software/provider-hsdp):
 ```
-kubectl crossplane install provider xpkg.upbound.io/philips-software/provider-hsdp:v0.35.1 provider-hsdp
+kubectl crossplane install provider xpkg.upbound.io/philips-software/provider-hsdp:v0.54.0 provider-hsdp
 ```
 
 Alternatively, you can use declarative installation:
@@ -25,7 +25,7 @@ kind: Provider
 metadata:
   name: provider-hsdp
 spec:
-  package: xpkg.upbound.io/philips-software/provider-hsdp:v0.35.1
+  package: xpkg.upbound.io/philips-software/provider-hsdp:v0.54.0
 ```
 
 ## Credentials
