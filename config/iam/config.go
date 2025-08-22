@@ -30,6 +30,13 @@ func Configure(p *config.Provider) {
 			TerraformName: "hsdp_iam_application",
 			RefFieldName:  "ApplicationRef",
 		}
+		r.Sensitive.AdditionalConnectionDetailsFn = func(attr map[string]interface{}) (map[string][]byte, error) {
+			conn := map[string][]byte{}
+			if a, ok := attr["client_id"].(string); ok {
+				conn["client_id"] = []byte(a)
+			}
+			return conn, nil
+		}
 	})
 
 	// EmailTemplate
