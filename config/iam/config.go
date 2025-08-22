@@ -66,6 +66,13 @@ func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("hsdp_iam_org", func(r *config.Resource) {
 		r.ShortGroup = shortGroup
 		r.Kind = "Organization"
+		r.Sensitive.AdditionalConnectionDetailsFn = func(attr map[string]interface{}) (map[string][]byte, error) {
+			conn := map[string][]byte{}
+			if a, ok := attr["id"].(string); ok {
+				conn["organization_id"] = []byte(a)
+			}
+			return conn, nil
+		}
 	})
 
 	// PasswordPolicy
