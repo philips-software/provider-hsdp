@@ -1,4 +1,4 @@
-# Copyright 2021 The Upbound Authors. All rights reserved.
+# Copyright 2025 The Crossplane Authors. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -124,9 +124,9 @@ endif
 build.done: img.done
 clean: img.clean img.release.clean
 
-# only publish images for main / master and release branches
-# TODO(hasheddan): remove master and support overriding
-ifneq ($(filter main master release-%,$(BRANCH_NAME)),)
+# only publish images for main / master and release branches by default
+RELEASE_BRANCH_FILTER ?= main master release-%
+ifneq ($(filter $(RELEASE_BRANCH_FILTER),$(BRANCH_NAME)),)
 publish.artifacts: $(foreach r,$(REGISTRY_ORGS), $(foreach i,$(IMAGES),img.release.publish.$(r).$(i)))
 endif
 

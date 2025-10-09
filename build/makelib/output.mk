@@ -1,4 +1,4 @@
-# Copyright 2016 The Upbound Authors. All rights reserved.
+# Copyright 2025 The Crossplane Authors. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -29,6 +29,9 @@ endif
 S3_CP := aws s3 cp --only-show-errors
 S3_SYNC := aws s3 sync --only-show-errors
 S3_SYNC_DEL := aws s3 sync --only-show-errors --delete
+
+# We will not set the artifact as "current" if this is a pre-release build.
+PRE_RELEASE ?= false
 
 # ====================================================================================
 # Targets
@@ -61,7 +64,9 @@ output.publish:
 output.promote:
 	@$(INFO) promoting s3://$(S3_BUCKET)/$(CHANNEL)/$(VERSION)
 	@$(S3_SYNC_DEL) s3://$(S3_BUCKET)/build/$(BRANCH_NAME)/$(VERSION) s3://$(S3_BUCKET)/$(CHANNEL)/$(VERSION) || $(FAIL)
+ifneq ($(PRE_RELEASE),true)
 	@$(S3_SYNC_DEL) s3://$(S3_BUCKET)/build/$(BRANCH_NAME)/$(VERSION) s3://$(S3_BUCKET)/$(CHANNEL)/current || $(FAIL)
+endif
 	@$(OK) promoting s3://$(S3_BUCKET)/$(CHANNEL)/$(VERSION)
 
 publish.artifacts: output.publish

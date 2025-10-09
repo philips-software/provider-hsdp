@@ -1,4 +1,4 @@
-# Copyright 2022 The Upbound Authors. All rights reserved.
+# Copyright 2025 The Crossplane Authors. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,21 +13,29 @@
 # limitations under the License.
 
 KIND_CLUSTER_NAME ?= local-dev
-CROSSPLANE_NAMESPACE ?= upbound-system
+CROSSPLANE_NAMESPACE ?= crossplane-system
+CROSSPLANE_VERSION ?=
+CROSSPLANE_CHART_REPO ?= https://charts.crossplane.io/stable
+CROSSPLANE_CHART_NAME ?= crossplane
 
 CONTROLPLANE_DUMP_DIRECTORY ?= $(OUTPUT_DIR)/controlplane-dump
 
-controlplane.up: $(UP) $(KUBECTL) $(KIND)
+controlplane.up: $(HELM) $(KUBECTL) $(KIND)
 	@$(INFO) setting up controlplane
 	@$(KIND) get kubeconfig --name $(KIND_CLUSTER_NAME) >/dev/null 2>&1 || $(KIND) create cluster --name=$(KIND_CLUSTER_NAME)
+	@$(INFO) "setting kubectl context to kind-$(KIND_CLUSTER_NAME)"
+	@$(KUBECTL) config use-context "kind-$(KIND_CLUSTER_NAME)"
+	@$(HELM) repo add crossplane-build-module $(CROSSPLANE_CHART_REPO) --force-update
+	@$(HELM) repo update
 ifndef CROSSPLANE_ARGS
 	@$(INFO) setting up crossplane core without args
-	@$(KUBECTL) -n $(CROSSPLANE_NAMESPACE) get cm universal-crossplane-config >/dev/null 2>&1 || $(UP) uxp install --namespace=$(CROSSPLANE_NAMESPACE)
+	@$(HELM) get notes -n $(CROSSPLANE_NAMESPACE) crossplane >/dev/null 2>&1 || $(HELM) install crossplane --create-namespace --namespace=$(CROSSPLANE_NAMESPACE) crossplane-build-module/$(CROSSPLANE_CHART_NAME) --version $(CROSSPLANE_VERSION)
 else
-	@$(INFO) setting up crossplane core with args @$(CROSSPLANE_ARGS)
-	@$(KUBECTL) -n $(CROSSPLANE_NAMESPACE) get cm universal-crossplane-config >/dev/null 2>&1 || $(UP) uxp install --namespace=$(CROSSPLANE_NAMESPACE) --set "args={${CROSSPLANE_ARGS}}"
+	@$(INFO) setting up crossplane core with args $(CROSSPLANE_ARGS)
+	@$(HELM) get notes -n $(CROSSPLANE_NAMESPACE) crossplane >/dev/null 2>&1 || $(HELM) install crossplane --create-namespace --namespace=$(CROSSPLANE_NAMESPACE) --set "args={${CROSSPLANE_ARGS}}" crossplane-build-module/$(CROSSPLANE_CHART_NAME) --version $(CROSSPLANE_VERSION)
 endif
-controlplane.down: $(UP) $(KUBECTL) $(KIND)
+
+controlplane.down: $(KIND)
 	@$(INFO) deleting controlplane
 	@$(KIND) delete cluster --name=$(KIND_CLUSTER_NAME)
 	@$(OK) deleting controlplane
