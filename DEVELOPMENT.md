@@ -40,8 +40,32 @@ make generate build
 
 ## Publish to marketplace
 
+First login to Upbound:
+
 ```shell
 up login
+```
 
+### authenticate
+
+If your session has expired you need to authenticate against the private `xpkg.upbound.io` repository first
+
+Session token can be found like this [(see details)](https://github.com/crossplane/crossplane/issues/4785#issuecomment-1759953441):
+
+```shell
+cat ~/.up/config.json|jq -r .upbound.profiles.default.session
+```
+
+Then login:
+
+```shell
+$ docker login xpkg.upbound.io
+username: _token
+password: # paste the session token
+```
+
+Finally, publish:
+
+```shell
 make build.all publish.artifacts XPKG_REG_ORGS=xpkg.upbound.io/philips-software
 ```
