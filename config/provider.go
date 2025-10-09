@@ -11,10 +11,8 @@ import (
 	"github.com/philips-software/terraform-provider-hsdp/hsdp"
 
 	ujconfig "github.com/crossplane/upjet/pkg/config"
-	"github.com/philips-software/provider-hsdp/config/cdr"
 	"github.com/philips-software/provider-hsdp/config/connect/dbs"
 	"github.com/philips-software/provider-hsdp/config/connect/mdm"
-	"github.com/philips-software/provider-hsdp/config/dicom"
 	"github.com/philips-software/provider-hsdp/config/iam"
 	"github.com/philips-software/provider-hsdp/config/tenant"
 )
@@ -46,10 +44,8 @@ func GetProvider() *ujconfig.Provider {
 	for _, configure := range []func(provider *ujconfig.Provider){
 		// add custom config functions
 		iam.Configure,
-		cdr.Configure,
 		dbs.Configure,
 		mdm.Configure,
-		dicom.Configure,
 		tenant.Configure,
 	} {
 		configure(pc)

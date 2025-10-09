@@ -9,19 +9,13 @@ import (
 
 	"github.com/crossplane/upjet/pkg/controller"
 
-	organization "github.com/philips-software/provider-hsdp/internal/controller/cdr/organization"
-	subscription "github.com/philips-software/provider-hsdp/internal/controller/cdr/subscription"
 	sqssubscriber "github.com/philips-software/provider-hsdp/internal/controller/dbs/sqssubscriber"
-	subscriptiondbs "github.com/philips-software/provider-hsdp/internal/controller/dbs/subscription"
-	notification "github.com/philips-software/provider-hsdp/internal/controller/dicom/notification"
-	objectstore "github.com/philips-software/provider-hsdp/internal/controller/dicom/objectstore"
-	repository "github.com/philips-software/provider-hsdp/internal/controller/dicom/repository"
-	storeconfig "github.com/philips-software/provider-hsdp/internal/controller/dicom/storeconfig"
+	subscription "github.com/philips-software/provider-hsdp/internal/controller/dbs/subscription"
 	application "github.com/philips-software/provider-hsdp/internal/controller/iam/application"
 	client "github.com/philips-software/provider-hsdp/internal/controller/iam/client"
 	emailtemplate "github.com/philips-software/provider-hsdp/internal/controller/iam/emailtemplate"
 	group "github.com/philips-software/provider-hsdp/internal/controller/iam/group"
-	organizationiam "github.com/philips-software/provider-hsdp/internal/controller/iam/organization"
+	organization "github.com/philips-software/provider-hsdp/internal/controller/iam/organization"
 	passwordpolicy "github.com/philips-software/provider-hsdp/internal/controller/iam/passwordpolicy"
 	proposition "github.com/philips-software/provider-hsdp/internal/controller/iam/proposition"
 	role "github.com/philips-software/provider-hsdp/internal/controller/iam/role"
@@ -38,19 +32,13 @@ import (
 // the supplied manager.
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
-		organization.Setup,
-		subscription.Setup,
 		sqssubscriber.Setup,
-		subscriptiondbs.Setup,
-		notification.Setup,
-		objectstore.Setup,
-		repository.Setup,
-		storeconfig.Setup,
+		subscription.Setup,
 		application.Setup,
 		client.Setup,
 		emailtemplate.Setup,
 		group.Setup,
-		organizationiam.Setup,
+		organization.Setup,
 		passwordpolicy.Setup,
 		proposition.Setup,
 		role.Setup,

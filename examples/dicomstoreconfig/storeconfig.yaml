@@ -1,9 +1,0 @@
-apiVersion: dicom.hsdp.crossplane.io/v1alpha1
-kind: StoreConfig
-metadata:
-  name: store-config
-  namespace: crossplane-system
-spec:
-  forProvider:
-    configUrl: "https://dss-config-sandbox.hsdp.io"
-    organizationId: "57988c50-a5e9-48c4-bb2b-b5674e3d0163"
