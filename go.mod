@@ -8,7 +8,7 @@ require (
 	github.com/crossplane/crossplane-tools v0.0.0-20240522174801-1ad3d4c87f21
 	github.com/crossplane/upjet v1.9.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.38.1
-	github.com/philips-software/terraform-provider-hsdp v0.69.0
+	github.com/philips-software/terraform-provider-hsdp v0.70.0
 	github.com/pkg/errors v0.9.1
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 	k8s.io/apimachinery v0.33.0
@@ -83,7 +83,6 @@ require (
 	github.com/hashicorp/terraform-svchost v0.1.1 // indirect
 	github.com/hashicorp/yamux v0.1.2 // indirect
 	github.com/hasura/go-graphql-client v0.14.5 // indirect
-	github.com/herkyl/patchwerk v0.0.0-20190629103337-f0ea77068152 // indirect
 	github.com/iancoleman/strcase v0.2.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect

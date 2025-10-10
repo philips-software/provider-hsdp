@@ -440,8 +440,6 @@ github.com/hashicorp/yamux v0.1.2 h1:XtB8kyFOyHXYVFnwT5C3+Bdo8gArse7j2AQ0DA0Uey8
 github.com/hashicorp/yamux v0.1.2/go.mod h1:C+zze2n6e/7wshOZep2A70/aQU6QBRWJO/G6FT1wIns=
 github.com/hasura/go-graphql-client v0.14.5 h1:M9HxxGLCcDZnxJGYyWXAzDYEpommgjW+sUW3V8EaGms=
 github.com/hasura/go-graphql-client v0.14.5/go.mod h1:jfSZtBER3or+88Q9vFhWHiFMPppfYILRyl+0zsgPIIw=
-github.com/herkyl/patchwerk v0.0.0-20190629103337-f0ea77068152 h1:GITUy7r2Eijl7u/Xe5AOs3HBV3Gt/3+l0j2bTh2UO5Y=
-github.com/herkyl/patchwerk v0.0.0-20190629103337-f0ea77068152/go.mod h1:bRtCxY0f88xmUw+Y0Xfl/uGaCWMUy04wUGSKbnQdsJs=
 github.com/hpcloud/tail v1.0.0/go.mod h1:ab1qPbhIpdTxEkNHXyeSf5vhxWSCs/tWer42PpOxQnU=
 github.com/iancoleman/strcase v0.2.0 h1:05I4QRnGpI0m37iZQRuskXh+w77mr6Z41lwQzuHLwW0=
 github.com/iancoleman/strcase v0.2.0/go.mod h1:iwCmte+B7n89clKwxIoIXy/HfoL7AsD47ZCWhYzw7ho=
@@ -612,8 +610,8 @@ github.com/pborman/uuid v1.2.0/go.mod h1:X/NO0urCmaxf9VXbdlT7C2Yzkj2IKimNn4k+gtP
 github.com/pelletier/go-toml v1.2.0/go.mod h1:5z9KED0ma1S8pY6P1sdut58dfprrGBbd/94hg7ilaic=
 github.com/peterbourgon/diskv v2.0.1+incompatible/go.mod h1:uqqh8zWWbv1HBMNONnaR/tNboyR3/BZd58JJSHlUSCU=
 github.com/philhofer/fwd v1.0.0/go.mod h1:gk3iGcWd9+svBvR0sR+KPcfE+RNWozjowpeBVG3ZVNU=
-github.com/philips-software/terraform-provider-hsdp v0.69.0 h1:MLC0Rqu7L5tHg+MNZKZzJs/1e9TQuiVdOLJ1kYh/e20=
-github.com/philips-software/terraform-provider-hsdp v0.69.0/go.mod h1:AypktPzAn4uyIQ9BpyboCR+fkazgC6qug86T/BwnHHU=
+github.com/philips-software/terraform-provider-hsdp v0.70.0 h1:bEmmvu5XR8143oviLmyGGpEuL95BQ1f43eU34RziXHM=
+github.com/philips-software/terraform-provider-hsdp v0.70.0/go.mod h1:hUQhM4BQCETpF05bb5nWig/9MXkNGsY9dKABmBI8qvk=
 github.com/pires/go-proxyproto v0.0.0-20191211124218-517ecdf5bb2b/go.mod h1:Odh9VFOZJCf9G8cLW5o435Xf1J95Jw9Gw5rnCjcwzAY=
 github.com/pkg/errors v0.8.0/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
