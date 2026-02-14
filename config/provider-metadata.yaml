@@ -78,6 +78,51 @@ resources:
             name: '- (Required) The name of the device group'
             proposition_id: '- (Required) The proposition ID where this bucket falls under'
         importStatements: []
+    hsdp_connect_iot_provisioning_orgconfiguration:
+        subCategory: Provisioning
+        description: Manages HSDP DIP Connect IoT Provisioning Org Configuration
+        name: hsdp_connect_iot_provisioning_orgconfiguration
+        title: hsdp_connect_iot_provisioning_orgconfiguration
+        examples:
+            - name: my-orgconfig
+              manifest: |-
+                {
+                  "bootstrap_signature": [
+                    {
+                      "algorithm": "RSA-SHA256",
+                      "config": [
+                        {
+                          "padding": "RSA_PKCS1_PSS_PADDING",
+                          "salt_length": "RSA_PSS_SALTLEN_MAX_SIGN",
+                          "type": "RSA"
+                        }
+                      ],
+                      "public_key": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSBlahBlahBlahMqgzQIDAQAB\n-----END PUBLIC KEY-----"
+                    }
+                  ],
+                  "organization_guid": "1ac2e233-8146-4661-8ec4-dc956aeb5a4b",
+                  "service_account": [
+                    {
+                      "service_account_id": "demo_test_tf.xyz-app.xyz-prop@demo.iot__connect__sandbox.apmplatform.philips-healthsuite.com",
+                      "service_account_key": "-----BEGIN RSA PRIVATE KEY-----\nMIIEowBlahBlahI1KExUm\n-----END RSA PRIVATE KEY-----"
+                    }
+                  ]
+                }
+        argumentDocs:
+            bootstrap_signature: '- (Required) Bootstrap signature configuration block containing:'
+            bootstrap_signature.algorithm: '- (Required) The signature algorithm to use (e.g., "RSA-SHA256").'
+            bootstrap_signature.config: '- (Optional) Additional configuration block containing:'
+            bootstrap_signature.public_key: '- (Required) The public key for bootstrap signature verification.'
+            id: '- The unique identifier of the organization configuration.'
+            organization_guid: '- (Required, ForceNew) The GUID of the organization to configure.'
+            padding: '- (Optional) The padding type (e.g., "RSA_PKCS1_PSS_PADDING").'
+            salt_length: '- (Optional) The salt length configuration (e.g., "RSA_PSS_SALTLEN_MAX_SIGN").'
+            service_account: '- (Required) Service account configuration block containing:'
+            service_account.service_account_id: '- (Required) The service account ID for the organization.'
+            service_account.service_account_key: '- (Required, Sensitive) The service account private key.'
+            type: '- (Optional) The signature type (e.g., "RSA", "ECC", "DSA").'
+        importStatements:
+            - terraform import hsdp_connect_iot_provisioning_orgconfiguration.my-orgconfig <id>
     hsdp_connect_mdm_application:
         subCategory: Master Data Management (MDM)
         description: Manages HSDP Connect MDM Applications
@@ -974,66 +1019,6 @@ resources:
             triggers: '- (Required, Hashmap) Create dependencies on other resources'
             uaa_password: '- (Optional) The UAA password to use'
             uaa_username: '- (Optional) The UAA username to use'
-        importStatements: []
-    hsdp_function:
-        subCategory: Functions
-        description: Manages HSDP Function definitions
-        name: hsdp_function
-        title: hsdp_function
-        examples:
-            - name: rds_backup
-              manifest: |-
-                {
-                  "backend": [
-                    {
-                      "credentials": "${module.siderite_backend.credentials}"
-                    }
-                  ],
-                  "docker_credentials": {
-                    "password": "${var.docker_password}",
-                    "username": "${var.docker_username}"
-                  },
-                  "docker_image": "${var.streaming_backup_image}",
-                  "environment": {
-                    "db_host": "rds.aws.com",
-                    "db_name": "hsdp_pg",
-                    "db_password": "${var.db_password}",
-                    "db_username": "${var.db_username}",
-                    "s3_access_key": "AAA",
-                    "s3_bucket": "cf-s3-xxx",
-                    "s3_prefix": "/backups",
-                    "s3_secret_key": "BBB"
-                  },
-                  "name": "streaming-backup",
-                  "schedule": "0 4 * * *"
-                }
-              references:
-                backend.credentials: module.siderite_backend.credentials
-                docker_image: var.streaming_backup_image
-        argumentDocs:
-            async_endpoint: '- The gateway endpoint where you can schedule the function asynchronously'
-            auth_type: '- The authentication type. Possible values [none, token, iam]'
-            backend: '- (Required) Use this block to specify backend details'
-            command: '- (Optional) The command to execute in the container. Default is /app/server'
-            credentials: '- (Required, map) The backend credentials. Must be iron configuration details at this time.'
-            docker_credentials: '- (Optional) The docker registry credentials'
-            docker_image: '- (Required) The docker image that contains the logic of the function'
-            endpoint: '- The gateway endpoint where you can trigger this function'
-            environment: '- (Optional, map) The environment variables to set in the docker container before executing the function'
-            name: '- (Required) The name of the function'
-            password: '- (Required) The registry password'
-            run_every: |-
-                - (Optional) Run the function every {value}{unit} period. Supported units are s, m, h, d for second, minute, hours, days respectively. Conflicts with cron
-                Example: a value of "20m" would run the function every 20 minutes.
-            schedule: '- (Optional) set schedule using cron format. This requires a backend with activated gateway. Conflicts with run_every'
-            start_at: |-
-                - (Optional) Only valid for run_every. This is a hint for when the first run should be.
-                This determines the time of day the schedule will run at. Depending on the frequency of the runs and
-                the time of day when the Terraform script was run, it can take up to 24 hours for the first run to happen.
-                Use schedule for more accurate scheduling behaviour.
-            timeout: '- (Optional, int) When set, limits the execution time (seconds) to this value. Default: 1800 (30 minutes)'
-            token: '- The token to use in case auth_type is set to token. This token must be pasted in the HTTP Authorization header as Token TOKENHERE'
-            username: '- (Required) The registry username'
         importStatements: []
     hsdp_iam_activation_email:
         subCategory: Identity and Access Management (IAM)
@@ -2078,29 +2063,6 @@ resources:
             space_name: '- (Required) The CF space name to verify the user is part of'
             triggers: '- (Optional, list(string)) An list of strings which when changes will trigger recreation of the resource'
             ttl: '- (Optional, string regex [0-9]+[hms]$) The TTL, example 8760h for 1 year'
-        importStatements: []
-    hsdp_s3creds_policy:
-        subCategory: S3 Credentials
-        description: Manages HSDP S3 Credentials policies
-        name: hsdp_s3creds_policy
-        title: hsdp_s3creds_policy
-        examples:
-            - name: policy1
-              manifest: |-
-                {
-                  "policy": "{\n  \"conditions\": {\n    \"managingOrganizations\": [ \"${var.org_id}\" ],\n    \"groups\": [ \"PublishGroup\" ]\n  },\n  \"allowed\": {\n    \"resources\": [ \"${var.org_id}/foo/*\" ],\n    \"actions\": [\n      \"GET\",\n      \"PUT\",\n      \"LIST\",\n      \"DELETE\"\n    ]\n  }\n}\n",
-                  "product_key": "${var.credentials_product_key}"
-                }
-              references:
-                product_key: var.credentials_product_key
-        argumentDocs:
-            id: '- The ID of the policy'
-            policy: |-
-                - (Required) The policy definition. This is a JSON string as per
-                HSDP S3 Credentials documentation
-            product_key: |-
-                - (Required) The product key (tenant) for which this
-                policy should apply to
         importStatements: []
     hsdp_tenant_key:
         subCategory: Tenant Management

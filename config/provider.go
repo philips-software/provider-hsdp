@@ -36,7 +36,7 @@ func GetProvider() *ujconfig.Provider {
 		ujconfig.WithTerraformPluginSDKIncludeList(ExternalNameConfigured()),
 		ujconfig.WithIncludeList([]string{}),
 		ujconfig.WithFeaturesPackage("internal/features"),
-		ujconfig.WithTerraformProvider(hsdp.Provider("v0.70.0")),
+		ujconfig.WithTerraformProvider(hsdp.Provider("v1.1.0")),
 		ujconfig.WithDefaultResourceOptions(
 			ExternalNameConfigurations(),
 		))
